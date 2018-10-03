@@ -1,0 +1,533 @@
+void OnStart() {
+      AddLocalVarInt("FirstAct1ToAct2",0);
+      
+	SetEntityPlayerLookAtCallback("Check_lever","Check_lever",false);
+//######### LEVER COLLIDE #####################
+for(int k=0;k<4;k++) {
+	AddEntityCollideCallback("lever_machine_lever01_"+k,"up_"+k,"lever_move",false,1);
+	AddEntityCollideCallback("lever_machine_lever01_"+k,"down_"+k,"lever_move",false,1);
+}
+//######### COLLIDE #################
+	AddEntityCollideCallback("Player","Lurker_Active","Lurker_Active",false,1);
+	AddEntityCollideCallback("Player","ScriptArea_2","ScriptArea_2",true,1);
+	AddEntityCollideCallback("Player","ScriptArea_1","ScriptArea_1",false,1);
+	AddEntityCollideCallback("Player","Smoking","Smoking",false,0);
+	AddEntityCollideCallback("Player","ScriptArea_4","ScriptArea_4",true,1);
+	AddEntityCollideCallback("Player","Check_lever","Check_lever_q",true,1);
+	AddEntityCollideCallback("Player","ScriptArea_23","ScriptArea_23",true,1);
+	AddEntityCollideCallback("Player","ScriptArea_22","ScriptArea_22",true,1);
+	AddEntityCollideCallback("Player","Death_Smoke","Death_Smoke",false,1);
+	AddEntityCollideCallback("Player","ScriptArea_24","ScriptArea_24",false,1);
+	AddEntityCollideCallback("Player","ScriptArea_25","ScriptArea_25",false,-1);
+	AddEntityCollideCallback("Player","ScriptArea_26","ScriptArea_26",false,1);
+	AddEntityCollideCallback("Player","ScriptArea_27","ScriptArea_27",false,-1);
+	AddEntityCollideCallback("Player","ScriptArea_13","ScriptArea_13",true,1);
+	AddEntityCollideCallback("Player","ScriptArea_14","ScriptArea_14",true,1);
+	
+	AddEntityCollideCallback("Player","ScriptArea_16","ScriptArea_16",true,1);
+	AddEntityCollideCallback("Player","ScriptArea_18","ScriptArea_18",true,1);
+	//############ ZNISZCZENIE BLOKADY ###########################################
+	AddEntityCollideCallback("stone_small01_brown_*","ScriptArea_16","wooden_boards_block_1",true,1);
+	//AddEntityCollideCallback("stone_small01_brown_*","wooden_boards_block_1","wooden_boards_block_1",true,1);
+	
+	//############ INTERACT ##########################################
+	SetEntityPlayerInteractCallback("Dotnij_ogien","Dotnij_ogien",false);
+	SetEntityPlayerInteractCallback("Dotyk_lever","Dotyk_lever",false); 
+	SetEntityPlayerInteractCallback("Interact_klapa","Interact_klapa",false);
+	//########## ITEMS ######################	
+	AddUseItemCallback("", "ladder_item_1", "ScriptArea_4", "ScriptArea_4", true);
+	for(int z=6;z<10;z++) { AddUseItemCallback("", "wooden_bucket_1", "ScriptArea_"+z, "Nalej_wody"+z, false); }
+	AddUseItemCallback("", "wooden_bucket_filled_1", "ScriptArea_1", "Ugas_ogien", false); 
+	ConnectEntities("",	"lever_nice01_1", "shelf_secret_door_rot_1",	false,1, "Secret_Door");
+}
+//############ ZNISZCZENIE BARYKADY ###############
+void wooden_boards_block_1(string &in asParent, string &in asChild, int alState) {
+SetEntityActive("wooden_boards_block_1",false);
+SetEntityActive("block_box_14",false);
+SetEntityActive("wooden_boards_block_2",true);
+PlayGuiSound("break_wood.snt",1);
+
+}
+//########### Rury ###############################
+void ScriptArea_16(string &in asParent, string &in asChild, int alState) {
+PlaySoundAtEntity("", "insanity_whisper01", "ScriptArea_17", 0.0f, false);
+}
+void ScriptArea_18(string &in asParent, string &in asChild, int alState) {
+PlaySoundAtEntity("", "03_in_a_bottle.snt", "ScriptArea_19", 0.0f, false);
+SetEntityActive("bottle_absinthe_7",true);
+SetEntityActive("bottle_absinthe_8",true);
+}
+//########## Krzyk kogo� #########################
+void ScriptArea_22(string &in asParent, string &in asChild, int alState) {
+PlaySoundAtEntity("", "15_the_big_scream1.snt", "hatch_large_2", 0.0f, false);
+GiveSanityDamage(10, false);
+}
+//######### INTERAKCJA KLAPY ######################
+void Interact_klapa(string &in asEntity) {
+PlaySoundAtEntity("", "door_level_wood_close", "hatch_large_2", 0.0f, false);
+}
+//########### NALEJ WODDY : ( ###################
+void Nalej_wody6(string &in asItem, string &in asEntity) {
+RemoveItem("wooden_bucket_1");
+for(int d=1;d<5;d++) { CreateParticleSystemAtEntity("","ps_bucket_pour_water.ps" ,"Drip_Sewer_"+d, false); } 
+for(int e=6;e<10;e++) { SetEntityActive("wooden_bucket_object_"+e,true); }
+StartPlayerLookAt("wooden_bucket_object_6", 1, 1, ""); 
+for(int p=6;p<10;p++) { PlaySoundAtEntity("", "16_water_stream2.snt", "ScriptArea_"+p, 0, true); }
+GiveItemFromFile("wooden_bucket_filled_1", "wooden_bucket_filled.ent");
+SetPlayerActive(false);
+AddTimer("",3,"usun_wiadro");
+return;
+}
+void Nalej_wody7(string &in asItem, string &in asEntity) {
+RemoveItem("wooden_bucket_1");
+for(int d=1;d<5;d++) { CreateParticleSystemAtEntity("","ps_bucket_pour_water.ps" ,"Drip_Sewer_"+d, false); } 
+for(int e=6;e<10;e++) { SetEntityActive("wooden_bucket_object_"+e,true); }
+StartPlayerLookAt("wooden_bucket_object_7", 1, 1, ""); 
+for(int p=6;p<10;p++) { PlaySoundAtEntity("", "16_water_stream2.snt", "ScriptArea_"+p, 0, true); }
+GiveItemFromFile("wooden_bucket_filled_1", "wooden_bucket_filled.ent");
+SetPlayerActive(false);
+AddTimer("",3,"usun_wiadro");
+}
+void Nalej_wody8(string &in asItem, string &in asEntity) {
+RemoveItem("wooden_bucket_1");
+for(int d=1;d<5;d++) { CreateParticleSystemAtEntity("","ps_bucket_pour_water.ps" ,"Drip_Sewer_"+d, false); } 
+for(int e=6;e<10;e++) { SetEntityActive("wooden_bucket_object_"+e,true); }
+ StartPlayerLookAt("wooden_bucket_object_8", 1, 1, ""); 
+for(int p=6;p<10;p++) { PlaySoundAtEntity("", "16_water_stream2.snt", "ScriptArea_"+p, 0, true); }
+GiveItemFromFile("wooden_bucket_filled_1", "wooden_bucket_filled.ent");
+SetPlayerActive(false);
+AddTimer("",3,"usun_wiadro");
+}
+void Nalej_wody9(string &in asItem, string &in asEntity) {
+RemoveItem("wooden_bucket_1");
+for(int d=1;d<5;d++) { CreateParticleSystemAtEntity("","ps_bucket_pour_water.ps" ,"Drip_Sewer_"+d, false); } 
+for(int e=6;e<10;e++) { SetEntityActive("wooden_bucket_object_"+e,true); }
+StartPlayerLookAt("wooden_bucket_object_9", 1, 1, ""); 
+for(int p=6;p<10;p++) { PlaySoundAtEntity("", "16_water_stream2.snt", "ScriptArea_"+p, 0, true); }
+GiveItemFromFile("wooden_bucket_filled_1", "wooden_bucket_filled.ent");
+SetPlayerActive(false);
+AddTimer("",3,"usun_wiadro");
+}
+void usun_wiadro(string &in asTimer) {
+for(int e=6;e<10;e++) { SetEntityActive("wooden_bucket_object_"+e,false); } 
+StopPlayerLookAt();
+SetPlayerActive(true);
+return;
+}
+//############# UGAS OGIEN ########################## 
+void Ugas_ogien(string &in asItem, string &in asEntity) {
+if(GetLocalVarInt("pozar") == 0) {
+RemoveItem("wooden_bucket_filled_1");	
+PlaySoundAtEntity("", "25_water_stream.snt", "ScriptArea_1", 0, true);
+GiveItemFromFile("wooden_bucket_1", "wooden_bucket.ent");
+SetLocalVarInt("pozar",1);
+//######## Efekty
+SetPlayerActive(false);
+CreateParticleSystemAtEntity("","ps_bucket_pour_water.ps" ,"Drip_Sewer_7", false);
+SetEntityActive("wooden_bucket_object_2",true);
+StartPlayerLookAt("wooden_bucket_object_2", 1, 1, "");
+AddTimer("",2,"wywal_wiadro_1");
+return;
+}
+else if(GetLocalVarInt("pozar") == 1) {
+RemoveItem("wooden_bucket_filled_1");
+GiveItemFromFile("wooden_bucket_1", "wooden_bucket.ent");
+PlaySoundAtEntity("", "25_water_stream.snt", "ScriptArea_1", 0, true);
+SetLocalVarInt("pozar",2);
+//######## Efekty
+SetPlayerActive(false);
+CreateParticleSystemAtEntity("","ps_bucket_pour_water.ps" ,"Drip_Sewer_6", false);
+SetEntityActive("wooden_bucket_object_1",true);
+StartPlayerLookAt("wooden_bucket_object_1", 1, 1, "");
+AddTimer("",2,"wywal_wiadro_2");
+return;
+}
+else {
+PlaySoundAtEntity("", "25_water_stream.snt", "ScriptArea_1", 0, true);
+RemoveItem("wooden_bucket_filled_1");
+AddTimer("",17,"ContinueMusic");
+//######## Efekty
+SetPlayerActive(false);
+CreateParticleSystemAtEntity("","ps_bucket_pour_water.ps" ,"Drip_Sewer_5", false);
+SetEntityActive("wooden_bucket_object_3",true);
+StartPlayerLookAt("wooden_bucket_object_3", 1, 1, "");
+AddTimer("",2,"wywal_wiadro_3");
+return;
+}
+}
+void wywal_wiadro_1(string &in asTimer) {
+for(int t=1;t<7;t++) { 	 DestroyParticleSystem("ParticleSystem_"+t); } 
+SetEntityActive("bonfire_2",false);
+SetPlayerActive(true);
+StopPlayerLookAt();
+SetEntityActive("wooden_bucket_object_2",false);
+}
+void wywal_wiadro_2(string &in asTimer) {
+for(int y=7;y<12;y++) { 	 DestroyParticleSystem("ParticleSystem_"+y); }
+SetEntityActive("ogien1",false);
+SetPlayerActive(true);
+StopPlayerLookAt();
+SetEntityActive("wooden_bucket_object_1",false);
+}
+void wywal_wiadro_3(string &in asTimer) {
+for(int x=12;x<18;x++) { 	 DestroyParticleSystem("ParticleSystem_"+x); } 
+SetEntityActive("bonfire_1",false);
+SetPlayerActive(true);
+StopPlayerLookAt();
+SetEntityActive("wooden_bucket_object_3",false);
+AddPlayerSanity(15);
+StopMusic(2,2.0f);
+StopSound("Sound_1",1.0f);
+SetEntityActive("ScriptArea_1",false);
+SetEntityActive("block_box_2",false);
+SetEntityActive("FogArea_4",false);
+SetEntityActive("waterlurker_music02_1",false);
+CompleteQuest("Journal","act1toact2");
+PlayMusic("16_puzzle_bridge",false,0.5,0.1,1.0,false);
+
+/* Dodany checkpoint */
+  CheckPoint ("Act1ToAct2CheckpointUgaszone", "Z_act2sterownia", "OnEnter", "Death_Category", "Act1ToAct2Water");
+       
+}
+void ContinueMusic(string &in asTimer) {
+StopMusic(1,2.0f);
+PlayMusic("04_amb",true, 0.75, 0.1, 1,true);
+}
+//####### SMOKING DAMAGE ########################
+void Smoking(string &in asParent, string &in asChild, int alState) {
+if(alState == 1) {
+	SetLocalVarInt("enter_area_smoke",1);
+	GivePlayerDamage(1, "BloodSplash", false, false);
+	PlaySoundAtEntity("smooker", "13_steam.snt", "Smoking", 0, true); // or 18_steam_release
+	PlaySoundAtEntity("smooker", "13_steam.snt", "Smoking", 0, true); // or 18_steam_release
+	AddTimer("Smoke_Timer",1,"Smoke");
+	}
+if(alState == -1) {
+		SetLocalVarInt("enter_area_smoke",0);
+	RemoveTimer("Smoke_Timer");
+}	
+}
+void Smoke(string &in asTimer) {
+if(GetLocalVarInt("enter_area_smoke") == 1) {
+ 	GivePlayerDamage(1, "BloodSplash", false, false);
+	PlaySoundAtEntity("","player_cough", "Player", 0, false);	
+		 	AddTimer("Smoke_Timer",1.5f,"Smoke");
+	}
+	else {
+	RemoveTimer("Smoke_Timer");	
+	}
+
+ }
+ /*
+ void EndSmoking(string &in asParent, string &in asChild, int alState) {
+ if(alState == -1) {
+		SetLocalVarInt("enter_area_smoke",0);
+	RemoveTimer("Smoke_Timer");
+	AddPlayerSanity(1);
+	}
+	if(alState == 1) {
+	GiveSanityDamage(1,true);
+	}
+ }
+ */
+//####### Death Smoke #########
+void Death_Smoke(string &in asParent, string &in asChild, int alState) { 
+	FadeOut(1);
+	PlaySoundAtEntity("", "13_steam.snt", "Player", 0, false);
+	AddTimer("",1,"Run_Death_smoke");
+}
+void Run_Death_smoke(string &in asTimer) {
+	DisableDeathStartSound();
+	AddPlayerHealth(-200);
+	SetDeathHint("Act1_to_Act2", "Text_Death_Fall");
+	PlaySoundAtEntity("", "player_falldamage_max", "Player", 0, false);
+	PlaySoundAtEntity("", "player_bodyfall", "Player", 0, false);
+}
+//###### SCREEN SHAKE ############
+void ScriptArea_23(string &in asParent, string &in asChild, int alState) {
+StartScreenShake(0.03, 2, 2,3);
+GiveSanityDamage(5, false);
+PlaySoundAtEntity("","03_rock_move.snt", "ScriptArea_23", 0, false);
+AddTimer("",1,"react_shake");
+}
+void react_shake(string &in asTimer) {
+PlayGuiSound("react_breath.snt",1);
+}
+//####################################################
+// LEVER MOVE
+//####################################################
+//void lever_up(string &in asParent, string &in asChild, int alState)
+void lever_move_1(string &in asEntity, int alState) {
+if(alState == 1) { // je�eli d�wignia jest na dole
+  
+ SetEntityActive("LiquidArea_13",true);
+  SetEntityActive("LiquidArea_8",false);
+ 
+   PlaySoundAtEntity("", "18_fill_water.snt", "wood_box01_2", 0, false);
+  
+SetLocalVarInt("lever_1",1);
+AddTimer("",0.2,"Check_lever");
+SetMoveObjectState("water_level1", 1);
+}
+else if(alState == -1) { // je�li jest na g�rze
+ SetLocalVarInt("lever_1",0);
+ SetMoveObjectState("water_level1", -1);
+   
+ 
+SetEntityActive("LiquidArea_13",false);
+  SetEntityActive("LiquidArea_8",true);
+  
+   
+    PlaySoundAtEntity("", "18_fill_water.snt", "wood_box01_2", 0, false);
+}
+else { // je�li jest po �rodku
+SetLocalVarInt("lever_1",0);
+ 
+}
+ 
+}
+//##################################
+void lever_move_2(string &in asEntity, int alState) {
+if(alState == 1) { // je�eli d�wignia jest na dole
+SetLocalVarInt("lever_2",0);
+ SetEntityActive("LiquidArea_15",false);
+  SetEntityActive("LiquidArea_9",true);
+  
+   
+    PlaySoundAtEntity("", "18_fill_water.snt", "wood_box01_1", 0, false);
+}
+else if(alState == -1) { // je�li jest na g�rze
+
+//SetMoveObjectState("water_level2", 1);
+SetLocalVarInt("lever_2",1);
+AddTimer("",0.2,"Check_lever");
+
+ SetEntityActive("LiquidArea_15",true);
+  SetEntityActive("LiquidArea_9",false);
+  
+   
+    PlaySoundAtEntity("", "18_fill_water.snt", "wood_box01_1", 0, false);
+}
+else { // je�li jest po �rodku
+SetLocalVarInt("lever_2",0);
+ 
+}
+}
+//#################################
+void lever_move_3(string &in asEntity, int alState) {
+if(alState == 1) { // je�eli d�wignia jest na dole
+
+SetLocalVarInt("lever_3",1);
+AddTimer("",0.2,"Check_lever");
+
+SetEntityActive("LiquidArea_14",true);
+  SetEntityActive("LiquidArea_10",false);
+  
+  
+  PlaySoundAtEntity("", "18_fill_water.snt", "wood_box01_3", 0, false);
+//SetMoveObjectState("water_level1", 1);
+}
+else if(alState == -1) { // je�li jest na g�rze
+SetLocalVarInt("lever_3",0);
+//SetMoveObjectState("water_level3", 1);
+PlaySoundAtEntity("", "18_fill_water.snt", "wood_box01_3", 0, false);
+
+SetEntityActive("LiquidArea_14",false);
+  SetEntityActive("LiquidArea_10",true);
+}
+else { // je�li jest po �rodku
+SetLocalVarInt("lever_3",0);
+}
+}
+void Check_lever(string &in asTimer) {
+if((GetLocalVarInt("lever_1") == 1) && (GetLocalVarInt("lever_2") == 1) && (GetLocalVarInt("lever_3") == 1) && (GetLocalVarInt("check_q") == 0)) {
+StopMusic(2,1.8f);
+PlayMusic("12_puzzle_epoxy",false, 0.5, 0.5, 1,false);
+AddPlayerSanity(10);
+PlaySoundAtEntity("", "door_level_engine_open.snt", "hatch_large_1", 0, false);
+SetLocalVarInt("check_q",1);
+AddPropImpulse("hatch_large_2", 0, 100*100, 0, "World");
+SetEntityActive("PosNodeArea_3",false);
+AddTimer("",16,"Next_Ambients");
+ 
+}
+}
+void Next_Ambients(string &in asTimer) {
+PlayMusic("amb_extra01",true, 0.75, 0.5, 1,false);
+}
+//######## LADDER ADDER ################
+void ScriptArea_4(string &in asItem, string &in asEntity) {
+SetEntityActive("ladder_static_2",true);
+RemoveItem("ladder_item_1");
+SetEntityActive("LadderArea_2",true);
+}
+void StickyAttachPipe(string &in asStickyArea, string &in asBodyName)
+{
+	 SetLocalVarInt("q_smoke",1);
+	 SetEntityActive("control_room_pipe03_2",true);
+	 SetEntityActive("control_room_pipe03_3",false);
+	 DestroyParticleSystem("ParticleSystem_40");
+	 DestroyParticleSystem("ParticleSystem_41");
+	 DestroyParticleSystem("ParticleSystem_26");
+	 DestroyParticleSystem("ParticleSystem_27");
+	 AddPlayerSanity(10);
+	 SetEntityActive("Smoking",false);
+	 StopSound("smooker", 1.0f);
+	 RemoveTimer("Smoke_Timer");
+ 
+	 SetLocalVarInt("Posion",1);
+	 AddTimer("",1,"Preload_Particle");
+	 SetEntityActive("Death_Smoke",false);
+	 CheckPoint ("Checkpoint_nad_klapa", "PlayerStartArea_2", "OnEnter", "Death_Category", "Act1ToAct2Water");
+}
+void Preload_Particle(string &in asTimer) {
+PreloadParticleSystem("ParticleSystem_27");
+PreloadParticleSystem("ParticleSystem_26");
+return;
+}
+//############# ACTIVE WATER LURKER ######################
+void Lurker_Active(string &in asParent,string &in asChild, int alState) {
+SetEntityActive("waterlurker_music02_1",true);
+PlayGuiSound("react_scare.snt",1);
+ShowEnemyPlayerPosition("waterlurker_music02_1");
+if(GetLocalVarInt("lurker_sanity") == 0) {
+GiveSanityDamage(20, false);
+SetLocalVarInt("lurker_sanity",1);
+}
+AddTimer("",1,"Next_Ambients");
+}
+//########### BREACH EFFECT ######################
+void ScriptArea_2(string &in asParent,string &in asChild, int alState) {
+	CreateParticleSystemAtEntity("", "ps_cave_monster_breath", "ScriptArea_5", false);
+	PlaySoundAtEntity("", "04_scream.snt", "ScriptArea_5", 0, false);
+	GiveSanityDamage(10, false);
+	AddQuest("Journal","act1toact2");
+}
+//####################### FIRE DAMAGE ######################################
+void Dotnij_ogien(string &in asEntity) {
+	AddPlayerBodyForce(0,0,4000*2.2f, false);
+	GivePlayerDamage(5, "BloodSplat", true, false);	
+	PlayGuiSound("ui_fire_damage.ogg", 0.7f);
+}
+void ScriptArea_1(string &in asParent,string &in asChild, int alState) {
+	AddPlayerBodyForce(0,0,9000*2.5f, false);
+	GivePlayerDamage(10, "BloodSplat", true, false);	
+	PlayGuiSound("ui_fire_damage.ogg", 0.7f);
+}
+void ScriptArea_25(string &in asParent, string &in asChild, int alState) {
+if(alState == 1) {
+AddTimer("",0.5,"Sound_Scare1"); 
+}
+else { AddTimer("",0.5,"Sound_Scare1"); }
+}
+void ScriptArea_24(string &in asParent, string &in asChild, int alState) {
+if(alState == 1) {
+AddTimer("",0.5,"Sound_Scare1"); 
+}
+else { AddTimer("",0.5,"Sound_Scare1"); }
+}
+void ScriptArea_26(string &in asParent, string &in asChild, int alState) {
+if(alState == 1) {
+AddTimer("",0.5,"Sound_Scare1"); 
+}
+else { AddTimer("",0.5,"Sound_Scare1"); }
+}
+void ScriptArea_27(string &in asParent, string &in asChild, int alState) {
+if(alState == 1) {
+AddTimer("",0.5,"Sound_Scare1"); 
+}
+else { AddTimer("",0.5,"Sound_Scare1"); }
+}
+void Sound_Scare1(string &in asTimer) {
+int predkosc_scare_effect1 = RandInt(10,90);
+AddLocalVarInt("sound_scare_effect1",1);
+switch(GetLocalVarInt("sound_scare_effect1")) {
+case 1:
+for(int area_nr=24;area_nr<28;area_nr++) { //PlaySoundAtEntity("", "23_saw_voice.snt", "ScriptArea_"+area_nr, 0, false); GiveSanityDamage(1, false); 
+}
+break;
+case 2:
+for(int area_nr=24;area_nr<28;area_nr++) { //PlaySoundAtEntity("", "21_screams.snt", "ScriptArea_"+area_nr, 0, false); GiveSanityDamage(1, false); 
+}
+break;
+case 3:
+for(int area_nr=24;area_nr<28;area_nr++) { //PlaySoundAtEntity("", "guardian_idle_rand.snt", "ScriptArea_"+area_nr, 0, false); GiveSanityDamage(1, false); 
+}
+break;
+case 4:
+for(int area_nr=24;area_nr<28;area_nr++) { //PlaySoundAtEntity("", "guardian_ontop.snt", "ScriptArea_"+area_nr, 0, false); GiveSanityDamage(1, false); 
+}
+break;
+case 5:
+for(int area_nr=24;area_nr<28;area_nr++) { // PlaySoundAtEntity("", "guardian_idle_rand.snt", "ScriptArea_"+area_nr, 0, false); GiveSanityDamage(1, false); 
+}
+break;
+case 6:
+for(int area_nr=24;area_nr<28;area_nr++) { //PlaySoundAtEntity("", "guardian_idle_rand.snt", "ScriptArea_"+area_nr, 0, false); GiveSanityDamage(1, false);
+ }
+break;
+case 7:
+for(int area_nr=24;area_nr<28;area_nr++) { //PlaySoundAtEntity("", "24_huia.snt", "ScriptArea_"+area_nr, 0, false);  GiveSanityDamage(1, false); 
+}
+break;
+}
+if(GetLocalVarInt("sound_scare_effect1") < 8) {
+AddTimer("",predkosc_scare_effect1,"Sound_Scare1");
+if(GetLocalVarInt("sound_scare_effect1") == 7) {
+SetLocalVarInt("sound_scare_effect1",0);
+}
+}
+}
+void OnEnter() {
+     StopMusic(2, 2.0f);
+  AutoSave();
+  
+  PlayMusic("04_amb",true, 0.75, 0.1, 1,false);
+    
+    if(GetLocalVarInt("FirstAct1ToAct2") == 0 ) {
+         CheckPoint ("Act1ToAct2Checkpoint", "Z_act1burning", "OnEnter", "Death_Category", "Act1ToAct2Smoke");
+         AddLocalVarInt("FirstAct1ToAct2",1);
+    }
+   
+if(GetLocalVarInt("rozdzial2") == 0) {
+FadeOut(0);
+ SetMessage("Rozdzial", "2", 3.0f);
+ AddLocalVarInt("rozdzial2",1);
+ AddTimer("",5,"EndFade_Rozdzial");
+ }
+
+if(GetGlobalVarInt("OpenDoorAct2") >= 1) {
+
+SetEntityActive("water_plane_ch02_17",false);
+DestroyParticleSystem("ParticleSystem_33");
+SetEntityActive("LiquidArea_2",false);
+ 
+ SetEntityActive("level_engine_2",false);
+ SetEntityActive("level_engine_3",true);
+ 
+}
+}
+void EndFade_Rozdzial(string &in asTimer) {
+FadeIn(0.5f);
+}
+void OnLeave() {
+}
+void ScriptArea_13(string &in asParent, string &in asChild, int alState) {
+AddPropImpulse("barrel01_18", -10, 0, 0, "World");
+AddTimer("",2,"react_barrel");
+   StartPlayerLookAt("barrel01_18", 1, 1, "");
+}
+void react_barrel(string &in asTimer) {
+StopPlayerLookAt();
+PlayGuiSound("react_scare",1);
+GiveSanityDamage(10,false);
+}
+void ScriptArea_14(string &in asParent, string &in asChild, int alState) {
+
+if(GetGlobalVarInt("OdkryteSkrytki") == 0) {
+GiveHint("Hint_Skrytki", "Skrytki", "Hint_Skrytki", 5);
+}
+AddGlobalVarInt("OdkryteSkrytki",1);
+PlayGuiSound("quest_completed",1);
+SetMessage("Skrytki","Odkryto", 3); // GetGlobalVarInt("OdkryteSkrytki")+GetGlobalVarString("Separator")+GetGlobalVarInt("MaxSkrytek")
+}

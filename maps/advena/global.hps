@@ -1,0 +1,13 @@
+void OnGameStart()
+{
+// This is script who can be checking the secret
+// place and showing the information for the player about currently state
+// copyright (c) polish scripter Micha³ Jendraszczyk 
+SetLocalVarInt("Ilosc_skrytek",30);
+SetLocalVarInt("Odkryte_skrytki",0);
+//if(GetEntitiesCollide(string& asEntityA, string& asEntityB) == true) {
+SetMessage("secret_place", "Odkryto "+Odkryte_skrytki+" / "+Ilosc_skrytek+" skrytek", 3);
+//bool  StringContains(string& asString, string& asSubString);
+//string&  StringSub(string& asString, int alStart, int alCount);
+//}
+}

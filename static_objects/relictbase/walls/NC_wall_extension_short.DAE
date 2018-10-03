@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">
+  <asset>
+    <contributor>
+      <author></author>
+      <authoring_tool>FBX COLLADA exporter</authoring_tool>
+      <comments></comments>
+    </contributor>
+    <created>2012-11-22T18:24:54Z</created>
+    <keywords></keywords>
+    <modified>2012-11-22T18:24:54Z</modified>
+    <revision></revision>
+    <subject></subject>
+    <title></title>
+    <unit meter="1.000000" name="centimeter"></unit>
+    <up_axis>Z_UP</up_axis>
+  </asset>
+  <library_images>
+    <image id="Map #4-image" name="Map #4">
+      <init_from>file://C:\AMFP_Raw_data\StaticObjects\new_church\NC_wall_details.psd</init_from>
+    </image>
+    <image id="Map #5-image" name="Map #5">
+      <init_from>file://C:\AMFP_Raw_data\StaticObjects\new_church\NC_walls.psd</init_from>
+    </image>
+  </library_images>
+  <library_materials>
+    <material id="Material #28" name="Material #28">
+      <instance_effect url="#Material #28-fx"/>
+    </material>
+    <material id="Material #29" name="Material #29">
+      <instance_effect url="#Material #29-fx"/>
+    </material>
+  </library_materials>
+  <library_effects>
+    <effect id="Material #28-fx" name="Material #28">
+      <profile_COMMON>
+        <technique sid="standard">
+          <phong>
+            <emission>
+              <color sid="emission">0.000000  0.000000 0.000000 1.000000</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0.588000  0.588000 0.588000 1.000000</color>
+            </ambient>
+            <diffuse>
+              <texture texture="Map #4-image" texcoord="CHANNEL0">
+                <extra>
+                  <technique profile="MAYA">
+                    <wrapU sid="wrapU0">TRUE</wrapU>
+                    <wrapV sid="wrapV0">TRUE</wrapV>
+                    <blend_mode>ADD</blend_mode>
+                  </technique>
+                </extra>
+              </texture>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.000000  0.000000 0.000000 1.000000</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">2.000000</float>
+            </shininess>
+            <reflective>
+              <color sid="reflective">0.000000  0.000000 0.000000 1.000000</color>
+            </reflective>
+            <reflectivity>
+              <float sid="reflectivity">1.000000</float>
+            </reflectivity>
+            <transparent opaque="RGB_ZERO">
+              <color sid="transparent">1.000000  1.000000 1.000000 1.000000</color>
+            </transparent>
+            <transparency>
+              <float sid="transparency">0.000000</float>
+            </transparency>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="Material #29-fx" name="Material #29">
+      <profile_COMMON>
+        <technique sid="standard">
+          <phong>
+            <emission>
+              <color sid="emission">0.000000  0.000000 0.000000 1.000000</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0.588000  0.588000 0.588000 1.000000</color>
+            </ambient>
+            <diffuse>
+              <texture texture="Map #5-image" texcoord="CHANNEL0">
+                <extra>
+                  <technique profile="MAYA">
+                    <wrapU sid="wrapU0">TRUE</wrapU>
+                    <wrapV sid="wrapV0">TRUE</wrapV>
+                    <blend_mode>ADD</blend_mode>
+                  </technique>
+                </extra>
+              </texture>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.000000  0.000000 0.000000 1.000000</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">2.000000</float>
+            </shininess>
+            <reflective>
+              <color sid="reflective">0.000000  0.000000 0.000000 1.000000</color>
+            </reflective>
+            <reflectivity>
+              <float sid="reflectivity">1.000000</float>
+            </reflectivity>
+            <transparent opaque="RGB_ZERO">
+              <color sid="transparent">1.000000  1.000000 1.000000 1.000000</color>
+            </transparent>
+            <transparency>
+              <float sid="transparency">0.000000</float>
+            </transparency>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_geometries>
+    <geometry id="NC_wall_extension_short_details-lib" name="NC_wall_extension_short_detailsMesh">
+      <mesh>
+        <source id="NC_wall_extension_short_details-POSITION">
+          <float_array id="NC_wall_extension_short_details-POSITION-array" count="60">
+0.063523 -1.000000 3.980000
+0.063523 -1.000000 3.932321
+0.000000 -1.000000 4.000000
+0.000000 -1.000000 3.820008
+0.043523 -1.000000 4.000000
+0.063523 -1.000000 0.067627
+0.063523 -1.000000 0.019948
+0.043523 -1.000000 0.000000
+0.000000 -1.000000 0.000000
+0.000000 -1.000000 0.179940
+0.063523 1.000000 3.980000
+0.063523 1.000000 3.932321
+0.000000 1.000000 4.000000
+0.000000 1.000000 3.820008
+0.043523 1.000000 4.000000
+0.063523 1.000000 0.019948
+0.063523 1.000000 0.067627
+0.000000 1.000000 0.000000
+0.043523 1.000000 0.000000
+0.000000 1.000000 0.179940
+</float_array>
+          <technique_common>
+            <accessor source="#NC_wall_extension_short_details-POSITION-array" count="20" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="NC_wall_extension_short_details-Normal0">
+          <float_array id="NC_wall_extension_short_details-Normal0-array" count="144">
+0.870426 0.000000 -0.492299
+0.870426 0.000000 -0.492299
+0.967064 0.000000 -0.254533
+0.967064 0.000000 -0.254533
+0.967064 0.000000 -0.254533
+0.870426 0.000000 -0.492299
+0.923631 -0.000000 -0.383284
+0.923631 -0.000000 -0.383284
+0.967064 0.000000 0.254533
+0.967064 0.000000 0.254533
+0.967064 0.000000 0.254533
+0.923631 -0.000000 -0.383284
+0.000000 -0.000000 -1.000000
+0.000000 -0.000000 -1.000000
+0.382082 -0.000000 -0.924128
+0.382082 -0.000000 -0.924128
+0.382083 -0.000000 -0.924128
+0.000000 -0.000000 -1.000000
+0.382083 -0.000000 -0.924128
+0.382082 -0.000000 -0.924128
+0.923631 -0.000000 -0.383284
+0.923631 -0.000000 -0.383284
+0.923631 -0.000000 -0.383284
+0.382083 -0.000000 -0.924128
+0.923879 0.000000 0.382685
+0.967064 0.000000 -0.254533
+0.967064 0.000000 -0.254533
+0.967064 0.000000 -0.254533
+0.923879 0.000000 0.382684
+0.923879 0.000000 0.382685
+0.000000 0.000000 1.000000
+0.382682 0.000000 0.923880
+0.382682 0.000000 0.923880
+0.382682 0.000000 0.923880
+0.000000 0.000000 1.000000
+0.000000 0.000000 1.000000
+0.382682 0.000000 0.923880
+0.923879 0.000000 0.382685
+0.923879 0.000000 0.382684
+0.923879 0.000000 0.382684
+0.382682 0.000000 0.923880
+0.382682 0.000000 0.923880
+0.870426 0.000000 0.492299
+0.967064 0.000000 0.254533
+0.967064 0.000000 0.254533
+0.967064 0.000000 0.254533
+0.870426 0.000000 0.492299
+0.870426 0.000000 0.492299
+</float_array>
+          <technique_common>
+            <accessor source="#NC_wall_extension_short_details-Normal0-array" count="48" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="NC_wall_extension_short_details-UV0">
+          <float_array id="NC_wall_extension_short_details-UV0-array" count="40">
+0.045235 1.000000
+0.032407 1.000000
+0.061928 1.000000
+0.000000 1.000000
+0.051644 1.000000
+0.032407 0.495353
+0.045235 0.495353
+0.051644 0.495353
+0.061928 0.495353
+0.000000 0.495353
+0.045235 0.495353
+0.032407 0.495353
+0.061928 0.495353
+0.000000 0.495353
+0.051644 0.495353
+0.045235 1.000000
+0.032407 1.000000
+0.061928 1.000000
+0.051644 1.000000
+0.000000 1.000000
+</float_array>
+          <technique_common>
+            <accessor source="#NC_wall_extension_short_details-UV0-array" count="20" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="NC_wall_extension_short_details-VERTEX">
+          <input semantic="POSITION" source="#NC_wall_extension_short_details-POSITION"/>
+        </vertices>
+        <polylist count="16" material="Material #28">
+          <input semantic="VERTEX" offset="0" source="#NC_wall_extension_short_details-VERTEX"/>
+          <input semantic="NORMAL" offset="1" source="#NC_wall_extension_short_details-Normal0"/>
+          <input semantic="TEXCOORD" offset="2" set="0" source="#NC_wall_extension_short_details-UV0"/>
+          <vcount>3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 </vcount>
+          <p> 3 0 3 13 1 13 11 2 11 11 3 11 1 4 1 3 5 3 6 6 6 15 7 15 16 8 16 16 9 16 5 10 5 6 11 6 8 12 8 17 13 17 18 14 18 18 15 18 7 16 7 8 17 8 7 18 7 18 19 18 15 20 15 15 21 15 6 22 6 7 23 7 0 24 0 1 25 1 11 26 11 11 27 11 10 28 10 0 29 0 2 30 2 4 31 4 14 32 14 14 33 14 12 34 12 2 35 2 4 36 4 0 37 0 10 38 10 10 39 10 14 40 14 4 41 4 9 42 9 5 43 5 16 44 16 16 45 16 19 46 19 9 47 9</p>
+        </polylist>
+      </mesh>
+    </geometry>
+    <geometry id="NC_wall_extension_short-lib" name="NC_wall_extension_shortMesh">
+      <mesh>
+        <source id="NC_wall_extension_short-POSITION">
+          <float_array id="NC_wall_extension_short-POSITION-array" count="12">
+0.000000 -1.000000 4.000000
+0.000000 -1.000000 0.000000
+0.000000 1.000000 4.000000
+0.000000 1.000000 0.000000
+</float_array>
+          <technique_common>
+            <accessor source="#NC_wall_extension_short-POSITION-array" count="4" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="NC_wall_extension_short-Normal0">
+          <float_array id="NC_wall_extension_short-Normal0-array" count="18">
+1.000000 0.000000 0.000000
+1.000000 0.000000 0.000000
+1.000000 0.000000 0.000000
+1.000000 0.000000 0.000000
+1.000000 0.000000 0.000000
+1.000000 0.000000 0.000000
+</float_array>
+          <technique_common>
+            <accessor source="#NC_wall_extension_short-Normal0-array" count="6" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="NC_wall_extension_short-UV0">
+          <float_array id="NC_wall_extension_short-UV0-array" count="8">
+0.750000 1.000000
+0.250000 1.000000
+0.250000 0.000000
+0.750000 0.000000
+</float_array>
+          <technique_common>
+            <accessor source="#NC_wall_extension_short-UV0-array" count="4" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="NC_wall_extension_short-VERTEX">
+          <input semantic="POSITION" source="#NC_wall_extension_short-POSITION"/>
+        </vertices>
+        <polylist count="2" material="Material #29">
+          <input semantic="VERTEX" offset="0" source="#NC_wall_extension_short-VERTEX"/>
+          <input semantic="NORMAL" offset="1" source="#NC_wall_extension_short-Normal0"/>
+          <input semantic="TEXCOORD" offset="2" set="0" source="#NC_wall_extension_short-UV0"/>
+          <vcount>3 3 </vcount>
+          <p> 0 0 1 1 1 2 3 2 3 3 3 3 2 4 0 0 5 1</p>
+        </polylist>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_visual_scenes>
+    <visual_scene id="" name="">
+      <node name="NC_wall_extension_short_details" id="NC_wall_extension_short_details" layer="walls_details" sid="NC_wall_extension_short_details">
+        <matrix sid="matrix">1.000000 0.000000 0.000000 0.000000 0.000000 1.000000 0.000000 0.000000 0.000000 0.000000 1.000000 0.000000 0.000000 0.000000 0.000000 1.000000</matrix>
+        <instance_geometry url="#NC_wall_extension_short_details-lib">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="Material #28" target="#Material #28"/>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+        <extra>
+          <technique profile="FCOLLADA">
+            <visibility>1.000000</visibility>
+          </technique>
+        </extra>
+      </node>
+      <node name="NC_wall_extension_short" id="NC_wall_extension_short" layer="walls" sid="NC_wall_extension_short">
+        <matrix sid="matrix">1.000000 0.000000 0.000000 0.000000 0.000000 1.000000 0.000000 0.000000 0.000000 0.000000 1.000000 0.000000 0.000000 0.000000 0.000000 1.000000</matrix>
+        <instance_geometry url="#NC_wall_extension_short-lib">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="Material #29" target="#Material #29"/>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+        <extra>
+          <technique profile="FCOLLADA">
+            <visibility>1.000000</visibility>
+          </technique>
+        </extra>
+      </node>
+      <extra>
+        <technique profile="MAX3D">
+          <frame_rate>30.000000</frame_rate>
+        </technique>
+        <technique profile="FCOLLADA">
+          <start_time>0.000000</start_time>
+          <end_time>3.333333</end_time>
+        </technique>
+      </extra>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#"></instance_visual_scene>
+  </scene>
+</COLLADA>
+

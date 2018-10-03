@@ -1,0 +1,761 @@
+//#################################################################################
+//##					- AMNESIA - ADVENA -
+//##-------------------------------------------------------------------------------
+//##	COPYRIGHT (c) 2012-2013 BY MICHA� 'TASILVAR' JENDRASZCZYK
+//##-------------------------------------------------------------------------------
+//## 	POLSKA MODYFIKACJA GRY AMNESIA - THE DARK DESCENT -
+//#################################################################################
+void OnEnter() {	
+	AutoSave();	
+	 PlayMusic("22_amb",true, 0.8, 0.1, 10, true);
+	 if(GetLocalVarInt("rozdzial1") == 0) {
+FadeOut(0);
+ SetMessage("Rozdzial", "1", 3.0f);
+ AddLocalVarInt("rozdzial1",1);
+ AddTimer("",5,"EndFade_Rozdzial");
+ }
+}
+void EndFade_Rozdzial(string &in asTimer) {
+FadeIn(0.5f);
+}
+void OnStart() {
+//GiveItemFromFile("lantern", "lantern.ent");
+//############ ROPE ###############################################
+InteractConnectPropWithRope("lina_sloj","crank_iron_1", "RopeArea_1", false, 1,1,1, true, 0);
+//############ SANITY LEVEL #######################################
+SetPlayerSanity(25.0f);
+//############ LAMP OIL ###########################################
+SetPlayerLampOil(0.0f);
+//############## INTRODUCTION SEQUENCE #############################
+// AddTimer("START_GAME",0.5,"INTRO_SEQUENCE_START");
+//############## SECRETS ########################################### 
+AddGlobalVarInt("MaxSkrytek",25);
+AddGlobalVarInt("OdkryteSkrytki",0);
+AddGlobalVarString("Odkryto","Odkryto ");
+AddGlobalVarString("Separator"," / ");
+AddGlobalVarString("Skrytek"," skrytek");
+for(int q=1;q<=3;q++) {
+AddEntityCollideCallback("Player","Skrytka_"+q,"Skrytki",true,1);
+}
+//############## START SETTINGS ###############################
+FadePlayerFOVMulTo(RandFloat(0.7f,1.3f), RandFloat(0.05f,0.1f));
+SetLightVisible("PSumon5_1", false);
+SetLightVisible("PSumon5_2", false);
+SetLightVisible("SwiatloKwas", false);
+//######### MUSIC THEME ###############################################
+SetPlayerMoveSpeedMul(1.0f);
+//############ COLLIDE AREA ###############################################
+AddEntityCollideCallback("Player","Kwas_Area","Kwas_Area",false,1);
+AddEntityCollideCallback("Player","ScriptArea_8","ScriptArea_8",true,1);
+AddEntityCollideCallback("Player","ScriptArea_48","ScriptArea_48",true,1);
+AddEntityCollideCallback("Player","Zgaszenie1","Zgaszenie1",true,1);
+AddEntityCollideCallback("Player","ScriptArea_54","ScriptArea_54",true,1);
+AddEntityCollideCallback("enemy_suitor_2","ScriptArea_56","ScriptArea_56",true,1);
+AddEntityCollideCallback("Player","ScriptArea_55","ScriptArea_55",true,1);
+AddEntityCollideCallback("Player","ScriptArea_47","ScriptArea_47",true,1);
+AddEntityCollideCallback("Player","ScriptArea_45","ScriptArea_45",true,1);
+AddEntityCollideCallback("Player","ScriptArea_49","ScriptArea_49",true,1);
+AddEntityCollideCallback("Player","ScriptArea_10","ScriptArea_10",true,1);
+AddEntityCollideCallback("Player","ScriptArea_11","ScriptArea_11",true,1);
+AddEntityCollideCallback("Player","ScriptArea_12","ScriptArea_12",true,1);
+
+//SetEntityPlayerLookAtCallback("show_kostnica","show_kostnica",false,1);
+
+AddEntityCollideCallback("Player","ScriptArea_14","ScriptArea_14",true,1);
+
+AddEntityCollideCallback("Player","ScriptArea_6","ScriptArea_6",true,1);
+AddEntityCollideCallback("Player","ScriptArea_7","ScriptArea_7",true,1);
+AddEntityCollideCallback("Player","ScriptArea_9","ScriptArea_9",true,1);
+AddEntityCollideCallback("Player","ScriptArea_3","ScriptArea_3",true,1);
+AddEntityCollideCallback("Player","ScriptArea_2","ScriptArea_2",true,1);
+AddEntityCollideCallback("Player","ScriptArea_13","ScriptArea_13",true,1);
+AddEntityCollideCallback("Player","ScriptArea_5","ScriptArea_5",true,1);
+AddEntityCollideCallback("Player","ScriptArea_7","ScriptArea_7",true,1);
+AddEntityCollideCallback("Player","ScriptArea_1","ScriptArea_1",true,1);
+AddEntityCollideCallback("Player","ScriptArea_27","ScriptArea_27",true,1);
+AddEntityCollideCallback("Player","ScriptArea_28","ScriptArea_28",true,1);
+AddEntityCollideCallback("Player","ScriptArea_29","ScriptArea_29",true,1);
+AddEntityCollideCallback("Player","ScriptArea_60","ScriptArea_60",true,1);
+AddEntityCollideCallback("Player","ScriptArea_35","ScriptArea_35",true,1);
+AddEntityCollideCallback("Player","ScriptArea_58","ScriptArea_58",false,1);
+AddEntityCollideCallback("Player","ghost_uderzenie","ghost_uderzenie",true,1);
+//################ USING ITEM ############################################
+AddUseItemCallback("", "key_tomb_rusty_1", "castle_arched01_1", "Otworz_Drzwi_Tomb_K", true);	
+AddUseItemCallback("", "igla1", "castle_arched01_2", "igla_open", true);	
+AddUseItemCallback("", "glass_container_quest", "ScriptArea_19", "ScriptArea_60", true);
+AddUseItemCallback("", "glass_container_quest_end","ScriptArea_19","lab_sloj",true);	
+AddUseItemCallback("", "glass_container_quest","poloz_sloik","poloz_sloik",true);	
+ AddUseItemCallback("","igla1","ScriptArea_19","sumon_igla",true);
+ //############## INTERACT ITEM #############################################
+SetEntityPlayerInteractCallback("kolowrot_obroc", "kolowrot_obroc",false);
+
+SetEntityPlayerInteractCallback("podnies_dywan", "podnies_dywan",false);
+
+}
+void show_kostnica(string &in asEntity, int alState) {
+   SetMessage("Levels","act1main_room", 3); 
+}
+//############## INTRODUCTION SEQUENCE #############################
+void INTRO_SEQUENCE_START(string &in asTimer) 
+{
+AddLocalVarInt("START",1);
+int predkosc = 2;
+switch(GetLocalVarInt("START")) {
+case 1:
+FadeIn(2);
+SetInventoryDisabled(true); 
+SetPlayerActive(false);
+StartPlayerLookAt("ScriptArea_1", 2, 2, "");
+FadePlayerRollTo(-30, 10, 60);
+PlayGuiSound("player_bodyfall5.ogg",1);
+break;
+case 2:
+ predkosc = 0;  
+break;
+case 3:
+predkosc = 2;
+FadeImageTrailTo(0,1);
+FadeSepiaColorTo(0,1);
+FadePlayerFOVMulTo(0.6f, 1);
+FadeGlobalSoundVolume(1, 3);
+FadeGlobalSoundSpeed(1, 3);
+break;
+case  4: 
+ predkosc = 2;
+FadeOut(2);
+break;
+case 5:
+ predkosc = 2;
+ StartPlayerLookAt("ScriptArea_25", 2, 2, "");
+TeleportPlayer("PlayerStartArea_10");
+FadeIn(2);
+FadePlayerFOVMulTo(1.5f, 1);
+break;
+case 6:
+ predkosc = 3;
+FadePlayerFOVMulTo(0.9f, 1);
+ StartPlayerLookAt("ScriptArea_50", 2, 2, "");
+break;
+case 7:
+FadeOut(2);
+ predkosc = 3;
+break;
+case 8:
+FadeIn(2);
+ predkosc = 4;
+ StartPlayerLookAt("ScriptArea_51", 2, 2, "");
+FadePlayerRollTo(0, 10, 60); 
+FadePlayerFOVMulTo(1, 1);	
+break;
+case 9:
+ predkosc = 1;
+SetPlayerActive(true);
+SetInventoryDisabled(false); 
+ChangePlayerStateToNormal();
+StopPlayerLookAt();
+break;
+}
+if(GetLocalVarInt("START") < 10) {
+AddTimer("",predkosc,"INTRO_SEQUENCE_START");
+}
+}
+//######## PRZYWIAZANIE SLOJA DO LINY ##############################
+void poloz_sloik(string &in asItem, string &in asEntity) {
+//SetEntityActive("glass_container_quest_end",true);
+RemoveItem(asItem);
+
+ PlaySoundAtEntity("", "06_pull_wood.snt", "invisible_box_mass_3", 1.0f, false);
+     
+AddAttachedPropToProp("invisible_box_mass_3", "glass_container_quest_end", "glass_container_filled.ent", 0,0,0, 0,0,0);
+AddLocalVarInt("sloik_polozony",1);
+}
+//######## SECRET PLACE ###########################################
+
+void podnies_dywan(string &in asEntity) {
+    
+    if(GetGlobalVarInt("OdkryteSkrytki") == 0) {
+GiveHint("Hint_Skrytki", "Skrytki", "Hint_Skrytki", 5);
+}
+AddGlobalVarInt("OdkryteSkrytki",1);
+PlayGuiSound("quest_completed",1);
+SetMessage("Skrytki","Odkryto", 3); // GetGlobalVarInt("OdkryteSkrytki")+GetGlobalVarString("Separator")+GetGlobalVarInt("MaxSkrytek")
+
+    
+}
+
+void Skrytki(string &in asParent, string &in asChild, int alState) {
+if(GetGlobalVarInt("OdkryteSkrytki") == 0) {
+GiveHint("Hint_Skrytki", "Skrytki", "Hint_Skrytki", 5);
+}
+AddGlobalVarInt("OdkryteSkrytki",1);
+PlayGuiSound("quest_completed",1);
+SetMessage("Skrytki","Odkryto", 3); // GetGlobalVarInt("OdkryteSkrytki")+GetGlobalVarString("Separator")+GetGlobalVarInt("MaxSkrytek")
+}
+ //############## ROTATION THE VALVE IRON ######################################
+void valve_iron_1(string &in asEntity, int alState) {
+if(alState == 1) {
+    AddPropImpulse("piec_close1", 0, 0, 1, "World");
+	SetEntityActive("magik1",false);
+	SetEntityActive("key_tomb_1",true);
+	SetEntityActive("proch1",true);
+	SetEntityActive("ScriptArea_58",true);
+	
+		 PlaySoundAtEntity("gaz","13_steam","valve_iron_slow02_1", 0 , false);
+		 PlaySoundAtEntity("ogien","general_fire_burning","valve_iron_slow02_1", 0 , false);
+	
+SetSwingDoorLocked("piec_close1", false, false);
+ PlayMusic("04_event_stairs.ogg", false, 0.8f, 1.0f, 1, false);
+
+  
+
+}
+
+
+}
+//############## FALLING THE FIRETORCH#######################################
+void ScriptArea_58(string &in asParent, string &in asChild, int alState) { 
+if(HasItem("key_tomb_1") == true) {
+FadeOut(2);
+ChangeMap("act1burning.map", "PlayerStartArea_1", "", "");
+		StartPlayerLookAt("torch_floor_3", 1, 1, "");
+   AddPropImpulse("piec_close1", -1, 0, 1, "World");
+   AddTimer("",2,"StopLookTorch");
+   }
+}
+//############# THE FIRST EVENT WHO TORCHS ARE EXTINGUISH 
+void Zgaszenie1(string &in asParent, string &in asChild, int alState) {
+for(int p=1;p<=5;p++) { 	 SetLampLit("zgas"+p, false, true); }
+	 	PlaySoundAtEntity("","general_wind_whirl.snt", "torch_static01_4", 0, false);
+	PlaySoundAtEntity("","react_breath.snt", "Player", 0, false);
+	GiveSanityDamage(5, true);
+	 SetLampLit("torch_static01_nosound_3", false, true); 
+	 SetLampLit("torch_static01_nosound_1", false, true); 
+	FadeLightTo("PointLight_108", 0, 0, 0, 0, 0, 1);
+}
+//################ CHANGE MAP ON THE BRUNNING LOCATION#########################
+void StopLookTorch(string &in asTimer) {
+StopPlayerLookAt();
+FadeIn(3);
+AddTimer("upadanie_change_location",3,"start_burning");
+
+}
+void start_burning() {
+//ChangeMap("act1burning.map", "PlayerStartArea_1", "", "");
+SetEntityActive("ScriptArea_60",true);
+}
+//###### glass container on the line ##################
+void ScriptArea_60(string &in asItem, string &in asEntity) { 
+SetEntityActive("glass_container_filled_1",true);
+AddLocalVarInt("kwas_hak",1);
+  RemoveItem("glass_container_quest");
+}
+//########## CLOSE DOOR WITH THE SUMMON MONSTER ####################################
+void ScriptArea_56(string &in asParent, string &in asChild, int alState) { 
+   SetSwingDoorDisableAutoClose("foch1", true);
+  SetSwingDoorClosed("foch1", true,true);
+ SetSwingDoorLocked("foch1", true, false); 
+}
+void ScriptArea_13(string &in asParent, string &in asChild, int alState)  {
+ StopMusic(1.0f,1);
+	 PlayMusic("22_amb",false, 0.8, 0.1, 10, false);
+}
+void ScriptArea_55(string &in asParent, string &in asChild, int alState)  {
+ StopMusic(1.0f,1);
+	 PlayMusic("24_event_vision04",false, 0.8, 0.1, 10, false);
+	 AddTimer("",13,"StopEvent");
+}
+void StopEvent(string &in asTimer) {
+ StopMusic(1.0f,1);
+	 PlayMusic("22_amb",false, 0.8, 0.1, 10, true);
+}
+void ScriptArea_54(string &in asParent, string &in asChild, int alState)  {
+ StopMusic(1.0f,1);
+	 PlayMusic("24_event_vision03",false, 0.8, 0.1, 10, false);
+}
+void ScriptArea_47(string &in asParent, string &in asChild, int alState)  {
+ StopMusic(1.0f,1);
+	 PlayMusic("24_event_vision02",false, 0.8, 0.1, 10, false);
+	 }
+//######## enable the fire in the floor ######## 
+void ScriptArea_45(string &in asParent, string &in asChild, int alState)  {
+GiveHint("RunHint", "Hints", "RunHint", 5);
+  	 CreateParticleSystemAtEntityExt( "", "ps_fire_orb_room.ps", "ScriptArea_44", false, 1, 0, 0, 1, true, 0, 2, 100, 110);
+  	 CreateParticleSystemAtEntityExt( "", "ps_fire_orb_room.ps", "ScriptArea_43", false, 1, 0, 0, 1, true, 0, 2, 100, 110);
+  	 CreateParticleSystemAtEntityExt( "", "ps_fire_orb_room.ps", "ScriptArea_42", false, 1, 0, 0, 1, true, 0, 2, 100, 110);
+  	 CreateParticleSystemAtEntityExt( "", "ps_fire_orb_room.ps", "ScriptArea_41", false, 1, 0, 0, 1, true, 0, 2, 100, 110);
+  	 CreateParticleSystemAtEntityExt( "", "ps_fire_orb_room.ps", "ScriptArea_53", false, 1, 0, 0, 1, true, 0, 2, 100, 110);
+SetEntityActive("enemy_suitor_3",true);
+AddTimer("",2,"Attack");
+}
+void Attack(string &in asTimer) {
+ShowEnemyPlayerPosition("enemy_suitor_3"); 
+StopPlayerLookAt();
+}
+ //####### show fire before the door ###########
+ void ScriptArea_48(string &in asParent, string &in asChild, int alState) {
+   PlaySoundAtEntity("","general_fire_burning","ScriptArea_48", 0 , false);
+  	 CreateParticleSystemAtEntityExt( "", "ps_fire_orb_room.ps", "ScriptArea_37", false, 1.0f, 0.0f, 0.0f, 1.0f, true, 0.0f, 2.0f, 100.0f, 110.0f);
+  	 CreateParticleSystemAtEntityExt( "", "ps_fire_orb_room.ps", "ScriptArea_38", false, 1.0f, 0.0f, 0.0f, 1.0f, true, 0.0f, 2.0f, 100.0f, 110.0f);
+  	 CreateParticleSystemAtEntityExt( "", "ps_fire_orb_room.ps", "ScriptArea_39", false, 1.0f, 0.0f, 0.0f, 1.0f, true, 0.0f, 2.0f, 100.0f, 110.0f);
+  	 CreateParticleSystemAtEntityExt( "", "ps_fire_orb_room.ps", "ScriptArea_40", false, 1.0f, 0.0f, 0.0f, 1.0f, true, 0.0f, 2.0f, 100.0f, 110.0f);
+} 
+//######## rotate the wheel  ###################
+void kolowrot_obroc(string &in asEntity, int alState) {
+if(alState == -1) {
+SetLocalVarInt("Lina",1);
+}
+if(alState == 1) {
+if(GetLocalVarInt("Lina") == 1) {
+    if(GetLocalVarInt("sloik_polozony") == 1) { 
+RemoveAttachedPropFromProp("invisible_box_mass_3", "glass_container_quest_end");
+AddPlayerSanity(20);
+ SetEntityActive("glass_container_quest_end",true);
+ 
+ PlaySoundAtEntity("", "04_water_puff.snt", "ScriptArea_8", 1.0f, false);
+ 
+ //
+  
+ SetLocalVarInt("sloik_polozony",0);
+    } 
+	//GiveItemFromFile("glass_container_quest_end", "glass_container_filled.ent");
+}
+}
+}
+//######## take the glas container ##################
+ void podnies_sloik(string &in asEntity) {
+//GiveItemFromFile("glass_container_quest_end", "glass_container.ent");  
+ }
+ //####### summon demon ###########################
+ void sumon_igla(string &in asItem, string &in asEntity) {
+ AddLocalVarInt("summon",1);
+    CreateParticleSystemAtEntity("blood_impact", "ps_blood_tiny_stream_impact02.ps", "ScriptArea_19", false);  
+	 PlaySoundAtEntity("blood_pour","19_pour_blood","ScriptArea_19", 0 , false);	
+	 AddTimer("",2,"StopSoundBlood");
+ }
+ void StopSoundBlood(string &in asTimer) {
+ StopSound("blood_pour", 0.5f);
+ DestroyParticleSystem("blood_impact");
+ }
+  void lab_sloj(string &in asItem, string &in asEntity) {
+  AddLocalVarInt("summon",1);
+    SetLightVisible("SwiatloKwas", true);
+	RemoveItem("glass_container_quest_end");
+	//GiveItemFromFile("glass_container_oil_q", "glass_container.ent"); // usuniecie sloja ktory bedzie dopiero w act3kitchen
+    CreateParticleSystemAtEntity("kwas", "ps_acid_web_dissolve.ps", "ScriptArea_19", false); 
+	 PlaySoundAtEntity("","gameplay_acid_web.ogg","ScriptArea_19", 0 , false);  
+	 CreateParticleSystemAtEntityExt( "", "ps_acid_web_dissolve.ps", "ScriptArea_19", false, 0.15, 0.55, 0.3, 1, true, 0, 2, 100, 110);
+  if(GetLocalVarInt("summon") >= 1) {
+  if(GetLocalVarInt("kosci") >= 2) {
+      SetLightVisible("PSumon5_1", true);
+      SetLightVisible("PSumon5_2", true); 
+		 PlayMusic("10_event_coming",false, 0.8, 0.1, 10, false);
+//FadePlayerRollTo(-30, 10, 60);
+GiveSanityDamage(100,true);
+ SetPlayerMoveSpeedMul(0.25f);
+ SetPlayerRunSpeedMul(0.25f);
+ SetPlayerLookSpeedMul(0.25f);
+ 	StartScreenShake(0.03, 2, 2,3);
+	AddTimer("",1,"SummonDemon");
+	  CreateParticleSystemAtEntity("", "ps_acid_web_dissolve.ps", "ScriptArea_36", false);
+	    CreateParticleSystemAtEntity("", "ps_ghost_release.ps", "ScriptArea_36", false);
+   StartPlayerLookAt("ScriptArea_36", 1, 1, "");
+   }
+   }
+} 
+  void SummonDemon(string &in asTimer) {
+  	  StopPlayerLookAt();
+	  FadeRadialBlurTo(0.55f, 0.6f);
+	  FadeOut(1);
+	  AddTimer("",3,"EndFadeSumm");
+	  PlayGuiSound("react_pant",1);
+     SetEntityActive("enemy_suitor_2",true);
+	  for(int d=9;d<=15;d++) {      AddEnemyPatrolNode("enemy_suitor_2", "PathNodeArea_"+d, 0, ""); }
+	   AddEnemyPatrolNode("enemy_suitor_2", "PathNodeArea_21", 0, "");
+	  
+           AddTimer("",20,"BFirstScreen");
+           
+           AddTimer("",55,"EndSummon");
+	  
+} 
+  void BFirstScreen(string &in asTimer) {
+      FadeIn(1);
+       TeleportPlayer("PlayerStartArea_1");
+       AddTimer("",2,"FirstScreen");
+           
+  }
+  void FirstScreen(string &in asTimer) {
+      FadeOut(1);
+       AddTimer("",15,"BSecondScreen");
+           
+  }
+  void BSecondScreen(string &in asTimer) {
+    FadeIn(1);
+     TeleportPlayer("PlayerStartArea_6");
+     AddTimer("",2,"SecondScreen");
+  }
+  void SecondScreen(string &in asTimer) {
+    FadeOut(1);
+      
+  }
+    
+void EndFadeSumm(string &in asTimer) {
+FadeIn(1);
+}
+  void EndSummon(string &in asTimer) {
+  	  FadeRadialBlurTo(0.0f, 0.6f);
+	  FadeOut(1);
+     SetEntityActive("enemy_suitor_2",false);
+	 AddTimer("",2,"OutFadeSummon");
+} 
+void OutFadeSummon(string &in asTimer) {
+ TeleportPlayer("PlayerStartArea_5");
+FadeIn(1);
+SetEntityActive("castle_arched01_3",false);
+PlayGuiSound("react_scare",1);
+SetPlayerMoveSpeedMul(1.0f);
+ SetPlayerRunSpeedMul(1.0f);
+ SetPlayerLookSpeedMul(1.0f);
+}
+//##### touch the first door  ##################################
+  void dotyk_drzwi_nightmare(string &in asEntity) {
+   SetEntityActive("enemy_suitor_3",false);
+   	FadeOut(1);
+	AddTimer("",1,"FadeOutDoor");
+} 
+  void FadeOutDoor(string &in asTimer) {
+TeleportPlayer("Tunelstart2");
+FadeIn(1);
+} 
+//####### FadeOutTouchDoors ####################################
+ void FadeOutTouchDoors(string &in asTimer) {
+ TeleportPlayer("PlayerStartArea_9");
+ FadeRadialBlurTo(0.0f, 0.2f);
+FadeIn(1);
+} 
+//###### touch the door I ####################################
+  void dotyk_drzwi_I(string &in asEntity) {
+   AddLocalVarInt("Come_Back_Nightmare",1);
+   	  if(GetLocalVarInt("Come_Back_Nightmare") == 4) {
+	    FadeOut(1);
+	     AddTimer("",1,"FadeOutTouchDoors"); {
+		 }
+	  }
+} 
+//###### touch the door II ####################################
+  void dotyk_drzwi_II(string &in asEntity) {
+     AddLocalVarInt("Come_Back_Nightmare",1);
+	 	  if(GetLocalVarInt("Come_Back_Nightmare") == 4) {
+		  FadeOut(1);
+		 AddTimer("",1,"FadeOutTouchDoors");
+	  }
+} 
+//###### touch the door III ####################################
+  void dotyk_drzwi_III(string &in asEntity) {
+      AddLocalVarInt("Come_Back_Nightmare",1);
+	  	  if(GetLocalVarInt("Come_Back_Nightmare") == 4) {
+		  FadeOut(1);
+		 AddTimer("",1,"FadeOutTouchDoors");
+	  }
+} 
+//###### touch the door IV ####################################
+  void dotyk_drzwi_IV(string &in asEntity) {
+      AddLocalVarInt("Come_Back_Nightmare",1);
+	  if(GetLocalVarInt("Come_Back_Nightmare") == 4) {
+		  FadeOut(1);
+		 AddTimer("",1,"FadeOutTouchDoors");
+	  }
+} 
+
+ //##### fall the body ################################
+ void ScriptArea_35(string &in asParent, string &in asChild, int alState) {
+    GiveSanityDamage(20,false);
+	  for(int a=1;a<=6;a++) {   SetEntityActive("corpse_male_leg_"+a,true);   }
+     for(int b=1;b<=6;b++) {      SetEntityActive("corpse_male_arm_"+b,true);     }
+     for(int c=1;c<=4;c++) {    SetEntityActive("corpse_male_torso_"+c,true);     }
+	AddTimer("",5,"StopLookBody"); 
+   StartPlayerLookAt("corpse_male_arm_4", 1, 1, "");
+} 
+ void StopLookBody(string &in asTimer) {
+    StopPlayerLookAt();
+} 
+//###### teleport to nightmitare ######################
+void ScriptArea_14(string &in asParent, string &in asChild, int alState) {
+
+    if(GetGlobalVarInt("wiezien_chleb_result") == 0) {
+   PlaySoundAtEntity("","insanity_imageflash01","ScriptArea_14", 0 , false);
+    GiveSanityDamage(100,false);
+	 PlayMusic("24_event_vision",false, 0.8, 0.1, 10, false);
+	AddTimer("",3,"Teleport_Nightmitare");
+    } else {
+        
+    }
+} 
+void Teleport_Nightmitare(string &in asTimer) {
+ FadeOut(2);
+ AddTimer("",2,"End_Teleport_Nightmitare");
+} 
+void End_Teleport_Nightmitare(string &in asTimer) {
+ FadeIn(2);
+ FadeRadialBlurTo(0.55f, 0.6f);
+ TeleportPlayer("Tunelstart1");
+}
+//###### walking prisoner #############################
+void ScriptArea_7(string &in asParent, string &in asChild, int alState) {
+GiveHint("EnemyTip01", "Hints", "EnemyTip01", 5);
+AddQuest("act1main_summon","act1main_summon");
+   SetEntityActive("servant_grunt_1",true);
+   for(int z=1;z<=3;z++) {
+   AddEnemyPatrolNode("servant_grunt_1", "PathNodeArea_"+z, 0, "");
+   }
+} 
+//###### open the door with the needle #################
+void igla_open(string &in asItem, string &in asEntity) {
+SetSwingDoorDisableAutoClose("castle_arched01_2", true);
+  SetSwingDoorClosed("castle_arched01_2", false,false);
+ SetSwingDoorLocked("castle_arched01_2", false, true);
+ 
+ 
+  PlayMusic("02_puzzle", false, 0.8f, 1.0f, 1, false);
+
+  AddTimer("",30,"ContinueAmb_1");
+  
+   AddPlayerSanity(5);
+}
+void ContinueAmb_1(string &in asTimer) {
+ PlayMusic("22_amb",true, 0.8, 0.1, 10, true);  
+}
+/*
+//###### saw wood from the door #######################
+void Przetnij_Deski(string &in asItem, string &in asEntity) {
+SetEntityActive("saw_2",true);
+SetMoveObjectState("saw_2", 1);
+  RemoveItem("saw_door_itm");
+ AddTimer("",2,"EndSaw");
+}
+void EndSaw(string &in asTimer) {
+SetEntityActive("saw_2",false);
+ AddPlayerSanity(5);
+  SetEntityActive("wooden_boards_block_1",false);
+ SetEntityActive("wooden_boards_block_broken_1",true);
+ 	 SetSwingDoorDisableAutoClose("castle_arched01_2", true);
+  SetSwingDoorClosed("castle_arched01_2", false,false);
+ SetSwingDoorLocked("castle_arched01_2", false, true);
+}*/
+//####### enable the spirit ##################
+void ScriptArea_32(string &in asParent, string &in asChild, int alState) {
+   PlaySoundAtEntity("","ambience_haunting","ScriptArea_2", 0 , false);
+} 
+//####### before the door ##################
+void ScriptArea_2(string &in asParent, string &in asChild, int alState) {
+   PlaySoundAtEntity("","ambience_haunting","ScriptArea_2", 0 , false);
+} 
+//####### touch the door ############
+void dotyk_drzwi_2(string &in asEntity) {
+GiveHint("EntitySwingDoor", "Hints", "EntitySwingDoor", 5);
+if(GetLocalVarInt("sprawdz_suitor") == 0) {
+SetEntityActive("enemy_suitor_1",true);
+AddEnemyPatrolNode("enemy_suitor_1", "PathNodeArea_6", 0, "");
+AddTimer("",3,"Disable_Suitor");
+AddLocalVarInt("sprawdz_suitor",1);
+}
+} 
+void Disable_Suitor(string &in asTimer) {
+SetPropActiveAndFade("enemy_suitor_1",false,0.5f);
+} 
+//####### open tomb ##################
+void ScriptArea_29(string &in asParent, string &in asChild, int alState) {
+   PlaySoundAtEntity("","24_iron_maiden","ScriptArea_29", 0 , false);
+   GiveSanityDamage(10,true);
+ //SetPlayerActive(false);
+   AddPropImpulse("iron_maiden_7", -20, 0, -5, "World");
+   AddPropImpulse("grunt_body_part2_1", -1, 0, -5, "World");
+   AddPropImpulse("grunt_body_part3_1", -1, 0, -5, "World");
+   AddTimer("",1,"Contunue29");	
+   CreateParticleSystemAtEntity("monster_breath", "ps_cave_monster_breath.ps", "iron_maiden_7", true);
+} 
+void Contunue29(string &in asTimer) {
+ //SetPlayerActive(true); 
+} 
+//######## spirit laugh ##############
+void ScriptArea_12(string &in asParent, string &in asChild, int alState) {
+   PlaySoundAtEntity("","00_laugh","ScriptArea_12", 0 , false);
+   StartPlayerLookAt("chair_event", 2, 2, "");
+   AddTimer("",2,"Look");
+}
+void Look(string &in asTimer) {
+GiveSanityDamage(15,true);
+ AddPropImpulse("chair_event", 10, 0, -5, "World");
+AddTimer("",1,"EndLook");
+}
+void EndLook(string &in asTimer) {
+StopPlayerLookAt();
+}
+
+//######## break wood ceil ###########
+void ScriptArea_11(string &in asParent, string &in asChild, int alState) {
+  StartPlayerLookAt("ScriptArea_33", 2, 2, "");
+  GiveSanityDamage(10,false);
+  PlaySoundAtEntity("creak","00_creak","ScriptArea_11", 0 , false);
+  AddPropImpulse("lampa_scare", 0, 0, -50, "World");	
+  CreateParticleSystemAtEntity("b_wood_11", "ps_break_wood.ps", "ScriptArea_33", true);
+  CreateParticleSystemAtEntity("b_dust_11", "ps_dust_falling.ps", "ScriptArea_33", true);
+  AddTimer("",2,"Stop_look_Area11");   
+  AddTimer("",10,"Stop_Sound_Wood");
+}
+void Stop_look_Area11(string &in asTimer) {
+   StartPlayerLookAt("level_wood_1", 2, 2, ""); 
+ StopPlayerLookAt(); 
+}
+void Stop_Sound_Wood(string &in asTimer) {
+StopSound("creak",2.0f); 
+}
+//######## ghost force ##############
+void ghost_uderzenie(string &in asParent, string &in asChild, int alState) {
+   PlaySoundAtEntity("roar","guardian_activated.ogg","ghost_uderzenie", 0 , false);
+   CreateParticleSystemAtEntity("dust_shelf", "ps_dust_small.ps", "shelf02_1", true);
+   CreateParticleSystemAtEntity("dust_shelf2", "ps_dust_small.ps", "shelf02_2", true);
+   AddPropImpulse("book01_1", 0, 0, -50, "World");	
+   AddPropImpulse("book_bible_1", 0, 0, -50, "World");	
+   AddPropImpulse("book02_3", 0, 0, -50, "World");	
+   AddPropImpulse("book02_5", 0, 0, -50, "World");	
+   AddPropImpulse("book_bible_2", 0, 0, -50, "World");	
+   AddPropImpulse("book03_1", 0, 0, -50, "World");	
+   AddTimer("",3,"End_Dust_10");
+}
+void End_Dust_10(string &in asTimer) {
+  DestroyParticleSystem("dust_shelf");
+  DestroyParticleSystem("dust_shelf2");  
+}
+//######## Otworzenie drzwi do komnaty z dwiema lokacjami ##############
+void Otworz_Drzwi_Tomb_K(string &in asItem, string &in asEntity) {
+  SetSwingDoorDisableAutoClose("castle_arched01_1", true);
+  SetSwingDoorClosed("castle_arched01_1", false,false);
+  SetSwingDoorLocked("castle_arched01_1", false, true);
+  AddPropImpulse("castle_arched01_1", 0, 0,  -10, "World");
+  AddPlayerSanity(10);
+  RemoveItem("key_tomb_rusty_1");
+ 	
+}
+//########   put the statue on the stone trigger ###########################
+void Poloz_Statulke(string &in asStickyArea, string &in asBodyName)
+{
+  CreateParticleSystemAtEntity("fog_small_statue", "ps_area_fog_small.ps", "Poloz_Statulke", true);
+  AddPlayerSanity(5);
+  CheckPoint ("Checkpoint_libray_circult", "PlayerStartArea_1", "", "", "");
+  AddTimer("",1,"Przesun_Regal");
+   PlayMusic("03_event_tomb",false, 0.7, 0.1, 10, false);
+    AddTimer("",30,"StopMusic_Tomb");
+}
+void Przesun_Regal(string &in asTimer) {
+	CompleteQuest("act1main2","act1main2");
+ 	RotatePropToSpeed("shelf_secret_door_1", 0.5f, 0.1f, 0, -45, 0, true, "przesuw_regal1");
+	SetMoveObjectState("shelf_secret_door_1", 0.75f); 
+	AddTimer("",10,"Stop_Prop_Movement");
+  DestroyParticleSystem("fog_small_statue");
+}
+void Stop_Prop_Movement(string &in asTimer) {
+StopPropMovement("shelf_secret_door_1");
+}
+//######### Ritual area ######################################################
+void ScriptArea_1(string &in asParent, string &in asChild, int alState) {
+   PlaySoundAtEntity("ritual_sound1","ambience_voice","ScriptArea_1", 1 , true);
+}
+//######### scare effect and open door on the up ########################################## 
+void ScriptArea_3(string &in asParent, string &in asChild, int alState) {
+        SetSwingDoorDisableAutoClose("metal_1", true);
+  SetSwingDoorClosed("metal_1", false,false);
+ SetSwingDoorLocked("metal_1", false, true); 
+    AddPropImpulse("metal_1", 1, 0, 0, "World");
+}
+//######### Invent by Tomb ##########################################
+void ScriptArea_9(string &in asParent, string &in asChild, int alState) {
+ GiveSanityDamage(10,false);
+GiveHint("DarknessDecrease", "Hints", "DarknessDecrease", 5);
+}
+ void StopMusic_Tomb(string &in asTimer) {
+ StopMusic(1.0f,1);
+  PlayMusic("22_amb",false, 0.8, 0.1, 10, true);
+}
+//######### Otworzenie drzwi kluczem z grobowca ############################################
+ 
+void Otworz_Drzwi_Tomb_K(string &in asParent, string &in asChild, int alState) {
+   PlaySoundAtEntity("","insanity_monster_roar03.ogg","wall_default_12", 0 , false);
+   AddTimer("",3,"Grunt_Start");
+}
+//######### Enter to libray circult ####################################
+void ScriptArea_5(string &in asParent, string &in asChild, int alState) {
+	SetEntityActive("ScriptArea_3",true);
+	 CheckPoint ("Checkpoint_libray", "PlayerStartArea_2", "", "", "");	 
+	AddQuest("act1main2","act1main2");
+	}
+//######### Steep on the shelf ########################################
+void ScriptArea_6(string &in asParent, string &in asChild, int alState) {
+ GiveSanityDamage(5,false); 
+  PlaySoundAtEntity("","break_wood","ScriptArea_6", 0 , false);
+  CreateParticleSystemAtEntity("", "ps_dust_impact_vert.ps", "ScriptArea_6", false);
+}
+//######### Collide posion ##############################################
+void Kwas_Area(string &in asParent, string &in asChild, int alState) {
+	GivePlayerDamage(150, "BloodSplash", false, false);
+	DisableDeathStartSound();
+	AddPlayerHealth(-200);
+	PlaySoundAtEntity("pain", "player_falldamage_max", "Player", 0, false);
+	PlaySoundAtEntity("bump2", "player_bodyfall", "Player", 0, false);
+	FadeIn(1);
+}
+//######### Checkpoint when we are going to the wheel ######
+void ScriptArea_28(string &in asParent, string &in asChild, int alState) {
+			 CheckPoint ("Checkpoint_after_posion", "PlayerStartArea_4", "", "", "");
+}
+//######## Last checkpoint in the act1 ########################
+void ScriptArea_49(string &in asParent, string &in asChild, int alState) {
+			 CheckPoint ("Last_CheckpointAct1", "PlayerStartArea_5", "", "", "");
+}
+//######## Looking on the posion ######################
+void ScriptArea_27(string &in asParent, string &in asChild, int alState) {
+			StartPlayerLookAt("special_welder_sewer_stone01_3", 0.3, 0.2, "");
+			AddTimer("",3,"LoopLookingForward");
+			SetPlayerLookSpeedMul(1.0f);
+			PlayGuiSound("react_breath_slow",1);
+			 CheckPoint ("Checkpoint_before_posion", "PlayerStartArea_3", "", "", "");
+}
+void LoopLookingForward(string &in asTimer) {
+			StartPlayerLookAt("wall_corner_concave_1", 0.3, 0.2, "");
+			AddTimer("",1,"Stop_LookingForward");	
+}
+void Stop_LookingForward(string &in asTimer) {
+	StopPlayerLookAt();
+}
+//####### Shake by jump over posion ###################################
+void ScriptArea_8(string &in asParent, string &in asChild, int alState) {
+	StartScreenShake(0.03, 2, 2,3);
+		PlaySoundAtEntity("", "explosion_rock_large", "ScriptArea_8", 0, false);
+		PlayGuiSound("react_breath3.ogg",1);	
+		SetPlayerLookSpeedMul(1.0f);
+			StartPlayerLookAt("ParticleSystem_3", 0.3, 0.2, "");
+			AddTimer("",4,"Stop_Look_Kwas_Look_Drzwi");
+}
+void Stop_Look_Kwas_Look_Drzwi(string &in asTimer) {
+			StartPlayerLookAt("castle_arched01_7", 0.3, 0.2, "");
+		PlayGuiSound("react_sigh1.ogg",1);
+			AddTimer("",2,"Stop_Look_Drzwi");	
+}
+ void Stop_Look_Drzwi(string &in asTimer) {
+		StopPlayerLookAt();
+			GiveSanityDamage(10, false);
+}
+//####### Put the bone and skull on the table ###########################
+void czacha1(string &in asStickyArea, string &in asBodyName)
+{
+AddLocalVarInt("kosci",1);
+if(GetLocalVarInt("kosci") == 2) {
+AddLocalVarInt("kosci",1);
+}
+}
+void kosc1(string &in asStickyArea, string &in asBodyName)
+{
+AddLocalVarInt("kosci",1);
+if(GetLocalVarInt("kosci") == 2) {
+AddLocalVarInt("kosci",1);
+}
+}

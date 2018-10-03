@@ -1,0 +1,130 @@
+void OnStart() {
+//########################################################################
+//## KEY MAKER
+//########################################################################
+ //GiveItemFromFile("lantern", "lantern.ent");
+AddEntityCollideCallback("Player","ScriptArea_1","ScriptArea_1",false,1);
+AddEntityCollideCallback("Player","ScriptArea_2","ScriptArea_2",false,1);
+AddEntityCollideCallback("Player","ScriptArea_4","ScriptArea_4",true,1);
+AddEntityCollideCallback("Player","ScriptArea_3","ScriptArea_3",false,1);
+AddEntityCollideCallback("Player","ScriptArea_5","ScriptArea_5",true,1);
+AddEntityCollideCallback("Player","ScriptArea_6","ScriptArea_6",false,1);
+AddEntityCollideCallback("Player","ScriptArea_7","ScriptArea_7",false,1);
+AddEntityCollideCallback("Player","ScriptArea_8","ScriptArea_7",false,1);
+AddEntityCollideCallback("Player","ScriptArea_9","ScriptArea_7",false,1);
+AddUseItemCallback("", "key_tomb_rusty_1", "ScriptArea_2", "Poloz_Klucz", true);
+AddUseItemCallback("", "hand_drill_part01_1", "ScriptArea_1", "Poloz_Raczke", true);
+AddUseItemCallback("", "key_tomb_1", "level_celler_1", "Otworz_Drzwi_Act4", true);
+}
+void OnEnter() {
+     AutoSave();
+PlayMusic("12_amb",true, 1.0f, 0.0f, 10, false); 
+}
+void ScriptArea_3(string &in asParent, string &in asChild, int alState) {
+SetEntityActive("servant_grunt_3",true);
+PlayGuiSound("react_pant.snt",1);
+if(GetLocalVarInt("grunt1") == 0) {
+GiveSanityDamage(5,true);
+AddLocalVarInt("grunt1",1);
+}
+  AddEnemyPatrolNode("servant_grunt_3", "PathNodeArea_3", 0, "");  
+  AddEnemyPatrolNode("servant_grunt_3", "PathNodeArea_4", 0, "");  
+  AddEnemyPatrolNode("servant_grunt_3", "PathNodeArea_1", 0, "");  
+  AddEnemyPatrolNode("servant_grunt_3", "PathNodeArea_2", 0, "");  
+}
+void ScriptArea_4(string &in asParent, string &in asChild, int alState) {
+SetEntityActive("servant_grunt_2",true);
+PlayGuiSound("react_scare.snt",1);
+GiveSanityDamage(10,false);
+ShowEnemyPlayerPosition("servant_grunt_2");
+}
+void ScriptArea_5(string &in asParent, string &in asChild, int alState) {
+SetEntityActive("servant_grunt_1",true);
+PlayGuiSound("react_sigh.snt",1);
+ShowEnemyPlayerPosition("servant_grunt_1");
+GiveSanityDamage(10,false);
+}
+void ScriptArea_6(string &in asParent, string &in asChild, int alState) {
+    SetEntityActive("ScriptArea_3",false);
+SetEntityActive("servant_grunt_2",false);
+AddTimer("",15,"KoniecGruntDoor");
+GiveSanityDamage(10,false);
+PlayGuiSound("react_breath.snt",1);
+SetSwingDoorLocked("cellar_wood01_2", true, true);
+ SetSwingDoorDisableAutoClose("cellar_wood01_2", true);
+ SetSwingDoorClosed("cellar_wood01_2", true, true);
+ //AddPropImpulse("door_barricade_1", 0, 0, -20, "World");
+ AddTimer("",1,"close_baricadde");
+}
+void close_baricadde(string &in asTimer) {
+ SetSwingDoorLocked("door_barricade_1", true, true);
+ SetSwingDoorDisableAutoClose("door_barricade_1", true);
+ SetSwingDoorClosed("door_barricade_1", true, true);
+}
+void KoniecGruntDoor(string &in asTimer) {
+SetEntityActive("servant_grunt_1",false);
+}
+void podnies_klucz_proto(string &in asEntity, string &in asType) {
+SetEntityActive("servant_grunt_4",true);
+PlayGuiSound("react_pant.snt",1);
+  for(int a=14;a<=16;a++) { AddEnemyPatrolNode("servant_grunt_4", "PathNodeArea_"+a, 0, "");  }
+  for(int b=7;b<=9;b++) { SetEntityActive("ScriptArea_"+b,true); } 
+}
+void ScriptArea_7(string &in asParent, string &in asChild, int alState) {
+SetEntityActive("servant_brute_1",true);
+PlayGuiSound("react_scare.snt",1);
+if(GetLocalVarInt("brute_cellar") == 0) {
+GiveSanityDamage(10,false);
+AddLocalVarInt("brute_cellar",1);
+  }
+  AddEnemyPatrolNode("servant_brute_1", "PathNodeArea_5", 0, "");  
+  AddEnemyPatrolNode("servant_brute_1", "PathNodeArea_6", 0, "");  
+  AddEnemyPatrolNode("servant_brute_1", "PathNodeArea_8", 0, ""); 
+  AddEnemyPatrolNode("servant_brute_1", "PathNodeArea_6", 0, "");  
+  AddEnemyPatrolNode("servant_brute_1", "PathNodeArea_9", 0, ""); 
+  AddEnemyPatrolNode("servant_brute_1", "PathNodeArea_6", 0, "");  
+  AddEnemyPatrolNode("servant_brute_1", "PathNodeArea_7", 0, "");
+AddEnemyPatrolNode("servant_brute_1", "PathNodeArea_6", 0, "");    
+}
+void Poloz_Raczke(string &in asItem, string &in asEntity) {
+SetEntityActive("hand_drill_part01_static_1",true);
+RemoveItem("hand_drill_part01_1");
+AddLocalVarInt("NewKey",1);
+if(GetLocalVarInt("NewKey") == 2) {
+SetSwingDoorLocked("hatch_ceiling_1", false, false);
+ SetSwingDoorDisableAutoClose("hatch_ceiling_1", false);
+ SetSwingDoorClosed("hatch_ceiling_1", false, false);
+  AddPlayerSanity(15);
+  RotatePropToSpeed("hand_drill_part01_static_1", 1.0f, 1.0f, 0.0f, 1.0f,0.0f, true, "ScriptArea_1");
+   GiveItemFromFile("key_tomb_1", "key_tomb.ent");
+}
+}
+void Poloz_Klucz(string &in asItem, string &in asEntity) {
+SetEntityActive("key_tomb_rusty_2",true);
+RemoveItem("key_tomb_rusty_1");
+AddLocalVarInt("NewKey",1);
+RotatePropToSpeed("ceiling_machinery_cog_3", 1.0f, 1.0f, 0.0f, 0.0f,1.0f, true, "ScriptArea_11");
+RotatePropToSpeed("ceiling_machinery_cog_2", 1.0f, 1.0f, 0.0f, 0.0f,1.0f, true, "ScriptArea_10");
+AddTimer("",15,"klucz_gotowy");
+
+}
+void klucz_gotowy(string &in asTimer) {
+if(GetLocalVarInt("NewKey") == 2) {
+SetSwingDoorLocked("hatch_ceiling_1", false, false);
+ SetSwingDoorDisableAutoClose("hatch_ceiling_1", false);
+ SetSwingDoorClosed("hatch_ceiling_1", false, false);
+ AddPlayerSanity(15);
+ PlayMusic("02_puzzle",false, 1.0f, 0.0f, 10, false); 
+ GiveItemFromFile("key_tomb_1", "key_tomb.ent");
+  StopPropMovement("ceiling_machinery_cog_2");
+  StopPropMovement("ceiling_machinery_cog_3");
+}
+}
+void Otworz_Drzwi_Act4(string &in asItem, string &in asEntity) {
+SetEntityActive("level_celler_1",false);
+SetEntityActive("level_celler_2",true);
+  PlayMusic("02_puzzle",false, 1.0f, 0.0f, 10, false); 
+}
+void OnLeave() {
+
+}

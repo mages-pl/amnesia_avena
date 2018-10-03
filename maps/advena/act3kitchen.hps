@@ -1,0 +1,185 @@
+void OnStart() {
+for(int r=1;r<3;r++) { 	AddEntityCollideCallback("Player","ScriptArea_"+r,"ScriptArea_"+r,true,1);
+}
+AddEntityCollideCallback("Player","ScriptArea_9","ScriptArea_9",true,1);
+AddEntityCollideCallback("Player","ScriptArea_10","ScriptArea_10",true,1);
+AddEntityCollideCallback("Player","ScriptArea_3","ScriptArea_3",false,1);
+AddEntityCollideCallback("Player","ScriptArea_11","ScriptArea_11",false,1);
+AddEntityCollideCallback("Player","ScriptArea_12","ScriptArea_12",true,1);
+AddEntityCollideCallback("Player","ScriptArea_13","ScriptArea_13",true,1);
+AddEntityCollideCallback("Player","ScriptArea_14","ScriptArea_14",false,1);
+//##### Ekwipunek
+ //GiveItemFromFile("lantern", "lantern.ent");
+SetEntityPlayerInteractCallback("Dotyk_drzwi", "Dotyk_drzwi", true);
+SetEntityPlayerInteractCallback("Teleport_chest", "Teleport_chest", true);
+SetEntityPlayerInteractCallback("kwas_damage", "kwas_damage", false);
+//
+AddUseItemCallback("", "glass_container_1", "ScriptArea_11", "Napelnij_olejem", true);
+}
+void OnEnter() {
+     AutoSave();
+PlayMusic("01_amb_darkness",true, 0.5, 0.1, 1,false);
+}
+void ScriptArea_2(string &in asParent, string &in asChild, int alState) {
+SetEntityActive("servant_brute_2",true);
+ShowEnemyPlayerPosition("servant_brute_2");
+PlayGuiSound("react_breath.snt",1);
+}
+void Dotyk_drzwi(string &in asEntity) {
+if(GetLocalVarInt("ucieczka") == 1) {
+SetEntityActive("ScriptArea_12",false);
+ SetSwingDoorLocked("mansion_3", false, false);
+ SetSwingDoorLocked("mansion_4", false, false);
+  AddEntityCollideCallback("Player","ScriptArea_6","ScriptArea_6",false,1);
+  AddEntityCollideCallback("Player","ScriptArea_7","ScriptArea_7",false,1);
+  AddEntityCollideCallback("Player","ScriptArea_8","ScriptArea_8",false,1);
+  }
+}
+void ScriptArea_7(string &in asParent, string &in asChild, int alState) {
+ShowEnemyPlayerPosition("servant_brute_1");
+}
+void ScriptArea_8(string &in asParent, string &in asChild, int alState) {
+ShowEnemyPlayerPosition("servant_brute_1");
+}
+void ScriptArea_6(string &in asParent, string &in asChild, int alState) {
+SetEntityActive("servant_brute_1",true);
+for(int j=7;j<10;j++) { SetEntityActive("block_box_"+j,true); }
+for(int i=1;i<6;i++) { AddEnemyPatrolNode("servant_brute_1", "PathNodeArea_"+i, 0, ""); }
+}
+void Napelnij_olejem(string &in asItem, string &in asEntity) {
+SetEntityActive("glass_container_filled_1",true);
+RemoveItem(asItem);
+AddTimer("",3,"Koniec_oliwa");
+AddLocalVarInt("ucieczka",1);
+}
+void Koniec_oliwa(string &in asTimer) {
+SetEntityActive("glass_container_filled_1",false);
+SetEntityActive("ScriptArea_13",true);
+ GiveItemFromFile("glass_container_oil_1", "glass_container_oil.ent");
+}
+void Chest_Sequence(string &in asTimer) {
+AddLocalVarInt("cutscene_kitchen_2",1);
+int szybkosc_sequene_chest = 6;
+switch(GetLocalVarInt("cutscene_kitchen_2")) {
+case 1: // przyciemnienie + teleport
+szybkosc_sequene_chest = 5;
+PlaySoundAtEntity("dziecko", "scare_baby_cry.snt", "player", 0, true);
+break;
+case 2:
+szybkosc_sequene_chest = 1;
+break;
+case 3: // odciemnienie + reakcja 
+FadeIn(1);
+szybkosc_sequene_chest = 5;
+PlaySoundAtEntity("dziecko", "scare_baby_cry.snt", "player", 0, true);
+break;
+case 4: //przyciemenienie + teleport
+szybkosc_sequene_chest = 2;
+break;
+case 5:
+FadePlayerRollTo(1, 1, 1);
+SetPlayerMoveSpeedMul(1.0f);
+SetPlayerRunSpeedMul(1.0f);
+SetPlayerLookSpeedMul(1.0f);
+szybkosc_sequene_chest = 1;
+break;
+case 6: // odciemnienie + reakcja 
+StopSound("dziecko",1.0f);
+szybkosc_sequene_chest = 2;
+PlayGuiSound("react_breath.snt",1);
+break;
+}
+if(GetLocalVarInt("cutscene_kitchen_2") < 7) {
+AddTimer("",szybkosc_sequene_chest,"Chest_Sequence");
+}
+}
+void ScriptArea_1(string &in asParent, string &in asChild, int alState) {
+AddTimer("",0.5,"Szok");
+}
+void Szok(string &in asTimer) {
+float szybkosc_cutsceny = 0.2f;
+AddLocalVarInt("cutscene_kitchen",1);
+switch(GetLocalVarInt("cutscene_kitchen")) {
+case 1: 
+FadeOut(0.2f);
+PlayGuiSound("ui_emotion_stone.snt",1);
+// Fade In i pojawienie si� cia�a
+break;
+case 2:
+SetEntityActive("graveyard_corpse03_1",true);
+for(int y=1;y<26;y++) { SetLampLit("candlestick_wall_"+y, false, true); }
+FadeLightTo("PointLight_4", 0, 0, 0, 0, 0, 1);
+SetLampLit("chandelier_large_2", false, true);
+for(int x=3;x<6;x++) { SetEntityActive("butcher_knife_"+x,true); }
+break;
+case 3: // z czerni do normalno�ci + szok tym cia�em
+FadeIn(0.2f);
+PlayGuiSound("react_breath_slow.snt",1);
+GiveSanityDamage(10,true);
+break;
+}
+if(GetLocalVarInt("cutscene_kitchen") < 4) {
+AddTimer("",szybkosc_cutsceny,"Szok");
+}
+} 
+void kwas_damage(string &in asEntity) {
+GivePlayerDamage(5, "BloodSplash", false, false);
+PlayGuiSound("puzzle_add_chemical.snt",1);
+}
+void ScriptArea_9(string &in asParent, string &in asChild, int alState) {
+     CheckPoint ("Check_point_end_kitchen", "PlayerStartArea_4", "ScriptArea_13", "", "");
+
+PlaySoundAtEntity("", "scare_baby_cry.snt", "ScriptArea_9", 0, false);
+}
+void ScriptArea_10(string &in asParent, string &in asChild, int alState) {
+PlaySoundAtEntity("", "scare_baby_cry.snt", "ScriptArea_10", 0, false);
+AddTimer("",0.5,"Chest_Sequence");
+}
+void ScriptArea_3(string &in asParent, string &in asChild, int alState) { 
+	AddPlayerBodyForce(0,0,9000*2.5f, false);
+	GivePlayerDamage(10, "BloodSplat", true, false);	
+	PlayGuiSound("ui_fire_damage.ogg", 0.7f);
+}
+void ScriptArea_12(string &in asParent, string &in asChild, int alState) {
+PlaySoundAtEntity("", "scare_wood_creak_scuf.snt", "mansion_3", 0, false);
+}
+void ScriptArea_11(string &in asParent, string &in asChild, int alState) {
+PlaySoundAtEntity("", "scare_baby_cry.snt", "ScriptArea_11", 0, true);
+AddTimer("",3,"Next_child");
+}
+void Next_child(string &in asTimer) {
+  PlayGuiSound("scare_baby_cry3.ogg",1);
+AddTimer("",3,"Next_child2");
+}
+void Next_child2(string &in asTimer) {
+  PlayGuiSound("scare_baby_cry4.ogg",1);
+AddTimer("",3,"Next_child3");
+}
+void Next_child3(string &in asTimer) {
+  PlayGuiSound("scare_baby_cry5.ogg",1);
+  AddTimer("",3,"Next_child4");
+}
+void Next_child4(string &in asTimer) {
+  PlayGuiSound("scare_baby_cry2.ogg",1);
+  PlayGuiSound("amb_idle01.ogg",1);
+ 
+}
+ 
+void ScriptArea_13(string &in asParent, string &in asChild, int alState) {
+ SetEntityActive("cave_in_1",true);
+ StartScreenShake(0.03, 2, 2,3);
+  SetSwingDoorLocked("mansion_2", true, true);
+ SetSwingDoorLocked("hatch_ceiling_1", true, true);
+  SetSwingDoorClosed("hatch_ceiling_1", true, true);
+ SetSwingDoorLocked("mansion_1", true, true);
+ PlaySoundAtEntity("", "explosion_rock_large.snt", "cave_in_1", 0, false);
+ CheckPoint ("Check_point_end_kitchen", "PlayerStartArea_4", "ScriptArea_13", "", "");
+}
+void ScriptArea_14(string &in asParent, string &in asChild, int alState) {
+	GivePlayerDamage(150, "BloodSplash", false, false);
+	DisableDeathStartSound();
+	AddPlayerHealth(-200);
+	PlaySoundAtEntity("pain", "player_falldamage_max", "Player", 0, false);
+	PlaySoundAtEntity("bump2", "player_bodyfall", "Player", 0, false);
+	FadeIn(1);
+}

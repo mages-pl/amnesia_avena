@@ -1,0 +1,110 @@
+ 
+void OnStart() {
+    SetSanityDrainDisabled(true);
+FadeSepiaColorTo(0.75f, 1.0f);
+AddEntityCollideCallback("Player", "ScriptArea_5", "START_INTRO", true, 1);
+AddEntityCollideCallback("Player", "ScriptArea_1", "ScriptArea_1", true, 1);
+AddEntityCollideCallback("Player", "ScriptArea_2", "ScriptArea_2", true, 1);
+AddEntityCollideCallback("Player", "ScriptArea_9", "ScriptArea_9", true, 1);
+AddEntityCollideCallback("Player", "ScriptArea_3", "ScriptArea_3", true, 1);
+SetPlayerMoveSpeedMul(0.25f);
+SetPlayerRunSpeedMul(0.0f);
+SetPlayerLookSpeedMul(0.2f);
+SetPlayerActive(false);
+ SetPlayerLampOil(0.0f);
+PlayMusic("ending_alexander.ogg",false, 0.5,0.7,1,false);
+}
+
+void START_INTRO(string &in asParent, string &in asChild, int alState)
+{
+FadeOut(0);
+SetMessage("Rozdzial", "Prolog", 2.0f);
+AddTimer("Start",15,"Start_Game");
+Idz();
+}
+void Start_Game(string &in asTimer) {
+FadeIn(0.5f);
+AddEffectVoice("PROLOG_1_1", "", "Dialogue", "PROLOG_1_1",true, "Player", 0.0f, 10.0f);
+AddEffectVoice("PROLOG_1_2", "", "Dialogue", "PROLOG_1_2",true, "Player", 0.0f, 10.0f);
+AddEffectVoice("CH02L21_Agrippa_Strained_01", "", "Dialogue", "PROLOG_1_3",true, "Player", 0.0f, 10.0f);
+AddEffectVoice("CH02L21_Agrippa_Strained_01", "", "Dialogue", "PROLOG_1_4",true, "Player", 0.0f, 10.0f);
+AddEffectVoice("PROLOG_1_5", "", "Dialogue", "PROLOG_1_5",true, "Player", 0.0f, 10.0f);
+AddEffectVoice("CH02L21_Agrippa_Strained_01", "", "Dialogue", "PROLOG_1_6",true, "Player", 0.0f, 10.0f);
+}
+void Idz() {
+	SetPlayerJumpDisabled(true);
+	SetPlayerCrouchDisabled(true);
+	SetInventoryDisabled(true);
+	StartPlayerLookAt("ScriptArea_4", 4, 4, "");
+	AddTimer("1", 0.5f, "StartWalking");
+	AddTimer("",40.0f,"FadeWalking");
+	AddTimer("", 55.0f, "EndWalking");
+}
+
+void StartWalking(string &in asTimer) {
+	FadeIn(10.0f);
+	AddTimer("walking", 0.016f, "TimerMoveForward");
+} 
+void TimerMoveForward(string &in asTimer) {
+	MovePlayerForward(2.0f);
+	AddTimer("automove", 0.016f, "TimerMoveForward");
+} 
+void FadeWalking(string &in asTimer) {
+	FadeOut(60.0f);
+}
+void EndWalking(string &in asTimer) {
+	RemoveTimer("walking");
+	RemoveTimer("automove");
+	FadeImageTrailTo(0.0f, 1.0f);
+	FadeSepiaColorTo(0.0f, 1.0f);
+	FadeRadialBlurTo(0.0f, 1.0f);
+	StopPlayerLookAt();
+	SetPlayerJumpDisabled(false);
+	SetPlayerCrouchDisabled(false);
+	SetInventoryDisabled(false);
+	SetPlayerActive(true);
+	ChangeMap("act1katakumby.map", "Z_act0main", "","");
+	SetPlayerMoveSpeedMul(1.0f);
+SetPlayerRunSpeedMul(1.0f);
+SetPlayerLookSpeedMul(1.0f);
+} 
+void ScriptArea_1(string &in asParent, string &in asChild, int alState) {
+StartPlayerLookAt("ScriptArea_10", 1, 1, "");
+AddTimer("",3,"Look_Forward");
+PlaySoundAtEntity("","scare_wind","ScriptArea_1", 0 , false);
+for(int p=1;p<=56;p++) { 	 SetLampLit("candle_floor_small_"+p, false, true); }
+}
+void Look_Forward(string &in asTimer) {
+StartPlayerLookAt("ScriptArea_4", 1, 1, "");
+}
+void ScriptArea_2(string &in asParent, string &in asChild, int alState) {
+ 
+AddTimer("",4,"Look_Forward");
+PlaySoundAtEntity("","scare_wind_reverse","ScriptArea_2", 0 , false);
+for(int m=56;m<=87;m++) { 	 SetLampLit("candle_floor_small_"+m, false, true); }
+}
+void ScriptArea_3(string &in asParent, string &in asChild, int alState)  {
+ 
+AddTimer("",3,"Look_Forward");
+PlaySoundAtEntity("","scare_wind","ScriptArea_3", 0 , false);
+PlayGuiSound("react_breath_slow.snt",1);
+for(int l=88;l<=107;l++) { 	 SetLampLit("candle_floor_small_"+l, false, true); }
+}
+void ScriptArea_9(string &in asParent, string &in asChild, int alState) {
+AddTimer("",6,"Look_Forward");
+}
+/*
+void End_Intro(string &in asParent, string &in asChild, int alState)
+{
+RemoveTimer("restart_walk");
+RemoveTimer("walking");
+}
+void OnEnter() {
+ 
+}
+  */
+ void OnLeave() {
+ StopMusic(2,2.0f);
+ }
+
+

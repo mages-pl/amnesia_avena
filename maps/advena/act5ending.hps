@@ -1,0 +1,425 @@
+//bridge_metal_vert_10
+
+void OnStart() {
+ //GiveItemFromFile("lantern", "lantern.ent");
+
+AddEntityCollideCallback("Player","ScriptArea_1","ScriptArea_1",false,1);
+AddEntityCollideCallback("Player","strach1","strach1",true,1);
+AddEntityCollideCallback("Player","ScriptArea_2","ScriptArea_2",false,1);
+AddEntityCollideCallback("Player","ScriptArea_5","ScriptArea_5",false,1);
+AddEntityCollideCallback("Player","ScriptArea_7","ScriptArea_7",false,1);
+AddEntityCollideCallback("Player","ScriptArea_8","ScriptArea_8",false,1);
+
+
+AddEntityCollideCallback("Player","ScriptArea_10","ScriptArea_10",true,1);
+AddEntityCollideCallback("Player","ScriptArea_9","ScriptArea_9",true,1);
+  AddTimer("podnoszenie_mostu1",1,"most1");
+  AddTimer("podnoszenie_mostu2",10,"most2");
+  AddTimer("podnoszenie_mostu3",5,"most3");
+  AddTimer("podnoszenie_mostu4",20,"most4");
+  AddTimer("podnoszenie_mostu5",15,"most5");
+  AddTimer("podnoszenie_mostu6",7,"most6");
+  AddTimer("podnoszenie_mostu7",10,"most7");
+  AddTimer("podnoszenie_mostu8",18,"most8");
+  AddTimer("podnoszenie_mostu9",25,"most9");
+  AddTimer("gaz",6,"gaz");
+ }
+ void ScriptArea_10(string &in asParent, string &in asChild, int alState) {
+ if(GetGlobalVarInt("OdkryteSkrytki") == 0) {
+GiveHint("Hint_Skrytki", "Skrytki", "Hint_Skrytki", 5);
+}
+AddGlobalVarInt("OdkryteSkrytki",1);
+PlayGuiSound("quest_completed",1);
+SetMessage("Skrytki","Odkryto", 3); // GetGlobalVarInt("OdkryteSkrytki")+GetGlobalVarString("Separator")+GetGlobalVarInt("MaxSkrytek")
+ }
+  void ScriptArea_9(string &in asParent, string &in asChild, int alState) {
+ if(GetGlobalVarInt("OdkryteSkrytki") == 0) {
+GiveHint("Hint_Skrytki", "Skrytki", "Hint_Skrytki", 5);
+}
+AddGlobalVarInt("OdkryteSkrytki",1);
+PlayGuiSound("quest_completed",1);
+SetMessage("Skrytki","Odkryto", 3); // GetGlobalVarInt("OdkryteSkrytki")+GetGlobalVarString("Separator")+GetGlobalVarInt("MaxSkrytek")
+ }
+ 
+ void strach1(string &in asParent, string &in asChild, int alState) {
+ SetEntityActive("ups1",true);
+ SetEntityActive("ups2",true);
+ SetEntityActive("ups3",true);
+ SetEntityActive("ups4",true);
+ PlayGuiSound("react_pant.snt",1);
+ }
+ void gaz(string &in asTimer) {
+  RemoveTimer("stop_gaz");
+  AddEntityCollideCallback("Player","ScriptArea_6","ScriptArea_6",false,0);
+AddTimer("stop_gaz",6,"stop_gaz");	
+CreateParticleSystemAtEntity("gazek", "ps_stream_deadly", "ScriptArea_6", false);
+ 	PlaySoundAtEntity("smooker", "13_steam.snt", "ScriptArea_6", 0, true); 
+ }
+   void ScriptArea_6(string &in asParent, string &in asChild, int alState) {
+   if(alState == 1) {
+	 	GivePlayerDamage(150, "BloodSplash", false, false);
+	DisableDeathStartSound();
+	AddPlayerHealth(-200);
+	PlaySoundAtEntity("pain", "player_falldamage_max", "Player", 0, false);
+	PlaySoundAtEntity("bump2", "player_bodyfall", "Player", 0, false);
+	FadeIn(1);
+	}
+ }
+ void stop_gaz(string &in asTimer) {
+ RemoveTimer("gaz");
+ StopSound("smooker",0.5f);
+ RemoveEntityCollideCallback("Player", "ScriptArea_6");
+ AddTimer("gaz",6,"gaz");
+ }
+  void ScriptArea_2(string &in asParent, string &in asChild, int alState) {
+ 	GivePlayerDamage(150, "BloodSplash", false, false);
+	DisableDeathStartSound();
+	AddPlayerHealth(-200);
+	PlaySoundAtEntity("pain", "player_falldamage_max", "Player", 0, false);
+	PlaySoundAtEntity("bump2", "player_bodyfall", "Player", 0, false);
+	FadeIn(1);
+ }
+ void ScriptArea_1(string &in asParent, string &in asChild, int alState) {
+// some effects
+ }
+ void most1(string &in asTimer) {
+ RemoveTimer("podnoszenie_mostu1a");
+ SetMoveObjectState("bridge_metal_vert_10", 2.0f);
+ //PlaySoundAtEntity("chain1", "general_chain", "bridge_metal_vert_10",1.0f, false);
+ AddTimer("podnoszenie_mostu1a",30,"most1a");
+  AddTimer("StopChain1",5,"StopChain1");
+ }
+ void StopChain1(string &in asTimer) {
+   StopSound("chain1", 1.0f);
+ }
+ void most1a(string &in asTimer) {
+ RemoveTimer("podnoszenie_mostu1");
+ StopSound("chain1", 1.0f);
+  //PlaySoundAtEntity("chain1a", "general_chain", "bridge_metal_vert_10",1.0f, false);
+ SetMoveObjectState("bridge_metal_vert_10", -4.0f);
+ AddTimer("podnoszenie_mostu1",30,"most1");
+   AddTimer("StopChain1a",5,"StopChain1a");
+ }
+  void StopChain1a(string &in asTimer) {
+   StopSound("chain1a", 1.0f);
+ }
+  void most2(string &in asTimer) {
+   RemoveTimer("podnoszenie_mostu2a");
+ //  PlaySoundAtEntity("chain2", "general_chain", "bridge_metal_vert_2",1.0f, false);
+ SetMoveObjectState("bridge_metal_vert_2", -1.5f);
+ AddTimer("podnoszenie_mostu2a",30,"most2a");
+ AddTimer("StopChain2",5,"StopChain2");
+ }
+   void StopChain2(string &in asTimer) {
+   StopSound("chain2", 1.0f);
+ }
+ void most2a(string &in asTimer) {
+   RemoveTimer("podnoszenie_mostu2");
+   // PlaySoundAtEntity("chain2a", "general_chain", "bridge_metal_vert_2",1.0f, false);
+ SetMoveObjectState("bridge_metal_vert_2", 1.0f);
+ AddTimer("podnoszenie_mostu2",30,"most2");
+ AddTimer("StopChain2a",5,"StopChain2a");
+ }
+    void StopChain2a(string &in asTimer) {
+   StopSound("chain2a", 1.0f);
+ }
+   void most3(string &in asTimer) {
+     RemoveTimer("podnoszenie_mostu3a");
+  //    PlaySoundAtEntity("chain3", "general_chain", "bridge_metal_vert_4",1.0f, false);
+ SetMoveObjectState("bridge_metal_vert_4", -2.0f);
+ AddTimer("podnoszenie_mostu3a",30,"most3a");
+ AddTimer("StopChain3",5,"StopChain3");
+ }
+     void StopChain3(string &in asTimer) {
+   StopSound("chain3", 1.0f);
+ }
+ void most3a(string &in asTimer)  {
+   RemoveTimer("podnoszenie_mostu3");
+   // PlaySoundAtEntity("chain3a", "general_chain", "bridge_metal_vert_4",1.0f, false);
+ SetMoveObjectState("bridge_metal_vert_4", 2.0f);
+ AddTimer("podnoszenie_mostu3",30,"most3");
+ AddTimer("StopChain3a",5,"StopChain3a");
+ }
+     void StopChain3a(string &in asTimer) {
+   StopSound("chain3a", 1.0f);
+ }
+    void most4(string &in asTimer) {
+	  RemoveTimer("podnoszenie_mostu4a");
+	  // PlaySoundAtEntity("chain4", "general_chain", "bridge_metal_vert_5",1.0f, false);
+ SetMoveObjectState("bridge_metal_vert_5", -2.0f);
+ AddTimer("podnoszenie_mostu4a",30,"most4a");
+ AddTimer("StopChain4",5,"StopChain4");
+ }
+   void StopChain4(string &in asTimer) {
+   StopSound("chain4", 1.0f);
+ }
+ void most4a(string &in asTimer) {
+     RemoveTimer("podnoszenie_mostu4");
+   // PlaySoundAtEntity("chain4a", "general_chain", "bridge_metal_vert_5",1.0f, false);
+ SetMoveObjectState("bridge_metal_vert_5", 2.0f);
+ AddTimer("podnoszenie_mostu4",30,"most4");
+ AddTimer("StopChain4a",5,"StopChain4a");
+ }
+   void StopChain4a(string &in asTimer) {
+   StopSound("chain4a", 1.0f);
+ }
+    void most5(string &in asTimer) {
+	   RemoveTimer("podnoszenie_mostu5a");
+	  // PlaySoundAtEntity("chain5", "general_chain", "bridge_metal_vert_9",1.0f, false);
+ SetMoveObjectState("bridge_metal_vert_9", 1.5f);
+ AddTimer("podnoszenie_mostu5a",30,"most5a");
+ AddTimer("StopChain5",5,"StopChain5");
+ }
+  void StopChain5(string &in asTimer) {
+   StopSound("chain5", 1.0f);
+ }
+ void most5a(string &in asTimer) {
+    RemoveTimer("podnoszenie_mostu5");
+    //PlaySoundAtEntity("chain5a", "general_chain", "bridge_metal_vert_9",1.0f, false);
+ SetMoveObjectState("bridge_metal_vert_9", -1.5f);
+ AddTimer("podnoszenie_mostu5",30,"most5");
+ AddTimer("StopChain5a",5,"StopChain5a");
+ }
+  void StopChain5a(string &in asTimer) {
+   StopSound("chain5a", 1.0f);
+ }
+     void most6(string &in asTimer) {
+	  RemoveTimer("podnoszenie_mostu6a");
+ //PlaySoundAtEntity("chain6", "general_chain", "bridge_metal_vert_3",1.0f, false);
+ SetMoveObjectState("bridge_metal_vert_3", 0.5f);
+ AddTimer("podnoszenie_mostu6a",30,"most6a");
+ AddTimer("StopChain6",5,"StopChain6");
+ }
+  void StopChain6(string &in asTimer) {
+   StopSound("chain6", 1.0f);
+ }
+ void most6a(string &in asTimer) {
+  RemoveTimer("podnoszenie_mostu6");
+  //  PlaySoundAtEntity("chain6a", "general_chain", "bridge_metal_vert_3",1.0f, false);
+ SetMoveObjectState("bridge_metal_vert_3", -1.0f);
+ AddTimer("podnoszenie_mostu6",30,"most6");
+ AddTimer("StopChain6a",5,"StopChain6a");
+ }
+  void StopChain6a(string &in asTimer) {
+   StopSound("chain6a", 1.0f);
+ }
+      void most7(string &in asTimer) {
+	  RemoveTimer("podnoszenie_mostu7a");
+ //PlaySoundAtEntity("chain6", "general_chain", "bridge_metal_vert_3",1.0f, false);
+ SetMoveObjectState("bridge_metal_vert_6", 0.9f);
+ AddTimer("podnoszenie_mostu7a",30,"most7a");
+ AddTimer("StopChain7",5,"StopChain7");
+ }
+  void StopChain7(string &in asTimer) {
+   StopSound("chain7", 1.0f);
+ }
+ void most7a(string &in asTimer) {
+  RemoveTimer("podnoszenie_mostu7");
+  //  PlaySoundAtEntity("chain6a", "general_chain", "bridge_metal_vert_3",1.0f, false);
+ SetMoveObjectState("bridge_metal_vert_6", -0.9f);
+ AddTimer("podnoszenie_mostu7",30,"most7");
+ AddTimer("StopChain7a",5,"StopChain7a");
+ }
+  void StopChain7a(string &in asTimer) {
+   StopSound("chain7a", 1.0f);
+ }
+  
+ // 
+      void most8(string &in asTimer) {
+	   RemoveTimer("podnoszenie_mostu8a");
+ //PlaySoundAtEntity("chain8", "general_chain", "bridge_metal_vert_7",1.0f, false);
+ SetMoveObjectState("bridge_metal_vert_7", -1.5f);
+ AddTimer("podnoszenie_mostu8a",30,"most8a");
+ AddTimer("StopChain8",5,"StopChain8");
+ }
+  void StopChain8(string &in asTimer) {
+   StopSound("chain8", 1.0f);
+ }
+ void most8a(string &in asTimer) {
+  RemoveTimer("podnoszenie_mostu8");
+   // PlaySoundAtEntity("chain8a", "general_chain", "bridge_metal_vert_7",1.0f, false);
+ SetMoveObjectState("bridge_metal_vert_7", 1.5f);
+ AddTimer("podnoszenie_mostu8",30,"most8");
+ AddTimer("StopChain8a",5,"StopChain8a");
+ }
+  void StopChain8a(string &in asTimer) {
+   StopSound("chain8a", 1.0f);
+ }
+ 
+       void most9(string &in asTimer) {
+	    RemoveTimer("podnoszenie_mostu9a");
+ //PlaySoundAtEntity("chain9", "general_chain", "bridge_metal_vert_8",1.0f, false);
+ SetMoveObjectState("bridge_metal_vert_8", 1.5f);
+ AddTimer("podnoszenie_mostu9a",30,"most9a");
+ AddTimer("StopChain9",5,"StopChain9");
+ }
+  void StopChain9(string &in asTimer) {
+   StopSound("chain9", 1.0f);
+ }
+ void most9a(string &in asTimer) {
+  RemoveTimer("podnoszenie_mostu9");
+   // PlaySoundAtEntity("chain9a", "general_chain", "bridge_metal_vert_8",1.0f, false);
+ SetMoveObjectState("bridge_metal_vert_8", -1.5f);
+ AddTimer("podnoszenie_mostu9",30,"most9");
+ AddTimer("StopChain9a",5,"StopChain9a");
+ }
+  void StopChain9a(string &in asTimer) {
+   StopSound("chain9a", 1.0f);
+ }
+ void przekrec_kolowrot1(string &in asEntity, int alState) {
+ if(alState == 1) {
+ AddLocalVarInt("kolowrot",1);
+ //TeleportPlayer("PlayerStartArea_4");
+ if(GetLocalVarInt("kolowrot") == 2) {
+Shake_Effect_Random();
+ }
+  if(GetLocalVarInt("kolowrot") == 3) {
+AddPlayerSanity(20);
+AddEntityCollideCallback("Player","ScriptArea_4","ScriptArea_4",false,1);
+ }
+ } 
+ }
+ void Shake_Effect_Random() {
+  AddTimer("RandomShakeEfekt",RandInt(2,30),"RandomShakeEfekt");
+ }
+ void RandomShakeEfekt(string &in asTimer) {
+ RemoveTimer(asTimer);
+  PlayGuiSound("general_rock_rumble",1);
+StartScreenShake(RandFloat(0.05f,0.2f),RandFloat(0.5f,2), RandFloat(0.2f,1.0f),RandFloat(0.2f,1.0f));
+  AddTimer("RandomShakeEfekt",RandInt(2,30),"RandomShakeEfekt");
+ }
+  void przekrec_kolowrot3(string &in asEntity, int alState) {
+ if(alState == 1) {
+ AddLocalVarInt("kolowrot",1);
+  // TeleportPlayer("PlayerStartArea_3");
+  if(GetLocalVarInt("kolowrot") == 2) {
+Shake_Effect_Random();
+ }
+  if(GetLocalVarInt("kolowrot") == 3) {
+AddPlayerSanity(20);
+AddEntityCollideCallback("Player","ScriptArea_4","ScriptArea_4",false,1);
+ }
+ } 
+ }
+  void przekrec_kolowrot2(string &in asEntity, int alState) {
+ if(alState == 1) {
+ SetEntityActive("servant_brute_1",true);
+ SetEntityActive("servant_brute_2",true);
+ ShowEnemyPlayerPosition("servant_brute_1");
+ ShowEnemyPlayerPosition("servant_brute_2");
+ AddLocalVarInt("kolowrot",1);
+  if(GetLocalVarInt("kolowrot") == 2) {
+Shake_Effect_Random();
+ }
+  if(GetLocalVarInt("kolowrot") == 3) {
+AddPlayerSanity(20);
+AddEntityCollideCallback("Player","ScriptArea_4","ScriptArea_4",false,1);
+ }
+ } 
+ }
+ void ScriptArea_3(string &in asParent, string &in asChild, int alState) {
+  SetEntityActive("servant_brute_1",false);
+ SetEntityActive("servant_brute_2",false);
+ }
+  void ScriptArea_4(string &in asParent, string &in asChild, int alState) {
+  SetMoveObjectState("bridge_metal_vert_11", -5.0f);
+  for(int z=1;z<=4;z++) {
+  SetEntityActive("block_box_"+z,true); 
+  }
+ }
+ void ScriptArea_5(string &in asParent, string &in asChild, int alState) {
+   ChangeMap("act6main.map", "PlayerStartArea_1", "", "");
+ }
+ void ScriptArea_7(string &in asParent, string &in asChild, int alState) {
+ 	FadeOut(0.3f);
+	
+	AddTimer("scare", 0.3f, "TimerPlayerReact");	
+	AddTimer("breath", 2.0f, "TimerPlayerReact");	
+	AddTimer("breathl", 4.0f, "TimerPlayerReact");
+	AddTimer("breathl", 6.0f, "TimerPlayerReact");
+		
+	AddTimer("TeleportDone", 2.5f, "TimerTelportDone");
+	
+	PlaySoundAtEntity("stomp","scare_wall_stomp","Player", 0, false);
+	PlaySoundAtEntity("darkamb","07_amb_breath","Player", 5, true);
+ 
+	
+	FadePlayerFOVMulTo(4.0f, 4.0f);
+	SetRadialBlurStartDist(0.1f);
+	FadeRadialBlurTo(1.0f, 5.0f);
+	
+	StartEffectFlash(0.2, 0.1,0.3);
+	
+	FadeGlobalSoundVolume(0, 0.3);
+	StopMusic(0.3f, 0);
+	StartScreenShake(0.1, 4.7, 0.05, 0.5);
+  
+ }
+ void TimerPlayerReact(string &in asTimer)
+{
+	if(asTimer == "scare"){
+		PlayGuiSound("react_scare", 1.0f);
+	}
+	else if(asTimer == "breath"){
+		PlayGuiSound("react_breath", 0.8f);
+	}
+	else if(asTimer == "breathl"){
+		PlayGuiSound("react_breath", 0.5f);
+	}	
+}
+void TimerTelportDone(string &in asTimer)
+{
+	TeleportPlayer("PlayerStartArea_2");
+	FadeGlobalSoundVolume(1,2);
+	SetPlayerActive(true);
+	FadePlayerFOVMulTo(1.0f, 0.5f);
+	FadeRadialBlurTo(0.0f, 1.0f);
+	FadeIn(1.3f);
+	
+	FadePlayerFOVMulTo(1, 1);
+	
+	 
+}
+ void ScriptArea_8 (string &in asParent, string &in asChild, int alState) {
+ FadeOut(0.3f);
+	
+	AddTimer("scare", 0.3f, "TimerPlayerReact");	
+	AddTimer("breath", 2.0f, "TimerPlayerReact");	
+	AddTimer("breathl", 4.0f, "TimerPlayerReact");
+	AddTimer("breathl", 6.0f, "TimerPlayerReact");
+	
+	PlaySoundAtEntity("stomp","scare_wall_stomp","Player", 0, false);
+	PlaySoundAtEntity("darkamb","07_amb_breath","Player", 5, true);
+ 
+	
+	FadePlayerFOVMulTo(4.0f, 4.0f);
+	SetRadialBlurStartDist(0.1f);
+	FadeRadialBlurTo(1.0f, 5.0f);
+	
+	StartEffectFlash(0.2, 0.1,0.3);
+	
+	FadeGlobalSoundVolume(0, 0.3);
+	StopMusic(0.3f, 0);
+	StartScreenShake(0.1, 4.7, 0.05, 0.5);
+  
+AddTimer("Koniec_Teleport_Secret",2.5f,"Koniec_Teleport_Secret");
+
+ }
+ void Koniec_Teleport_Secret(string &in asTimer) {
+  TeleportPlayer("PlayerStartArea_1"); 
+ 	FadeGlobalSoundVolume(1,2);
+	SetPlayerActive(true);
+	FadePlayerFOVMulTo(1.0f, 0.5f);
+	FadeRadialBlurTo(0.0f, 1.0f);
+	FadeIn(1.3f);
+	
+	FadePlayerFOVMulTo(1, 1);
+ }
+void OnEnter() {
+     AutoSave();
+ PlayMusic("08_amb_success",false, 0.8, 0.1, 1,false);
+ 
+}
+ void OnLeave() {
+
+ }

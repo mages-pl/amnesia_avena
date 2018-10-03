@@ -1,0 +1,76 @@
+void OnStart() {
+//##### Ekwipunek
+//#### USE ITEMS
+ AddUseItemCallback("", "crank_wood_no_mount_item_1", "AreaBrokenWheel", "UseCrank", true);
+ //INTERACT CALLBACK
+ SetEntityPlayerInteractCallback("rotate_wheel_control","rotate_wheel_control",true);
+ SetEntityPlayerInteractCallback("valve_iron_rusty_breakable_1","valve_iron_rusty_breakable_1",true);
+ AddEntityCollideCallback("Player", "ScriptArea_1", "ScriptArea_1", true, 1);  
+//SetWheelInteractionDisablesStuck("rotate_wheel_control", true);
+ //SetWheelStuckState("rotate_wheel_control", 1, true);
+}
+void ScriptArea_1(string &in asParent, string &in asChild, int alState) {
+if(GetGlobalVarInt("OdkryteSkrytki") == 0) {
+GiveHint("Hint_Skrytki", "Skrytki", "Hint_Skrytki", 5);
+}
+AddGlobalVarInt("OdkryteSkrytki",1);
+PlayGuiSound("quest_completed",1);
+SetMessage("Skrytki","Odkryto", 3); // GetGlobalVarInt("OdkryteSkrytki")+GetGlobalVarString("Separator")+GetGlobalVarInt("MaxSkrytek")
+}
+//####### U¯YJ KO£OWROTU #####################
+void UseCrank(string &in asItem, string &in asEntity) {
+ SetEntityActive("rotate_wheel_control",true);
+ AddPlayerSanity(10);
+ RemoveItem("crank_wood_no_mount_item_1");
+ SetEntityActive("AreaBrokenWheel",false);
+}
+//##### PODNIEŒ KO£OWRÓT ###############
+void take_crank_sterownia(string &in asEntity, string &in Type) {
+SetEntityActive("AreaBrokenWheel",true);
+}
+//######## Dotknij rozwalony ko³owrót ##### 
+void valve_iron_rusty_breakable_1(string &in asEntity) {
+  AddPropImpulse("valve_iron_rusty_breakable_1", 1, 0, 0, "World");
+}
+//############### ON ENTER #############
+void OnEnter() {
+PlayMusic("18_amb.ogg",true, 0.85,1.0,1,true);
+AutoSave();
+}
+//########## OBRACANIE ZAWORAMI ###########
+void obrot_wheel1(string &in asEntity, int alState) {
+if(alState == 1) {
+SetLocalVarInt("kolowrot1",1);
+AddTimer("",1,"EndSterownia");
+}
+}
+void obrot_wheel2(string &in asEntity, int alState) {
+if(alState == 1) {
+SetLocalVarInt("kolowrot2",1);
+AddTimer("",1,"EndSterownia");
+}
+}
+void rotate_wheel_control(string &in asEntity, int alState) {
+if(alState == 1) {
+SetLocalVarInt("kolowrot3",1);
+AddTimer("",0.5,"EndSterownia");
+}
+}
+void EndSterownia(string &in asTimer) {
+if((GetLocalVarInt("kolowrot1") == 1) && (GetLocalVarInt("kolowrot2") == 1) && (GetLocalVarInt("kolowrot3") == 1)) {  
+SetLocalVarInt("kolowrot3",1);
+SetWheelStuckState("rotate_wheel_control", 1, true);
+  AddGlobalVarInt("OpenDoorAct2",1);
+  SetEntityActive("servant_brute_1",true);
+  PlayGuiSound("react_pant.snt",1);
+  for(int t=1;t<4;t++) {     AddEnemyPatrolNode("servant_brute_1", "PathNodeArea_"+t, 0, "");
+if(t==3) {
+ AddEnemyPatrolNode("servant_brute_1", "PathNodeArea_"+t, 0, "notice"+RandInt(1,2));
+   for(int s=t;s>=1;s--) {     AddEnemyPatrolNode("servant_brute_1", "PathNodeArea_"+s, 0, ""); }
+  }
+  }
+  }
+}
+void OnLeave() {
+StopMusic(1,1.0f);
+}

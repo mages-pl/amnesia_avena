@@ -1,0 +1,238 @@
+void OnStart() {
+//####### Rope ################## 
+	//InteractConnectPropWithRope("opusc_sekret1","lever_small01_min_1", "RopeArea_8", true, 1,1,1, true, 0);
+	// InteractConnectPropWithRope("opusc_sekret2","crank_iron_1", "RopeArea_9", false, 0.2f,0.2f,0.2f, true, 0);
+	//InteractConnectPropWithRope("opusc_sekret3","lever_small01_min_1", "RopeArea_10", true, 1,1,1, true, 0);
+	//InteractConnectPropWithRope("opusc_sekret4","lever_small01_min_1", "RopeArea_11", true, 1,1,1, true, 0);
+	//AddAttachedPropToProp("invisible_box_mass_3", "platforma_sekret", "lift_wood_joint.ent", 0,0,0, 0,0,0);
+	//AddAttachedPropToProp("invisible_box_mass_3", "platforma_sekret", "lift_wood_joint.ent", 0,0,0, 0,0,0);
+	
+	SetEntityPlayerInteractCallback("dotknij_topielca","dotknij_topielca",true);
+ 
+//####### COLLIDE #############
+AddEntityCollideCallback("Player", "ScriptArea_1", "ScriptArea_1", true, 1);   
+AddEntityCollideCallback("Player", "ScriptArea_2", "ScriptArea_2", true, 1);  
+AddEntityCollideCallback("Player", "ScriptArea_3", "ScriptArea_3", true, 1); 
+AddEntityCollideCallback("Player", "ScriptArea_4", "ScriptArea_4", false, 1);  
+AddEntityCollideCallback("Player", "ScriptArea_5", "ScriptArea_5", true, 1);  
+AddEntityCollideCallback("Player", "ScriptArea_12", "ScriptArea_12", true, 1);  
+AddEntityCollideCallback("Player", "ScriptArea_18", "ScriptArea_18", true, 1);  
+ 
+AddEntityCollideCallback("Player", "ScriptArea_10", "ScriptArea_10", true, 1);  
+ 
+
+
+AddEntityCollideCallback("Player", "ScriptArea_19", "ScriptArea_19", true, 1);  
+ 
+
+
+
+}
+void ScriptArea_10(string &in asParent, string &in asChild, int alState) {
+    AddEntityCollideCallback("Player", "ScriptArea_8", "ScriptArea_8", true, 1);  
+    
+}
+void ScriptArea_8(string &in asParent, string &in asChild, int alState) {
+    SetEntityActive("servant_brute_5",true);
+    AddEnemyPatrolNode("servant_brute_5", "PathNodeArea_12", 0, "");
+AddEnemyPatrolNode("servant_brute_5", "PathNodeArea_13", 0, "");
+}
+void ScriptArea_19(string &in asParent, string &in asChild, int alState) {
+    AddEntityCollideCallback("Player", "brute_2_strach", "brute_2_strach", true, 1);  
+    
+}
+void brute_2_strach(string &in asParent, string &in asChild, int alState) {
+    SetEntityActive("servant_brute_4",true);
+    
+    
+AddEnemyPatrolNode("servant_brute_4", "PathNodeArea_9", 0, "");
+AddEnemyPatrolNode("servant_brute_4", "PathNodeArea_10", 0, "");
+AddEnemyPatrolNode("servant_brute_4", "PathNodeArea_11", 0, "");
+ 
+    
+}
+ 
+ 
+void ScriptArea_18(string &in asParent, string &in asChild, int alState) {
+ if(GetGlobalVarInt("OdkryteSkrytki") == 0) {
+GiveHint("Hint_Skrytki", "Skrytki", "Hint_Skrytki", 5);
+}
+AddGlobalVarInt("OdkryteSkrytki",1);
+PlayGuiSound("quest_completed",1);
+SetMessage("Skrytki","Odkryto", 3); // GetGlobalVarInt("OdkryteSkrytki")+GetGlobalVarString("Separator")+GetGlobalVarInt("MaxSkrytek")
+}
+void ScriptArea_12(string &in asParent, string &in asChild, int alState) {
+ if(GetGlobalVarInt("OdkryteSkrytki") == 0) {
+GiveHint("Hint_Skrytki", "Skrytki", "Hint_Skrytki", 5);
+}
+AddGlobalVarInt("OdkryteSkrytki",1);
+PlayGuiSound("quest_completed",1);
+SetMessage("Skrytki","Odkryto", 3); // GetGlobalVarInt("OdkryteSkrytki")+GetGlobalVarString("Separator")+GetGlobalVarInt("MaxSkrytek")
+}
+//####### CHANGE MAP #####################
+void ScriptArea_1(string &in asParent, string &in asChild, int alState) {
+   ChangeMap("act3main.map", "PlayerStartArea_1", "", "");
+}
+//#### Zawalenie g�az�w ######## 
+void ScriptArea_2(string &in asParent,string &in asChild, int alState) {
+SetEntityActive("cave_in_destroyed_1",true);
+SetEntityActive("cave_in_1",true);	
+StartScreenShake(0.3, 1, 1,2);
+GiveSanityDamage(15,false);
+FadePlayerRollTo(60, 0.05f, 0.1f);
+PlayGuiSound("react_breath.snt",1);
+PlaySoundAtEntity("","15_rock_break.snt", "ScriptArea_2", 0, false);
+PlaySoundAtEntity("","explosion_rock_large.snt", "ScriptArea_2", 0, false);
+CheckPoint ("", "PlayerStartArea_2", "", "", "");
+AddTimer("",0,"FadeOutGlaz");
+	PlaySoundAtEntity("stomp","scare_wall_stomp","Player", 0, false);
+	PlaySoundAtEntity("darkamb","07_amb_breath","Player", 5, true);
+	//FadePlayerFOVMulTo(4.0f, 4.0f);
+	SetRadialBlurStartDist(0.1f);
+	FadeRadialBlurTo(1.0f, 5.0f);
+	
+	StartEffectFlash(0.2, 0.1,0.3);
+
+
+SetPlayerRunSpeedMul(0.0f);
+SetPlayerMoveSpeedMul(0.0f);
+SetPlayerLookSpeedMul(0.03f);
+SetPlayerCrouching(true);
+SetPlayerCrouchDisabled(true);
+SetPlayerJumpDisabled(true);
+SetInventoryDisabled(true);
+//MovePlayerHeadPos(0.5f, -0.3f, 0.0f, 1.0f, 0.1f);
+}
+void FadeOutGlaz(string &in asTimer){
+FadeImageTrailTo(0.2f, 0.4f);
+AddTimer("",2,"FadeInGlaz");
+}
+void FadeInGlaz(string &in asTimer){
+FadeIn(1);
+//MovePlayerHeadPos(-0.5, 0.3f, 0.0f, 1.0f, 0.1f);
+//FadePlayerRollTo(0, 1.0f, 1.0f);
+AddTimer("",3,"upadek_n");
+
+}
+void upadek_n(string &in asTimer) {
+FadeOut(1.0f);
+AddTimer("",2,"upadek_n_2");
+}
+void upadek_n_2(string &in asTimer) {
+FadeIn(1.0f);
+//MovePlayerHeadPos(0, 0, 0.0f, 0.5f, 0.1f);
+FadePlayerRollTo(0, 0.05f, 0.1f);
+SetPlayerMoveSpeedMul(1.0f);
+SetPlayerRunSpeedMul(1.0f);
+SetPlayerLookSpeedMul(1.0f);
+SetPlayerCrouchDisabled(false);
+SetPlayerJumpDisabled(false);
+SetInventoryDisabled(false);
+	SetRadialBlurStartDist(0.0f);
+	FadeRadialBlurTo(0.0f, 5.0f);
+}
+//#### Prze��cz sekret ###### 
+void przelacz_sekret(string &in asEntity, int alState) {
+if(alState == 1) {
+ //SetMoveObjectState("bridge_metal_vert_1", -1.0f);
+ //bridge_metal_vert_1
+//AddAttachedPropToProp("invisible_box_mass_6", "lift_wood_joint_1", "lift_wood_joint.ent", 0,0,0, 0,0,0);
+//AddAttachedPropToProp("invisible_box_mass_7", "lift_wood_joint_1", "lift_wood_joint.ent", 0,0,0, 0,0,0);
+//AddAttachedPropToProp("invisible_box_mass_8", "lift_wood_joint_1", "lift_wood_joint.ent", 0,0,0, 0,0,0);
+//AddAttachedPropToProp("invisible_box_mass_9", "lift_wood_joint_1", "lift_wood_joint.ent", 0,0,0, 0,0,0);
+} if(alState == -1) {
+ SetMoveObjectState("bridge_metal_vert_1", 1.5f); 
+ AddTimer("platforma",15,"podniesc_platforme");
+}
+}
+void podniesc_platforme(string &in asTimer) {
+RemoveTimer("platforma");
+ SetMoveObjectState("bridge_metal_vert_1", -0.3f);
+}
+//#### Aktywuj bruta ######## 
+void ScriptArea_4(string &in asParent,string &in asChild, int alState) {
+ AddTimer("",1,"brute_active");
+}
+void brute_active(string &in asTimer) {
+GiveSanityDamage(10,false);
+SetEntityActive("servant_brute_2",true);
+PlayGuiSound("react_pant.snt",1);
+   for(int z=3;z<=8;z++) {
+   AddEnemyPatrolNode("servant_brute_2", "PathNodeArea_"+z, 0, "idle_extra"+RandInt(1,2));
+   }
+}
+//#### Biegn�cy brute ######## 
+void ScriptArea_3(string &in asParent,string &in asChild, int alState) {
+SetEntityActive("servant_brute_1",true);
+GiveSanityDamage(5,false);
+   for(int y=1;y<=2;y++) {
+   AddEnemyPatrolNode("servant_brute_1", "PathNodeArea_"+y, 0, "run");
+   }
+} 
+//######## Po�o�enie z�batek ###########################
+void zebatka1(string &in asStickyArea, string &in asBodyName)
+{
+AddLocalVarInt("zebatka",1);
+if(GetLocalVarInt("zebatka") == 3) {
+AddPlayerSanity(10);
+SetEntityActive("ScriptArea_4",true);
+AddTimer("",2,"Podnies_sciane");
+}
+}
+void zebatka2(string &in asStickyArea, string &in asBodyName)
+{
+AddLocalVarInt("zebatka",1);
+if(GetLocalVarInt("zebatka") == 3) {
+AddPlayerSanity(10);
+SetEntityActive("ScriptArea_4",true);
+AddTimer("",2,"Podnies_sciane");
+}
+}
+void zebatka3(string &in asStickyArea, string &in asBodyName)
+{
+AddLocalVarInt("zebatka",1);
+if(GetLocalVarInt("zebatka") == 3) {
+AddPlayerSanity(10);
+SetEntityActive("ScriptArea_4",true);
+AddTimer("",2,"Podnies_sciane");
+}
+}
+//######## Podniesienie �ciany ###########################
+void Podnies_sciane(string &in asTimer) {
+SetEntityActive("machine",true);
+PlaySoundAtEntity("","13_machine_extra.ogg", "ScriptArea_14", 0, true);
+PlayMusic("13_puzzle_machine",false, 0.85,1.0,1,false);
+PreloadSound("machine");
+AddTimer("",15,"next_amb_music");
+ 
+ RotatePropToSpeed("cogwheel_tiny01_1", 0.7, 0.6f , 0, 0, 1, false, "rotation1");  
+  RotatePropToSpeed("cogwheel_tiny01_2", 0.7, 0.6f , 0, 0, 1, false, "rotation2");
+   RotatePropToSpeed("cogwheel_tiny01_3", 0.7, 0.6f , 0, 0, -1, false, "rotation3");
+   
+SetMoveObjectState("crush_wall_1", -1.0f);
+}
+
+void next_amb_music(string &in asTimer) {
+StopMusic(2,1.0f);
+PlayMusic("01_amb_darkness.ogg",true, 0.85,1.0,1,true);
+}
+
+//############### ON ENTER ##############
+void OnEnter() {
+PlayMusic("01_amb_darkness.ogg",true, 0.85,1.0,1,true);
+AutoSave();
+
+}
+void OnLeave() {
+StopMusic(1,1.0f);
+}
+void dotknij_topielca(string &in asEntity) {
+SetEntityActive("orbpiece_indigo_1",true);
+SetEntityActive("waterlurker_1",true);
+  AddQuest("wiezien_q_2", "wiezien_q_2");
+  PlayGuiSound("react_sigh.snt",1);
+}
+void pickup_orb(string &in asEntity, string &in asType) {
+SetEntityActive("waterlurker_1",false);
+  CompleteQuest("wiezien_q_2", "wiezien_q_2");
+}

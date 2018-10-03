@@ -1,0 +1,30 @@
+void OnStart() {
+for(int k=1;k<4;k++) {
+ AddEntityCollideCallback("Player", "ScriptArea_"+k, "ScriptArea_"+k, false, 1);
+}
+ GiveItemFromFile("lantern", "lantern.ent");
+ AddEntityCollideCallback("Player", "ScriptArea_4", "ScriptArea_4", true, 1);
+ SetEntityPlayerInteractCallback("Wind_force", "Dotyk_drzwi", false);
+}
+void OnEnter() {
+PlayMusic("04_amb",true,0.8,0.1,1.0, true);
+}
+void ScriptArea_1(string &in asParent, string &in asChild, int alState) {
+PlaySoundAtEntity("123","guardian_activated.snt","ScriptArea_1",0,false);
+}
+void ScriptArea_2(string &in asParent, string &in asChild, int alState) {
+PlaySoundAtEntity("","cell_victor.snt","ScriptArea_2",0,false);
+AddTimer("",2,"react");
+}
+void react(string &in asTimer) {
+PlayGuiSound("react_scare.snt",1);
+}
+void ScriptArea_3(string &in asParent, string &in asChild, int alState) {
+// 1
+}
+void ScriptArea_4(string &in asParent, string &in asChild, int alState) {
+// 1
+}
+void Dotyk_drzwi(string &in asEntity) { 
+PlaySoundAtEntity("","general_wind_whirl.snt","castle_2",0,false);
+}

@@ -1,0 +1,364 @@
+void OnStart() {
+
+}
+void Level_door_script1(string &in asParent, string &in asChild, int alState) {
+ChangeMap("act1main.map", "Z_act0main", "","");
+}
+void strach1(string &in asParent, string &in asChild, int alState) {
+GiveSanityDamage(10,false);
+PlayGuiSound("react_breath.snt",1);
+	PlaySoundAtEntity("scare1", "05_event_door_bang.snt", "strach1daleko", 0, false);
+}
+void strach2(string &in asParent, string &in asChild, int alState) {
+GiveSanityDamage(5,false);
+ PlayGuiSound("react_pant.snt",1);
+	PlaySoundAtEntity("scare2", "23_saw1.ogg", "strach2", 0, false); 
+}
+void strach3(string &in asParent, string &in asChild, int alState) {
+GiveSanityDamage(10,false);
+AddQuest("Journal", "act1katakumby2_1");
+PlayGuiSound("react_breath.snt",1);
+	PlaySoundAtEntity("scare3", "05_event_bottles.snt", "strach3", 0, false); 
+}
+void strach4(string &in asParent, string &in asChild, int alState) {
+GiveSanityDamage(10,false);
+PlayGuiSound("react_sigh.snt",1);
+	PlaySoundAtEntity("scare4", "guardian_idle_rand.snt", "strach4", 0, false);
+	if(GetLocalVarInt("q2_active") == 0) {
+AddTimer("quest2",3,"quest_2_active");	
+AddLocalVarInt("q2_active",1);
+}
+}
+void quest_2_active(string &in asTimer) {
+RemoveTimer(asTimer);
+	AddQuest("Journal", "act1katakumby22");
+}
+void dotyk_ksiegi(string &in asEntity) {
+if(GetGlobalVarInt("szyfr") == 4) {
+	FadeOut(0.3);
+	
+	AddTimer("scare", 0.3f, "TimerPlayerReact");	
+	AddTimer("breath", 2.0f, "TimerPlayerReact");	
+	AddTimer("breathl", 4.0f, "TimerPlayerReact");
+	AddTimer("breathl", 6.0f, "TimerPlayerReact");
+	
+	AddTimer("TeleportHowl", 0.5f, "TimerTeleportHowl");	
+	AddTimer("TeleportDone", 3.5f, "TimerTelportDone");
+	
+	PlaySoundAtEntity("stomp","scare_wall_stomp","Player", 0, false);
+	PlaySoundAtEntity("darkamb","07_amb_breath","Player", 5, true);
+ 
+	
+	FadePlayerFOVMulTo(4.0f, 4.0f);
+	SetRadialBlurStartDist(0.1f);
+	FadeRadialBlurTo(1.0f, 5.0f);
+	
+	StartEffectFlash(0.2, 0.1,0.3);
+	
+	FadeGlobalSoundVolume(0, 0.3);
+	StopMusic(0.3f, 0);
+	StartScreenShake(0.1, 4.7, 0.05, 0.5);
+	
+	FadePlayerFOVMulTo(0.5, 3);
+	AddTimer("",1,"teleport_ksiega");
+}
+}
+
+void TimerPlayerReact(string &in asTimer)
+{
+	if(asTimer == "scare"){
+		PlayGuiSound("react_scare", 1.0f);
+	}
+	else if(asTimer == "breath"){
+		PlayGuiSound("react_breath", 0.8f);
+	}
+	else if(asTimer == "breathl"){
+		PlayGuiSound("react_breath", 0.5f);
+	}	
+}
+
+void TimerTeleportHowl(string &in asTimer)
+{
+	PlaySoundAtEntity("howl","guardian_activated.snt","Player", 0, false);
+	SetPlayerActive(false);	
+	SetFogActive(true);
+}
+
+void TimerTelportDone(string &in asTimer)
+{
+	//TeleportPlayer("PlayerStartArea_3");
+	FadeGlobalSoundVolume(1,2);
+	SetPlayerActive(true);
+	FadePlayerFOVMulTo(1.0f, 0.5f);
+	FadeRadialBlurTo(0.0f, 1.0f);
+	FadeIn(1.3f);
+	
+	FadePlayerFOVMulTo(1, 1);
+	
+	 
+}
+/////////
+void teleport_ksiega(string &in asTimer) {
+FadeIn(1.0f);
+for(int dt=1;dt<14;dt++) {
+SetEntityActive("upadl"+dt,true);
+}
+PlaySoundAtEntity("ryk", "guardian_distant1.ogg", "Player", 0, false); 
+TeleportPlayer("teleport1");
+RemoveTimer("t1");
+AddTimer("t2",10,"teleport_act1");
+}
+void teleport_act1(string &in asTimer) {
+RemoveTimer("t2");
+FadeOut(1.0f);
+AddTimer("t3",5,"teleport_out");
+}
+void teleport_out(string &in asTimer) {
+FadeIn(1.0f);
+TeleportPlayer("teleport2");
+PlayMusic("15_paper_daniel02.ogg", false, 0.75, 0.1, 10, false);
+AddTimer("stop_m",23,"stop_m");
+//SetMessage("Rozdzial", "1", 3.0f);
+//ChangeMap("act1main.map", "Z_act0main", "","");
+}
+void stop_m(string &in asTimer) {
+StopMusic(2,2.0f);
+}
+void OnEnter() {
+     AutoSave();
+AddTimer("scare_sound",RandInt(15,60),"scare_sound");
+
+
+AddEntityCollideCallback("Player","strach1","strach1",true,1);
+AddEntityCollideCallback("Player","strach2","strach2",true,1);
+AddEntityCollideCallback("Player","strach3","strach3",true,-1);
+AddEntityCollideCallback("Player","Level_door_script1","Level_door_script1",true,-1);
+AddEntityCollideCallback("Player","strach4","strach4",true,1);
+AddEntityCollideCallback("storage_box_wood01_*","Ciezar1","Ciezar1",false,0);
+AddEntityCollideCallback("storage_box_wood01_*","Ciezar2","Ciezar2",false,0);
+SetEntityPlayerInteractCallback("dotyk_ksiegi","dotyk_ksiegi",false);
+SetEntityPlayerInteractCallback("dotyk_piedestalu","dotyk_piedestalu",true);
+
+AddEntityCollideCallback("Player","ScriptArea_3","ScriptArea_3",true,1);
+AddEntityCollideCallback("Player","ScriptArea_2","ScriptArea_2",true,1);
+AddEntityCollideCallback("Player","ScriptArea_1","ScriptArea_1",true,1);
+
+ PlayMusic("04_amb.ogg", true, 0.85f, 1.0f, 1, false);
+
+        
+       
+}
+void scare_sound(string &in asTimer) {
+RemoveTimer(asTimer);
+PlaySoundAtEntity("scare2", "04_hole_squeal.snt", "Player", 0, false); 
+AddTimer("scare_sound",RandInt(30,60),"scare_sound");
+}
+void Ciezar1(string &in asParent, string &in asChild, int alState) {
+if(alState == 1) {
+PlayGuiSound("scrape_rock",1);
+AddLocalVarInt("open_gate",1);
+if(GetLocalVarInt("open_gate") == 2) {
+ SetMoveObjectState("castle_portcullis_1", 1.0f);
+ CompleteQuest("Journal", "act1katakumby2_1");
+}
+}
+else { 
+AddLocalVarInt("open_gate",-1);
+ SetMoveObjectState("castle_portcullis_1", 0.0f);
+ PlayMusic("04_puzzle_acid.ogg",false, 0.85f, 1.0f, 1, false);
+ AddTimer("",30,"amb_music");
+}
+}
+void amb_music(string &in asTimer) { 
+     PlayMusic("04_amb.ogg", true, 0.85f, 1.0f, 1, false);
+}
+void Ciezar2(string &in asParent, string &in asChild, int alState) {
+if(alState == 1) {
+PlayGuiSound("scrape_rock",1);
+AddLocalVarInt("open_gate",1);
+if(GetLocalVarInt("open_gate") == 2) {
+ SetMoveObjectState("castle_portcullis_1", 1.0f);
+  CompleteQuest("Journal", "act1katakumby2_1");
+}
+}
+else {
+AddLocalVarInt("open_gate",-1);
+SetMoveObjectState("castle_portcullis_1", 0.0f);
+}
+}
+void zmien_lever_1(string &in asEntity, int alState) {
+if((alState == 1)  )  {
+if(GetGlobalVarInt("szyfr") == 0) {
+SetLeverStuckState("Ziemia", 1, false);
+SetGlobalVarInt("szyfr",1);
+GiveSanityDamage(1,true);
+}
+
+else  {
+    SetGlobalVarInt("szyfr",0);
+    SetLeverStuckState("Ziemia", 0, false);
+    SetLeverStuckState("Woda", 0, false);
+    SetLeverStuckState("Ogien", 0, false);
+    SetLeverStuckState("Wiatr", 0, false);
+    
+    
+}
+
+
+}
+else if((alState == -1))  {
+SetGlobalVarInt("szyfr",0);
+  SetLeverStuckState("Ziemia", 0, false);
+    SetLeverStuckState("Woda", 0, false);
+    SetLeverStuckState("Ogien", 0, false);
+    SetLeverStuckState("Wiatr", 0, false);
+
+  // nie udalo sie :/
+//AddPlayerSanity(1);
+} 
+else {
+ 
+    
+}
+}
+void zmien_lever_2(string &in asEntity, int alState) {
+if((alState == 1) )  {
+if(GetGlobalVarInt("szyfr") == 1) {
+     SetLeverStuckState("Woda", 1, false);
+SetGlobalVarInt("szyfr",2);
+GiveSanityDamage(1,true);
+}
+else  {
+    
+    SetGlobalVarInt("szyfr",0);
+    SetLeverStuckState("Ziemia", 0, false);
+    SetLeverStuckState("Woda", 0, false);
+    SetLeverStuckState("Ogien", 0, false);
+    SetLeverStuckState("Wiatr", 0, false);
+    
+}
+
+}
+else if(alState == -1) {
+SetGlobalVarInt("szyfr",0);
+
+ 
+  SetLeverStuckState("Ziemia", 0, false);
+    SetLeverStuckState("Woda", 0, false);
+    SetLeverStuckState("Ogien", 0, false);
+    SetLeverStuckState("Wiatr", 0, false);
+
+ // nie udalo sie :/
+//AddPlayerSanity(1);
+}
+else { 
+  
+}
+}
+void zmien_lever_3(string &in asEntity, int alState) {
+if((alState == 1)  ) {
+if(GetGlobalVarInt("szyfr") == 2) {
+SetGlobalVarInt("szyfr",3);
+     SetLeverStuckState("Ogien", 1, false);
+GiveSanityDamage(1,true);
+} else {
+    
+   SetGlobalVarInt("szyfr",0);
+
+ 
+  SetLeverStuckState("Ziemia", 0, false);
+    SetLeverStuckState("Woda", 0, false);
+    SetLeverStuckState("Ogien", 0, false);
+    SetLeverStuckState("Wiatr", 0, false);  
+    
+}
+}
+else if((alState == -1)  ) {
+    SetGlobalVarInt("szyfr",0);
+
+ 
+  SetLeverStuckState("Ziemia", 0, false);
+    SetLeverStuckState("Woda", 0, false);
+    SetLeverStuckState("Ogien", 0, false);
+    SetLeverStuckState("Wiatr", 0, false);
+ // nie udalo sie :/
+//AddPlayerSanity(1);
+}
+else {
+    
+ 
+}
+}
+void zmien_lever_4(string &in asEntity, int alState) {
+if((alState == 1)  ) {
+if(GetGlobalVarInt("szyfr") == 3) {
+SetGlobalVarInt("szyfr",4);
+     SetLeverStuckState("Wiatr", 1, false);
+AddTimer("szyfr_ok",1,"szyfr_ok");
+GiveSanityDamage(1,true);
+}
+else {
+    
+          SetGlobalVarInt("szyfr",0);
+
+ 
+  SetLeverStuckState("Ziemia", 0, false);
+    SetLeverStuckState("Woda", 0, false);
+    SetLeverStuckState("Ogien", 0, false);
+    SetLeverStuckState("Wiatr", 0, false);
+}
+}
+else if(alState == -1) {
+ SetGlobalVarInt("szyfr",0);
+
+ 
+  SetLeverStuckState("Ziemia", 0, false);
+    SetLeverStuckState("Woda", 0, false);
+    SetLeverStuckState("Ogien", 0, false);
+    SetLeverStuckState("Wiatr", 0, false);
+
+ // nie udalo sie :/
+//AddPlayerSanity(1);  
+}
+else { 
+    
+   
+    
+}
+}
+void szyfr_ok(string &in asTimer) {
+AddPlayerSanity(10);
+ PlayMusic("00_event_gallery.ogg", false, 0.75, 0.1, 10, false);
+ CompleteQuest("Journal", "act1katakumby22");
+  SetMoveObjectState("castlebase_secret_door_1", 1.0f);
+SetLightVisible("PointLight_5", true);
+}
+void OnLeave() {
+
+}
+void dotyk_piedestalu(string &in asEntity) {
+ // podniesienie area w edytorze, usuniecie atrybutu player lookat auto remote
+AddPlayerSanity(1);
+AddPlayerHealth(1);
+ 
+/* ustawienie na full zdrowia i sanity*/
+SetPlayerSanity(100);
+SetPlayerHealth(100);
+}
+
+void ScriptArea_2(string &in asParent, string &in asChild, int alState) {
+GiveSanityDamage(10,false);
+ 
+	PlaySoundAtEntity("", "23_saw_voice3.ogg", "antidote_corpse_1", 0, false); 
+}
+
+void ScriptArea_1(string &in asParent, string &in asChild, int alState) {
+
+ 
+	PlaySoundAtEntity("", "23_saw2.ogg", "ScriptArea_3", 0, false); 
+}
+void ScriptArea_3(string &in asParent, string &in asChild, int alState) {
+
+ 
+	PlaySoundAtEntity("", "23_saw3.ogg", "ScriptArea_2", 0, false); 
+}

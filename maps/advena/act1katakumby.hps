@@ -1,0 +1,99 @@
+void OnStart() {
+   SetSanityDrainDisabled(false);
+	
+       
+         //0 oleju w lampie
+        SetPlayerLampOil(0.0f);
+        
+}
+
+void OnEnter() {
+       AddLocalVarInt("losuj_czy_duch",RandInt(1,2));
+    
+    AddEntityCollideCallback("Player","ScriptArea_1","ScriptArea_1",true,1);
+       AddEntityCollideCallback("Player","ScriptArea_8","ScriptArea_8",true,1);
+          AddEntityCollideCallback("Player","ScriptArea_9","ScriptArea_9",true,1);
+         
+           AddEntityCollideCallback("Player","ScriptArea_5","ScriptArea_5",true,-1);
+         AddEntityCollideCallback("Player","ScriptArea_4","ScriptArea_4",true,1);
+    
+         AddEntityCollideCallback("Player","ScriptArea_3","ScriptArea_3",true,1);
+    
+             AddEntityCollideCallback("Player","ScriptArea_10","ScriptArea_10",true,1);
+         
+     if(GetLocalVarInt("Act1Katakumby1" == 0)) {
+	AddEntityCollideCallback("Player","GruntPojawienie","GruntPojawienie",false,1); 
+        }
+ //PlaySoundAtEntity("","scare_whine_loop.snt", "Dzwieki1", 0, true);
+// PlaySoundAtEntity("","scare_male_terrified.snt", "Dzwieki2", 0, true);
+ //PlaySoundAtEntity("","scare_baby_cry.snt", "Dzwieki3", 0, true);
+      /* 
+     Autosave & szybkość gracza 1.0 
+     */
+     
+    	SetPlayerMoveSpeedMul(1.0f);	
+	AutoSave();
+
+
+}
+
+void OnLeave() {
+AddLocalVarInt("Act1Katakumby1",1);
+}
+void ScriptArea_1(string &in asParent, string &in asChild, int alState) {
+	CreateParticleSystemAtEntity("", "ps_dust_ghost.ps", "ScriptArea_2", false);
+   PlaySoundAtEntity("","03_in_a_bottle","ScriptArea_2", 0 , false);
+PlayGuiSound("react_scare.snt",1);   
+}
+void GruntPojawienie(string &in asParent, string &in asChild, int alState)  {
+    
+       if(GetLocalVarInt("losuj_czy_duch") == 1) {
+        SetEntityActive("servant_grunt_1", true);
+	  for(int d=1;d<=30;d++) {      AddEnemyPatrolNode("servant_grunt_1", "PathNodeArea_"+d, 0, ""); }  
+
+       } else {
+        SetEntityActive("servant_grunt_2", true);
+     for(int d=1;d<=30;d++) {      AddEnemyPatrolNode("servant_grunt_2", "PathNodeArea_"+d, 0, ""); }  
+
+       }
+//SetEntityActive("servant_grunt_1",true);
+PlayGuiSound("react_breath.snt",1);
+
+}
+
+void ScriptArea_8(string &in asParent, string &in asChild, int alState) {
+    FadeOut(1);
+ChangeMap("act1katakumby2.map", "PlayerStartArea_1", "", "");
+}
+void ScriptArea_9(string &in asParent, string &in asChild, int alState) {
+      PlaySoundAtEntity("", "04_big_feet.snt", "ScriptArea_5", 1.0f, false);
+     PlaySoundAtEntity("", "15_man0"+RandInt(1,2)+"_whimp.snt", "ScriptArea_5", 1.0f, false);
+}
+void ScriptArea_5(string &in asParent, string &in asChild, int alState) {
+      PlaySoundAtEntity("", "04_big_feet.snt", "ScriptArea_5", 1.0f, false);
+     
+}
+void ScriptArea_4(string &in asParent, string &in asChild, int alState) {
+      PlaySoundAtEntity("", "14_elevator_activate.snt", "castle_3", 1.0f, false);
+     
+}
+void ScriptArea_3(string &in asParent, string &in asChild, int alState) {
+      PlaySoundAtEntity("", "15_man0"+RandInt(1,2)+"_whimp.snt", "ScriptArea_7", 1.0f, false);
+     
+}
+void ScriptArea_6(string &in asParent, string &in asChild, int alState) {
+     PlaySoundAtEntity("", "21_scream"+RandInt(1,12)+"_whimp.snt", "castle_1", 1.0f, false);
+        
+     AddTimer("",30,"next_scare_s");
+} 
+void next_scare_s(string &in asTimer) {
+     PlaySoundAtEntity("", "21_scream"+RandInt(1,12)+"_whimp.snt", "castle_1", 1.0f, false);
+    
+}
+void ScriptArea_10(string &in asParent, string &in asChild, int alState) { 
+        PlaySoundAtEntity("", "scare_steps_big"+RandInt(1,5)+".ogg", "prison_section_3", 1.0f, false);
+    
+    
+      AddPropImpulse("prison_section_3", -50, 0, 0, "World");
+      
+}

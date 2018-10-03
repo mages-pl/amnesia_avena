@@ -1,0 +1,203 @@
+void OnStart() {
+    
+    StopPlayerLookAt();
+    
+     
+    GiveItemFromFile("key_tomb_1","key_tomb.ent");
+}
+
+void OnEnter() {
+    //
+    AutoSave();
+    
+    AddEntityCollideCallback("stone_small01_brown_*","ScriptArea_1","zniszczenie_drzwi",false,1);
+	 AddEntityCollideCallback("stone_med01_brown_*","ScriptArea_1","zniszczenie_drzwi",false,1);
+ AddEntityCollideCallback("rock_stone_med01_brown_*","ScriptArea_1","zniszczenie_drzwi",false,1);
+ AddEntityCollideCallback("dungeon_small01_*","ScriptArea_1","zniszczenie_drzwi",false,1);
+AddEntityCollideCallback("rock_stone_small01_brown_*","ScriptArea_1","zniszczenie_drzwi",false,1);
+
+    
+    AddEntityCollideCallback("Player","ScriptArea_3","ScriptArea_3",true,1);
+     AddEntityCollideCallback("Player","ScriptArea_4","ScriptArea_4",true,1);
+    
+     CheckPoint ("Checkpoint_Act1Burning_Start", "PlayerStartArea_1", "OnStart", "Death_Category", "Act1BruningDeath");
+
+     
+    SetEntityPlayerInteractCallback("castle_arched01_2", "castle_arched01_2", true);
+    
+    AddUseItemCallback("", "key_tomb_1", "otworz_act1toact2", "otworz_act1toact2", true);
+
+
+    PlayMusic("08_amb", true, 0.75, 0.1, 10, false);
+    if (GetLocalVarInt("q_pozar") == 0) {
+        AddLocalVarInt("q_pozar", 1);
+        AddQuest("Journal", "act1burning");
+        AddTimer("Efekty_pozaru", RandInt(2, 15), "Efekty_pozaru");
+    }
+    AddUseItemCallback("", "key_tomb_1", "otworz_act1toact2", "otworz_act1toact2", true);
+    AddTimer("break_glass1", RandInt(3, 12), "break_glass1"); 
+     
+     
+//ScriptArea_18
+     SetEntityActive("ScriptArea_18",true);
+       SetEntityActive("ScriptArea_50",true);
+         SetEntityActive("ScriptArea_51",true);
+           SetEntityActive("ScriptArea_52",true);
+           
+         SetEntityActive("ScriptArea_60",true);
+         
+         
+     	AddEntityCollideCallback("Player","ScriptArea_18","ScriptArea_18",false,1);
+        	AddEntityCollideCallback("Player","ScriptArea_52","ScriptArea_18",false,1);
+                	AddEntityCollideCallback("Player","ScriptArea_50","ScriptArea_18",false,1);
+                        	AddEntityCollideCallback("Player","ScriptArea_51","ScriptArea_18",false,1);
+	AddEntityCollideCallback("Player","ScriptArea_7","ScriptArea_18",false,1);
+        
+        AddEntityCollideCallback("Player","ScriptArea_26","ScriptArea_26",false,1);
+AddEntityCollideCallback("Player","ScriptArea_9","ScriptArea_26",false,1);
+AddEntityCollideCallback("Player","ScriptArea_10","ScriptArea_26",false,1);
+AddEntityCollideCallback("Player","ScriptArea_11","ScriptArea_26",false,1);
+
+
+
+AddEntityCollideCallback("Player","ScriptArea_60","ScriptArea_60",false,1);
+
+}
+
+void ScriptArea_26(string &in asParent, string &in asChild, int alState) {
+      PlaySoundAtEntity("", "00_creak.snt", asChild, 0, false);
+       
+   
+}
+
+void ScriptArea_4(string &in asParent, string &in asChild, int alState) {
+    
+   PlayMusic("08_amb_success", false, 0.75, 0.1, 10, false);  
+}
+void ScriptArea_3(string &in asParent, string &in asChild, int alState) {
+    
+   // AddPropImpulse("shelf_secret_door_2", 10000250, 0, -2500000, "World");
+    
+    
+    RotatePropToSpeed("shelf_secret_door_2", 1, 1 , -0.25, 0, 0, true, "ScriptArea_2");  
+    
+        PlaySoundAtEntity("", "joint_cabinet.snt", "ScriptArea_2", 0, false);
+        
+            AddTimer("",2,"Break_wood_regal");
+    //
+}
+
+void Break_wood_regal(string &in asTimer) {
+     PlaySoundAtEntity("", "break_wood.snt", "shelf_secret_door_2", 0, false);
+       CreateParticleSystemAtEntity("rozwal_polke","ps_dust_elevator_crash.ps" ,"ScriptArea_12", false);
+       StopPropMovement("shelf_secret_door_2");
+       
+}
+void zniszczenie_drzwi(string &in asParent, string &in asChild, int alState) {
+    
+   
+    if(GetLocalVarInt("zniszczenie") == 0 ) {
+        CreateParticleSystemAtEntity("drzwi_break","ps_impact_dirt_high.ps" ,"ScriptArea_1", false);
+        PlaySoundAtEntity("", "hit_wood.snt", "ScriptArea_8", 0, false);
+      
+    }
+     if(GetLocalVarInt("zniszczenie") == 1) {
+         CreateParticleSystemAtEntity("drzwi_break","ps_impact_dirt_high.ps" ,"ScriptArea_1", false);
+          PlaySoundAtEntity("", "hit_wood.snt", "ScriptArea_8", 0, false);
+       SetEntityActive("castle_arched01_2",false);
+      SetEntityActive("castle_arched01_4",true);
+    }
+     if(GetLocalVarInt("zniszczenie") == 2 ) {
+          CreateParticleSystemAtEntity("drzwi_break","ps_impact_dirt_high.ps" ,"ScriptArea_1", false);
+        PlaySoundAtEntity("", "hit_wood.snt", "ScriptArea_8", 0, false);
+             SetEntityActive("castle_arched01_4",false);
+      SetEntityActive("castle_arched01_5",true);
+    }
+      if(GetLocalVarInt("zniszczenie") == 3 ) {
+        CreateParticleSystemAtEntity("drzwi_break","ps_impact_dirt_high.ps" ,"ScriptArea_1", false);
+           PlaySoundAtEntity("", "hit_wood.snt", "ScriptArea_8",0, false);
+    
+    }
+    if(GetLocalVarInt("zniszczenie") > 3 ) {
+          SetEntityActive("castle_arched01_5",false);
+      SetEntityActive("castle_arched01_3",true);
+        
+          CreateParticleSystemAtEntity("drzwi_break","ps_impact_dirt_high.ps" ,"ScriptArea_1", false);
+          PlaySoundAtEntity("", "hit_wood.snt", "ScriptArea_8",0, false);
+          
+        AddPlayerSanity(10);
+          PlayMusic("23_puzzle", false, 0.75, 0.1, 10, false);
+    }
+     AddLocalVarInt("zniszczenie",1);
+}
+void ScriptArea_60(string &in asParent, string &in asChild, int alState) { 
+    SetEntityActive("barrel01_21",false);
+  
+    
+    SetEntityActive("barrel01_broken_4",true);
+   
+    
+    CreateParticleSystemAtEntity("dym_beczka1","ps_impact_dirt_high.ps" ,"ScriptArea_6", false);
+    
+    
+    DestroyParticleSystem("dym_beczka1");
+   
+     
+     PlaySoundAtEntity("", "break_wood.snt", "barrel01_broken_4", 0, false);
+     
+     AddTimer("",5,"drugi_break_beczka");
+ 
+}
+void drugi_break_beczka(string &in asTimer) {
+      SetEntityActive("barrel01_20",false);
+       SetEntityActive("barrel01_broken_5",true);
+       CreateParticleSystemAtEntity("dym_beczka2","ps_impact_dirt_high.ps" ,"ScriptArea_5", false);
+         DestroyParticleSystem("dym_beczka2");
+           PlaySoundAtEntity("", "break_wood.snt", "barrel01_broken_5", 0, false);
+     
+           
+}
+
+void castle_arched01_2(string &in asEnity) { 
+    GivePlayerDamage(20, "BloodSplash", false, false);
+    AddPlayerHealth(-20);
+    
+    
+}
+
+void ScriptArea_18(string &in asParent, string &in asChild, int alState) {
+    /* death area */
+    
+    GivePlayerDamage(150, "BloodSplash", false, false);
+	DisableDeathStartSound();
+	AddPlayerHealth(-200);
+	PlaySoundAtEntity("pain", "player_falldamage_max", "Player", 0, false);
+	PlaySoundAtEntity("bump2", "player_bodyfall", "Player", 0, false);
+	FadeIn(1);
+}
+void break_glass1(string &in asTimer) {
+    RemoveTimer(asTimer);
+    AddTimer("break_glass1", RandInt(3, 12), "break_glass1");
+    PlayGuiSound("break_glass_bottle", 1);
+}
+
+void otworz_act1toact2(string &in asItem, string &in asEntity) {
+    SetEntityActive("otworz_act1toact2", false);
+    SetEntityActive("otworz_act1toact2_1", true);
+    RemoveItem("key_tomb_1");
+}
+
+void Efekty_pozaru(string &in asTimer) {
+    RemoveTimer(asTimer);
+    if (GetPlayerHealth() <= 0.05) {
+
+    }
+    GivePlayerDamage(RandInt(0, 5), "BloodSplash", false, false);
+    PlaySoundAtEntity("", "player_cough", "Player", 0, false);
+    AddTimer("Efekty_pozaru", RandInt(2, 15), "Efekty_pozaru");
+}
+
+void OnLeave() {
+    CompleteQuest("Journal", "act1burning");
+    StopMusic(2, 2.0f);
+}

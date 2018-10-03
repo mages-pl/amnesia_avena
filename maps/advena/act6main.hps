@@ -1,0 +1,85 @@
+void OnEnter() {
+PlayMusic("game_menu.ogg",false, 0.85,1.0,1,false);
+	AddUseItemCallback("", "orbpiece_obsidian_1", "ScriptArea_1", "ScriptArea_1", true);
+	AddUseItemCallback("", "orbpiece_indigo_1", "ScriptArea_2", "ScriptArea_2", true);
+	AddUseItemCallback("", "orbpiece_emerald_1", "ScriptArea_3", "ScriptArea_3", true);
+ 
+	AddEntityCollideCallback("Player", "ScriptArea_14", "ScriptArea_14", true, 1); 
+AutoSave();
+if(GetLocalVarInt("Epilog") == 0) {
+FadeOut(0);
+ SetMessage("Rozdzial", "Epilog", 3.0f);
+ AddLocalVarInt("Epilog",1);
+ AddTimer("",5,"EndFade_Rozdzial");
+ }
+  GiveItemFromFile("orbpiece_obsidian_1", "orbpiece_obsidian.ent");
+  GiveItemFromFile("orbpiece_indigo_1", "orbpiece_indigo.ent");
+ GiveItemFromFile("orbpiece_emerald_1", "orbpiece_emerald.ent");
+}
+void EndFade_Rozdzial(string &in asTimer) {
+FadeIn(0.5f);
+}
+void ScriptArea_1(string &in asItem, string &in asEntity) {
+SetEntityActive("orb_2",true);
+RemoveItem("orbpiece_obsidian_1");
+CreateParticleSystemAtEntity("", "ps_orb_room_electro_bolt", "ScriptArea_10", true);
+AddLocalVarInt("kamienie",1);
+AddTimer("koniec_advena",60,"koniec_advena");
+}
+void ScriptArea_2(string &in asItem, string &in asEntity) {
+SetEntityActive("orb_3",true);
+RemoveItem("orbpiece_indigo_1");
+CreateParticleSystemAtEntity("", "ps_orb_room_electro_bolt", "ScriptArea_12", true);
+CreateParticleSystemAtEntity("", "ps_orb_room_electro_bolt", "ScriptArea_13", true);
+AddLocalVarInt("kamienie",1);
+AddTimer("koniec_advena",60,"koniec_advena");
+}
+void ScriptArea_14(string &in asItem, string &in asEntity) {
+AddTimer("koniec_advena",60,"koniec_advena");
+} 
+void ScriptArea_3(string &in asItem, string &in asEntity) {
+SetEntityActive("orb_1",true);
+RemoveItem("orbpiece_emerald_1");
+CreateParticleSystemAtEntity("", "ps_orb_room_electro_bolt", "ScriptArea_11", true);
+AddLocalVarInt("kamienie",1);
+//AddTimer("koniec_advena",60,"koniec_advena");
+} 
+void koniec_advena(string &in asTimer) {
+RemoveTimer("koniec_advena");
+SetPlayerMoveSpeedMul(0.5f);
+if(GetLocalVarInt("kamienie") == 3) {
+AddTimer("",2,"teleport_good");
+FadeOut(3);
+} 
+if(GetLocalVarInt("kamienie") == 2) {
+AddTimer("",2,"teleport_neutral");
+FadeOut(3);
+} if((GetLocalVarInt("kamienie") == 1) || (GetLocalVarInt("kamienie") == 0)){
+AddTimer("",2,"teleport_bad");
+FadeOut(3);
+}
+}
+ void teleport_good(string &in asTimer) {
+TeleportPlayer("good_ending");
+FadeIn(6);
+AddTimer("koniec_gry",15,"koniec");
+}
+ void teleport_neutral(string &in asTimer) {
+TeleportPlayer("rodzinkatele");
+FadeIn(6);
+AddTimer("koniec_gry",15,"koniec");
+}
+void teleport_bad(string &in asTimer) {
+TeleportPlayer("tele1");
+FadeIn(6);
+AddTimer("koniec_gry",15,"koniec");
+}
+void koniec(string &in asTimer) {
+FadeOut(3);
+AutoSave();
+StartCredits("amb_extra01.ogg",false,"Credits","Napisy_koncowe", -1);
+if((GetLocalVarInt("kamienie") == 3)) {
+ChangeMap("actXeasterII.map", "PlayerStartArea_1", "", "");
+}
+StartDemoEnd();
+}

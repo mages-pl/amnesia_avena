@@ -1,0 +1,192 @@
+void OnStart() {
+	AddEntityCollideCallback("Player","ScriptArea_1","ScriptArea_1",true,1);
+	AddEntityCollideCallback("Player","ScriptArea_2","ScriptArea_2",true,1);
+	AddEntityCollideCallback("Player","ScriptArea_3","ScriptArea_3",true,1);
+	AddEntityCollideCallback("Player","ScriptArea_8","ScriptArea_8",true,1);
+	AddEntityCollideCallback("Player","ScriptArea_4","ScriptArea_4",false,1);
+	AddEntityCollideCallback("Player","ScriptArea_5","ScriptArea_5",false,1);
+	AddUseItemCallback("", "key_piwnica1", "mansion_1", "otworz_piwnice", true);	
+   
+	AddEntityCollideCallback("Player", "areaendthunder", "CollideAreaThunder", true, 1);	
+	AddEntityCollideCallback("Player","ScriptArea_6","ScriptArea_6",false,1);
+	AddEntityCollideCallback("Player","ScriptArea_7","ScriptArea_7",true,1);
+	SetEntityPlayerInteractCallback("quest_drzwi", "quest_drzwi",true);
+	//GiveItemFromFile("lantern", "lantern.ent");
+ 
+        AddEntityCollideCallback("Player","sekret_lurker1","sekret_lurker1",true,1);
+        
+//AddTimer("thunder",0.1,"TimerThunder");
+}
+void ScriptArea_8(string &in asParent, string &in asChild, int alState){
+ if(GetGlobalVarInt("OdkryteSkrytki") == 0) {
+GiveHint("Hint_Skrytki", "Skrytki", "Hint_Skrytki", 5);
+}
+AddGlobalVarInt("OdkryteSkrytki",1);
+PlayGuiSound("quest_completed",1);
+SetMessage("Skrytki","Odkryto", 3); 
+}
+
+void sekret_lurker1(string &in asParent, string &in asChild, int alState){
+ if(GetGlobalVarInt("OdkryteSkrytki") == 0) {
+GiveHint("Hint_Skrytki", "Skrytki", "Hint_Skrytki", 5);
+}
+AddGlobalVarInt("OdkryteSkrytki",1);
+PlayGuiSound("quest_completed",1);
+SetMessage("Skrytki","Odkryto", 3); 
+}
+void zgas_swiatlo() {
+		SetLightVisible("PointLight_1", false);
+		SetLightVisible("PointLight_2", false);
+		SetLightVisible("PointLight_3", false);
+		SetLightVisible("PointLight_23", false);
+		 FadeLightTo("PointLight_1", 0, 0, 0, 0, 0, 1);
+		FadeLightTo("PointLight_2", 0, 0, 0, 0, 0, 1);
+		FadeLightTo("PointLight_3", 0, 0, 0, 0, 0, 1);
+		FadeLightTo("PointLight_23", 0, 0, 0, 0, 0, 1);
+}
+void ScriptArea_1(string &in asParent, string &in asChild, int alState) {
+if(GetLocalVarInt("waterlurker") == 0) {
+SetEntityActive("waterlurker_1",true);
+ShowEnemyPlayerPosition("waterlurker_1");
+AddLocalVarInt("waterlurker",1);
+}
+}
+void ScriptArea_2(string &in asParent, string &in asChild, int alState) {
+if(GetLocalVarInt("waterlurker") == 0) {
+SetEntityActive("waterlurker_1",true);
+ShowEnemyPlayerPosition("waterlurker_1");
+AddLocalVarInt("waterlurker",1);
+}
+}
+void ScriptArea_3(string &in asParent, string &in asChild, int alState) {
+if(GetLocalVarInt("waterlurker") == 0) {
+SetEntityActive("waterlurker_1",true);
+ShowEnemyPlayerPosition("waterlurker_1");
+AddLocalVarInt("waterlurker",1);
+}
+}
+//void TimerThunder(string &in asTimer)
+//{
+//	AddLocalVarInt("ThunderStep", 1);				//What step to play in the event
+//	float fEventSpeed = RandFloat(0.05f, 0.15f);	//The default time between steps in an event
+//
+//	switch(GetLocalVarInt("ThunderStep")) {
+//		case 1:
+//			ThunderLights(2,0.05f);
+//		break;
+//		case 2:
+//			ThunderLights(1,0.05f);
+//		break;
+//		case 3:
+//			ThunderLights(3,0.05f);
+//		break;
+//		case 4:
+//			ThunderLights(1,0.05f);
+//		break;
+//		case 5:
+//			ThunderLights(2,0.05f);
+//		break;
+//		case 6:
+//			ThunderLights(3,0.05f);
+//		break;
+//		case 7:
+//			ThunderLights(1,0.3f);
+//			PlaySoundAtEntity("Thunder", "general_thunder.snt", "AreaThunder", 0.0f, false);
+//		break;
+//	}
+//	
+//	if(GetLocalVarInt("ThunderStep") < 8)  AddTimer("thunder", fEventSpeed, "TimerThunder");
+//	else { 
+//		SetLocalVarInt("ThunderStep", 0); 
+//		
+//		AddTimer("thunder", RandFloat(10.0f, 30.0f), "TimerThunder"); 
+//	}
+//}
+//void ThunderLights(int alIntensity, float afFade)
+//{
+//	/*Skip parts of a flash everynow and then but not the first strong light 
+//	**and not the last "back to normal" light
+//	 */
+//	if(RandFloat(1, 3) == 1 && (GetLocalVarInt("ThunderStep") != 3 or GetLocalVarInt("ThunderStep") != 7)) return;
+//	
+//	float fF = 0.2f;
+//	
+//	switch(alIntensity) {
+//		case 1:
+//			for(int i=0;i<=5;i++) FadeLightTo("spotthunder_"+i,0.52f,0.55f,0.6f,0.45f,-1,afFade-0.04f);
+//			for(int i=0;i<=7;i++) FadeLightTo("pointthunder_"+i,0.32f,0.35f,0.4f,0.2f,-1,afFade-0.025f);
+//			for(int i=0;i<=3;i++) FadeLightTo("ambthunder_"+i,0.2f,0.25f,0.35f,-1,-1,afFade);
+//		break;
+//		case 2:
+//			for(int i=0;i<=5;i++) FadeLightTo("spotthunder_"+i,0.82f+fF,0.85f+fF,0.9f+fF,0.9f+fF,-1,afFade-0.04f);
+//			for(int i=0;i<=7;i++) FadeLightTo("pointthunder_"+i,0.72f+fF,0.75f+fF,0.8f+fF,0.4f+fF,-1,afFade-0.025f);
+//			for(int i=0;i<=3;i++) FadeLightTo("ambthunder_"+i,0.25f+fF,0.3f+fF,0.4f+fF,-1,-1,afFade);
+//		break;
+//		case 3:
+//			for(int i=0;i<=5;i++) FadeLightTo("spotthunder_"+i,0.92f+fF,0.95f+fF,1+fF,1+fF,-1,afFade-0.04f);
+//			for(int i=0;i<=7;i++) FadeLightTo("pointthunder_"+i,0.82f+fF,0.85f+fF,0.9f+fF,0.5f+fF,-1,afFade-0.025f);
+//			for(int i=0;i<=3;i++) FadeLightTo("ambthunder_"+i,0.3f+fF,0.35f+fF,0.45f+fF,-1,-1,afFade);
+//		break;
+//	}
+//}
+// void CollideAreaThunder(string &in asParent, string &in asChild, int alState)
+//{
+//	if(asChild == "areabeginthunder") {
+//		AddTimer("thunder", RandFloat(1, 5), "TimerThunder"); 
+//		
+//		AddEntityCollideCallback("Player", "areaendthunder", "CollideAreaThunder", true, 1);
+//		
+//	} else {
+//		RemoveTimer("thunder");
+//		
+//		ThunderLights(1,0.3f);
+//		
+//		AddEntityCollideCallback("Player", "areabeginthunder", "CollideAreaThunder", true, 1);
+//	}
+//}
+  
+void ScriptArea_4(string &in asParent, string &in asChild, int alState) {
+SetEntityActive("waterlurker_2",true);
+SetEntityActive("waterlurker_1",false);
+SetEntityActive("waterlurker_3",false);
+SetEntityActive("waterlurker_4",false);
+}
+void ScriptArea_5(string &in asParent, string &in asChild, int alState) {
+SetEntityActive("waterlurker_3",true);
+SetEntityActive("waterlurker_1",false);
+SetEntityActive("waterlurker_2",false);
+SetEntityActive("waterlurker_4",false);
+}
+void ScriptArea_6(string &in asParent, string &in asChild, int alState) {
+SetEntityActive("waterlurker_4",true);
+SetEntityActive("waterlurker_1",false);
+SetEntityActive("waterlurker_2",false);
+SetEntityActive("waterlurker_3",false);
+}
+void OnEnter() {
+    AutoSave();
+	PlayMusic("07_amb.ogg",true, 0.85,1.0,1,true);
+}
+
+void ScriptArea_7(string &in asParent, string &in asChild, int alState) {
+ PlaySoundAtEntity("wiatr","scare_wind","vase02_ghost_2", 0 , false);
+  AddPropImpulse("vase02_ghost_1", 3, 0, 0, "World");
+  AddPropImpulse("vase02_ghost_2", 2, 0, 0, "World");
+  GiveSanityDamage(5,true);
+  AddTimer("",1.5,"react_scare_vase");
+}
+void react_scare_vase(string &in asTimer) {
+PlayGuiSound("react_pant",1);
+}
+void quest_drzwi(string &in asEntity) {
+AddQuest("act4resident1","act4resident1");
+}
+void otworz_piwnice(string &in asItem, string &in asEntity) {
+  SetSwingDoorDisableAutoClose("mansion_1", true);
+  SetSwingDoorClosed("mansion_1", false,false);
+  SetSwingDoorLocked("mansion_1", false, true);
+  AddPropImpulse("mansion_1", -10, 0, 0, "World");
+  AddPlayerSanity(10);
+  RemoveItem(asItem);
+ CompleteQuest("act4resident1", "act4resident1");
+}

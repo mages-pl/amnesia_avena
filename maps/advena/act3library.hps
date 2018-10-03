@@ -1,0 +1,147 @@
+void OnStart() {
+	AddEntityCollideCallback("Player","ScriptArea_1","ScriptArea_1",true,1);
+	AddEntityCollideCallback("Player","ScriptArea_4","ScriptArea_4",true,1);
+	AddEntityCollideCallback("Player","pick_up_item","pick_up_item",true,1);
+	AddEntityCollideCallback("Player","ScriptArea_6","ScriptArea_6",false,1);
+
+     AddEntityCollideCallback("Player","ScriptArea_7","ScriptArea_7",true,1);   
+        //
+        
+         // AddEntityPlayerLookAtCallback("Player","spojrz_sekret_bibl","spojrz_sekret_bibl",true,1);    
+	//###### PLAYER INTERACT
+	SetEntityPlayerInteractCallback("spalonadupa_1","spalonadupa_1",false);	
+}
+void OnEnter() {
+     AutoSave();
+PlayMusic("02_amb_safe",true, 0.8, 0.1, 1,true);
+}
+void ScriptArea_4(string &in asParent, string &in asChild, int alState) {
+StopMusic(2.0f,1);
+ 
+  CheckPoint ("Check_point_library", "PlayerStartArea_2", "ScriptArea_4", "", "");
+ AddLocalVarInt("dotknij_drzwi",1);
+AddTimer("",1,"Paper_music");
+}
+void spojrz_sekret_bibl(string &in asEntity, int alState) {
+  if(GetGlobalVarInt("OdkryteSkrytki") == 0) {
+GiveHint("Hint_Skrytki", "Skrytki", "Hint_Skrytki", 5);
+}
+AddGlobalVarInt("OdkryteSkrytki",1);
+PlayGuiSound("quest_completed",1);
+SetMessage("Skrytki","Odkryto", 3); // GetGlobalVarInt("OdkryteSkrytki")+GetGlobalVarString("Separator")+GetGlobalVarInt("MaxSkrytek")
+  
+}
+void ScriptArea_7(string &in asParent, string &in asChild, int alState) {
+ if(GetGlobalVarInt("OdkryteSkrytki") == 0) {
+GiveHint("Hint_Skrytki", "Skrytki", "Hint_Skrytki", 5);
+}
+AddGlobalVarInt("OdkryteSkrytki",1);
+PlayGuiSound("quest_completed",1);
+SetMessage("Skrytki","Odkryto", 3); // GetGlobalVarInt("OdkryteSkrytki")+GetGlobalVarString("Separator")+GetGlobalVarInt("MaxSkrytek")
+
+   
+}
+void Paper_music(string &in asTimer) {
+//PlayMusic("05_paper_transformation",true, 0.8, 0.1, 1,true);
+    PlayMusic("03_amb_library",true, 0.8, 0.1, 1,true);
+//AddTimer("",30,"amb_safe");
+}
+void amb_safe(string &in asTimer) {
+//PlayMusic("02_amb_safe",true, 0.8, 0.1, 1,true);
+}
+void pick_up_item(string &in asEntity, string &in Type) {
+PlayGuiSound("react_sigh.snt",1);
+for(int i=1;i<3;i++) { SetEntityActive("servant_grunt_"+i,true);
+ShowEnemyPlayerPosition("servant_grunt_"+i); 
+}
+AddEnemyPatrolNode("servant_grunt_1", "1b", 0, "");
+AddEnemyPatrolNode("servant_grunt_2", "2b", 0, "");
+//##### CLOSE DOOR ##################
+  SetSwingDoorDisableAutoClose("mansion_3", true);
+  SetSwingDoorClosed("mansion_3", true,true);
+ SetSwingDoorLocked("mansion_3", true, true);
+ SetPropHealth("mansion_1",0);
+//##### OPEN DOOR ############################### 
+   SetSwingDoorDisableAutoClose("mansion_1", false);
+  SetSwingDoorClosed("mansion_1", false,false);
+ SetSwingDoorLocked("mansion_1", false, false);
+ //############## STARTING FUNCTIONS 
+ 	AddEntityCollideCallback("Player","ScriptArea_5","ScriptArea_5",true,1);
+	AddEntityCollideCallback("Player","ScriptArea_2","ScriptArea_2",true,1);
+	AddEntityCollideCallback("Player","ScriptArea_3","ScriptArea_3",true,1);
+	AddEntityCollideCallback("Player","ScriptArea_666","ScriptArea_666",true,1);
+}
+void ScriptArea_5(string &in asParent, string &in asChild, int alState) {
+SetEntityActive("servant_grunt_1",false);
+SetEntityActive("servant_grunt_2",false);
+
+   SetSwingDoorDisableAutoClose("mansion_4", true);
+  SetSwingDoorClosed("mansion_4", true,false);
+ SetSwingDoorLocked("mansion_4", true, false);
+}
+void ScriptArea_2(string &in asParent, string &in asChild, int alState) {
+//##### CLOSE DOOR ##################
+  SetSwingDoorDisableAutoClose("mansion_1", true);
+  SetSwingDoorClosed("mansion_1", true,true);
+ SetSwingDoorLocked("mansion_1", true, true);
+ PlayGuiSound("insanity_whisper03.ogg",1);
+ 	GiveSanityDamage(10, false);
+	SetPlayerMoveSpeedMul(0.6f);
+	SetPlayerLookSpeedMul(0.7f);
+ AddTimer("",5,"whisper2");
+}
+void whisper2(string &in asTimer) {
+PlayGuiSound("insanity_whisper01.ogg",1);
+}
+void ScriptArea_3(string &in asParent, string &in asChild, int alState) {
+SetEntityActive("servant_grunt_4",true);
+	//StartPlayerLookAt("servant_grunt_4", 1, 1, "");
+ShowEnemyPlayerPosition("servant_grunt_4");
+PlayGuiSound("react_scare.snt",1);
+SetEntityActive("servant_grunt_3",true);
+ShowEnemyPlayerPosition("servant_grunt_3");
+	SetPlayerMoveSpeedMul(1.0f);
+	SetPlayerLookSpeedMul(1.0f);  	
+AddTimer("",5,"time_open_door");
+AddTimer("",3,"stop_look");
+	AddEntityCollideCallback("Player","ScriptArea_4","ScriptArea_4",true,1);
+	 	GiveSanityDamage(20, true);
+}
+void stop_look(string &in asTimer) {
+SetPlayerMoveSpeedMul(1.0f);	
+StopPlayerLookAt();
+}
+void time_open_door(string &in asTimer) {
+//##### OPEN DOOR ############################### 
+   SetSwingDoorDisableAutoClose("mansion_1", false);
+  SetSwingDoorClosed("mansion_1", false,false);
+ SetSwingDoorLocked("mansion_1", false, false);
+}
+ 
+void spalonadupa_1(string &in asEntity) {
+	AddPlayerBodyForce(0,0,9000*2.5f, false);
+	GivePlayerDamage(5, "BloodSplat", true, false);	
+	PlayGuiSound("ui_fire_damage.ogg", 0.7f);
+}
+void ScriptArea_6(string &in asParent,string &in asChild,int alState) { 
+	AddPlayerBodyForce(0,0,9000*2.5f, false);
+	GivePlayerDamage(10, "BloodSplat", true, false);	
+	PlayGuiSound("ui_fire_damage.ogg", 0.7f);
+}
+void przesun_regal(string &in asEntity, int alState) {
+if(alState == -1) {
+if(GetLocalVarInt("pokaz_ukryte_przejscie_library") == 0) {
+AddLocalVarInt("pokaz_ukryte_przejscie_library",1);
+ 	RotatePropToSpeed("shelf_high01_41", 0.5f, 0.1f, 0, -45, 0, true, "ScriptArea_1");
+	AddTimer("",10,"stop_rotate");
+	}
+}
+}
+void stop_rotate(string &in asTimer) {
+StopPropMovement("shelf_high01_41");
+}
+void dotyk_drzwi(string &in asEntity) {
+if(GetLocalVarInt("dotknij_drzwi") == 0) {
+AddLocalVarInt("dotknij_drzwi",1);
+}
+}

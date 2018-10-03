@@ -1,0 +1,231 @@
+void OnStart() {
+	AddEntityCollideCallback("Player","ScriptArea_5","ScriptArea_5",true,1);
+	AddEntityCollideCallback("Player","ScriptArea_2","ScriptArea_2",true,1);
+	AddEntityCollideCallback("Player","ScriptArea_3","ScriptArea_3",true,1);
+	AddEntityCollideCallback("tabke_wood01_moveable_1","ScriptArea_20","ScriptArea_20",true,1);
+	AddEntityCollideCallback("Player","ScriptArea_6","ScriptArea_6",true,1);
+	AddEntityCollideCallback("Player","ScriptArea_15","ScriptArea_15",true,1);
+ AddUseItemCallback("", "crowbar_1", "cellar_wood01_1", "UsedCrowbarOnDoor", true);
+ 
+ 	InteractConnectPropWithMoveObject("v_s_1", "valve_iron_rusty_1", "wooden_slide_door_1", true, true, 0.1f);	
+	InteractConnectPropWithMoveObject("v_s_2", "valve_iron_rusty_2", "wooden_slide_door_2", true, true, 0.1f);	
+	InteractConnectPropWithMoveObject("v_s_3", "valve_iron_rusty_3", "wooden_slide_door_3", true, true, 0.1f);
+	
+	ScriptArea_8();
+	rorate_wheel();
+		AddUseItemCallback("", "wriggle_prison_bar_3", "ScriptArea_18", "zablokuj_mechanizm", true);
+//AddTimer("rotate_wheel",0.5,"rorate_wheel");	
+}
+ void ScriptArea_5(string &in asParent, string &in asChild, int alState) {
+ SetEntityActive("servant_brute_2",true);
+ PlayGuiSound("react_breath.snt",1);
+   for(int x=1;x<=11;x++) { AddEnemyPatrolNode("servant_brute_2", "PathNodeArea_"+x, 0, ""); } 
+ }
+//############# OTWIERANIE DRZWI �OMEM ##########
+void Dotyk_lomu(string &in asEntity, int alState) { 
+if(alState == 1) {
+AddTimer("",0.5,"Wylam_drzwi");
+}
+return;
+}
+void Wylam_drzwi(string &in asTimer) {
+ AddPlayerSanity(25);
+ PlayMusic("10_puzzle01.ogg", false, 0.7, 0.1, 10, false);
+ SetSwingDoorLocked("cellar_wood01_1", false, true);
+ AddPropImpulse("cellar_wood01_1", 0, 0, -50, "World");
+ SetSwingDoorDisableAutoClose("cellar_wood01_1", true);
+ SetSwingDoorClosed("cellar_wood01_1", false, false);
+ SetMoveObjectState("cellar_wood01_1", 1);
+ PlaySoundAtEntity("","break_wood_metal", "ScriptArea_1", 0, false);
+ CreateParticleSystemAtEntity("", "ps_hit_wood", "ScriptArea_1", false);
+ SetEntityActive("crowbar_joint_1", false);
+ SetLocalVarInt("Door", 1);
+}
+void UsedCrowbarOnDoor(string &in asItem, string &in asEntity)
+ {
+ AddTimer("", 0.2, "TimerSwitchShovel");
+ PlaySoundAtEntity("","player_crouch.snt", "Player", 0.05, false);
+ RemoveItem("crowbar_1");
+ } 
+void TimerSwitchShovel(string &in asTimer)
+ {
+ PlaySoundAtEntity("","puzzle_place_jar.snt", "", 0, false);
+ SetEntityActive("crowbar_joint_1", true);
+} 
+/*
+void PlayerInteractSlideDoor(string &in asEntity)
+{
+	PlayGuiSound("17_attach_crank", 0.5f);
+ 
+	
+	SetMoveObjectState(asEntity, 0.05f);
+	
+	AddTimer(asEntity, 0.4f, "TimerCloseGate");
+	AddTimer("sound", 0.8f, "TimerCloseGate");
+}
+
+void TimerCloseGate(string &in asTimer)
+{
+	if(asTimer == "sound"){
+		PlayGuiSound("close_gate.ogg", 0.5f);
+	} else{
+		SetMoveObjectState(asTimer, 0.01f);
+		
+		if(GetLocalVarInt(asTimer) != 1)
+			SetEntityPlayerInteractCallback(asTimer, "InteractGate", true);	
+	}
+}
+
+void InteractWheel(string &in asEntity)
+{
+	SetEntityPlayerInteractCallback("wooden_slide_door_1", "", true);	
+	SetEntityPlayerInteractCallback("wooden_slide_door_2", "", true);	
+	SetEntityPlayerInteractCallback("wooden_slide_door_3", "", true);	
+		AddTimer(asEntity, 0.4f, "TimerCloseGate");
+	AddTimer("sound", 0.8f, "TimerCloseGate");
+}  */
+void OnEnter() {
+     AutoSave();
+PlayMusic("06_amb.ogg",true, 0.85,1.0,1,true);
+if(GetLocalVarInt("rozdzial4") == 0) {
+FadeOut(0);
+ SetMessage("Rozdzial", "4", 3.0f);
+ AddLocalVarInt("rozdzial4",1);
+ AddTimer("",5,"EndFade_Rozdzial");
+ }
+}
+void EndFade_Rozdzial(string &in asTimer) {
+FadeIn(0.5f);
+}
+//###### OBRACANIE SIEKACZK� ####################
+void rorate_wheel() {
+PlaySoundAtEntity("machina","13_machine_extra.ogg", "ScriptArea_19", 0, true);
+		RotatePropToSpeed("water_wheel_1", 1.0f, 1.0f, 0.0f, 0.0f,1.0f, true, "ScriptArea_7");
+		RotatePropToSpeed("spinning_cogwheel_script_2", 1.0f, 1.0f, 1.0f, 0.0f,0.0f, true, "ScriptArea_17");
+		RotatePropToSpeed("spinning_cogwheel_script_1", 1.0f, 1.0f, -1.0f, 0.0f,0.0f, true, "ScriptArea_16");
+}
+void wylam_pret(string &in asEntity, int alState) {
+if(alState == 1) {
+AddLocalVarInt("pret",1);
+if(GetLocalVarInt("pret") >= 2) {
+    CreateParticleSystemAtEntity("break_metal", "ps_impact_dirt_high.ps", "wriggle_prison_bar_2", false);  
+	PlaySoundAtEntity("polam_pret","25_attach_bar_metal", "wriggle_prison_bar_2", 0, false);
+	SetEntityActive("wriggle_prison_bar_2",false);
+	SetEntityActive("wriggle_prison_bar_3",true);
+}
+}
+if(alState == -1) {
+AddLocalVarInt("pret",1);
+if(GetLocalVarInt("pret") >= 2) {
+CreateParticleSystemAtEntity("break_metal", "ps_impact_dirt_high.ps", "wriggle_prison_bar_2", false);  
+PlaySoundAtEntity("polam_pret","25_attach_bar_metal", "wriggle_prison_bar_2", 0, false);
+SetEntityActive("wriggle_prison_bar_2",false);
+SetEntityActive("wriggle_prison_bar_3",true);
+
+}
+}
+}
+
+void ScriptArea_6(string &in asParent, string &in asChild, int alState) {
+AddTimer("",0.5,"movetable");
+ PlayMusic("22_event_trapped.ogg",true, 0.85,1.0,1,true);
+AddQuest("wiezien_q_3", "wiezien_q_3");
+}
+void movetable(string &in asTimer) {
+SetMoveObjectState("tabke_wood01_moveable_1", 8.0f);
+}
+void ScriptArea_8() {
+PlaySoundAtEntity("wheel","24_wheel", "ScriptArea_8", 0, true);
+}
+void ScriptArea_2(string &in asParent,string &in asChild, int alState) {
+AddTimer("rozwald1",10,"rozwal_drzwi1");
+	CreateParticleSystemAtEntity("", "ps_hit_wood.ps", "ScriptArea_10", false);
+	ShowEnemyPlayerPosition("servant_brute_2");
+	PlayGuiSound("react_pant.snt",1);
+}
+void rozwal_drzwi1(string &in asTimer) {
+SetEntityActive("servant_brute_2",false);
+SetEntityActive("wooden_slide_door_1",false);
+	CreateParticleSystemAtEntity("", "ps_hit_wood.ps", "ScriptArea_10", false);
+SetEntityActive("servant_brute_5",true);
+SetEntityActive("wooden_slide_door_4",true);
+AddTimer("",3,"destroyed_d1");
+}
+void destroyed_d1(string &in asTimer) {
+SetEntityActive("wooden_slide_door_4",false);
+SetEntityActive("wooden_slide_door_6",true);
+PlaySoundAtEntity("","break_wood_metal", "ScriptArea_9", 0, false);
+	CreateParticleSystemAtEntity("", "ps_hit_wood.ps", "ScriptArea_10", false);
+	CreateParticleSystemAtEntity("", "ps_dust_break_25", "ScriptArea_10", false);
+		ShowEnemyPlayerPosition("servant_brute_5");
+		StopPropMovement("wooden_slide_door_1");
+}
+void ScriptArea_3(string &in asParent,string &in asChild, int alState) {
+SetEntityActive("servant_brute_5",false);
+//SetEntityActive("wooden_slide_door_2",false);
+	CreateParticleSystemAtEntity("", "ps_hit_wood.ps", "ScriptArea_10", false);
+//SetEntityActive("wooden_slide_door_7",true);
+//SetEntityActive("wooden_slide_door_4",true);
+AddTimer("",3,"destroyed_d2");
+}
+void destroyed_d2(string &in asTimer) {
+PlayGuiSound("react_scare.snt",1);
+SetEntityActive("wooden_slide_door_2",false);
+//SetEntityActive("wooden_slide_door_7",false);
+SetEntityActive("wooden_slide_door_8",true);
+ SetEntityActive("servant_brute_4",true);
+PlaySoundAtEntity("","break_wood_metal", "ScriptArea_12", 0, false);
+	CreateParticleSystemAtEntity("", "ps_hit_wood.ps", "ScriptArea_10", false);
+	CreateParticleSystemAtEntity("", "ps_dust_break_25", "ScriptArea_10", false);
+			ShowEnemyPlayerPosition("servant_brute_4");
+				StopPropMovement("wooden_slide_door_2");
+}
+void ScriptArea_15(string &in asParent,string &in asChild, int alState) {
+SetEntityActive("wooden_slide_door_3",false);
+SetEntityActive("wooden_slide_door_11",true);
+ SetEntityActive("servant_brute_3",true);
+ SetEntityActive("servant_brute_4",false);
+	CreateParticleSystemAtEntity("", "ps_hit_wood.ps", "ScriptArea_10", false);
+	CreateParticleSystemAtEntity("", "ps_dust_break_25", "ScriptArea_10", false);
+			ShowEnemyPlayerPosition("servant_brute_3");
+PlaySoundAtEntity("","break_wood_metal", "ScriptArea_14", 0, false);
+	StopPropMovement("wooden_slide_door_3");
+}
+void zablokuj_mechanizm(string &in asItem, string &in asEntity) {
+SetEntityActive("wriggle_prison_bar_1",true);
+StopSound("machina",1.0f);
+StopPropMovement("spinning_cogwheel_script_1");
+StopPropMovement("spinning_cogwheel_script_2");
+StopPropMovement("tabke_wood01_moveable_1");
+AddPlayerSanity(25);
+RemoveItem("wriggle_prison_bar_2");
+ PlaySoundAtEntity("pret"," 27_jam.ogg", "ScriptArea_18", 0, false);
+ PlaySoundAtEntity("pret2"," pick_pipe.ogg", "ScriptArea_18", 0, false);
+SetSwingDoorDisableAutoClose("prison_section_1", false);
+  SetSwingDoorClosed("prison_section_1", false,false);
+ SetSwingDoorLocked("prison_section_1", false, false);
+  AddPropImpulse("cellar_wood01_1", 0, 0, 1, "World");
+  PlayMusic("27_event_bang.ogg",false, 0.85,1.0,1,false);
+  AddTimer("",30,"stop_music_q3");
+  CompleteQuest("wiezien_q_3", "wiezien_q_3");
+}
+void stop_music_q3(string &in asTimer) {
+StopMusic(2,1.0f);
+PlayMusic("06_amb.ogg",true, 0.85,1.0,1,true);
+}
+
+void ScriptArea_20(string &in asParent,string &in asChild, int alState) {
+StopMusic(2,1.0f);
+AddLocalVarInt("wiezien_q3",1); // blokuje mo�liwo�� wzi�cia kamienia
+PlayMusic("15_event_prisoner.ogg",false, 0.85,1.0,1,false);
+PlaySoundAtEntity("","21_scream3", "ritual_prisoner_noillum_1", 0, false);
+AddTimer("",30,"stop_music_q3");
+}
+void wez_kamien(string &in asEntity) {
+if(GetLocalVarInt("wiezien_q3") == 0) {
+PlayGuiSound("pick_orb_piece.ogg",1);
+	GiveItemFromFile("orbpiece_emerald_1","orbpiece_emerald.ent");
+	AddLocalVarInt("wiezien_q3",1);
+	}
+}
+ // 22_event_trapped

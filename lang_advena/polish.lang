@@ -1,0 +1,124 @@
+<LANGUAGE>
+  <RESOURCES>
+    <Directory Path="fonts/eng" />
+    <Directory Path="lang/eng" />
+  </RESOURCES>
+  <CATEGORY Name="Inventory">
+    <Entry Name="ItemName_key_office">Klucz do piwnicy</Entry>
+    <Entry Name="ItemDesc_key_office">Wydaje si[u281] pasowa[u263] do zamka na dole.</Entry>
+  </CATEGORY>
+  <CATEGORY Name="Journal">
+    <Entry Name="Note_act1main1_Text">Doskwieraj[u261]ca mi od kilku dni migrena doprowadza mnie do granic resztek wytrzyma[u322]o[u347]ci, jakie jestem w stanie jeszcze wykrzesa[u263]. Umazany obok stó[u322] w jeszcze [u347]wie[u380]ej krwi wskazywuje na seri[u281] okropno[u347]ci jakie musia[u322]y si[u281] tutaj okala[u263] t[u281] komnat[u281]. [br][br]Samo miejsce ogarnia zbyt du[u380]y mrok abym móg[u322] je dosk[u322]adniej zbada[u263]. Powinienem poszuka[u263] czego[u347], co u[u322]atwi mi eksploracj[u281] okolic,  a nast[u281]pnie uda[u263] si[u281] wg[u322][u261]b kazamatów. [br][br]Miejmy nadziej[u281], [u380]e  nie oka[u380]e si[u281] to ostatnim z miejsc jakie przyjdzie mi jeszcze odwiedzi[u263].</Entry>
+    <Entry Name="Note_act1main1_Name">Kazamaty Isaac'a[br]</Entry>
+    <Entry Name="Quest_act1main2_Name">"[u346]lepy zau[u322]ek"</Entry>
+    <Entry Name="Quest_act1main2_Text">Schodz[u261]c w dó[u322] z ledwie daj[u261]c[u261] jasnego p[u322]omienia latarni[u261] spotka[u322]em si[u281] z kolejn[u261] niespodziank[u261].  Pomieszcznie na dole wydaje si[u281] [u347]lepym zau[u322]kiem. [br][br]Wygl[u261]da na to [u380]e, pomieszczenie to zosta[u322]o wyposa[u380]one w mechanizm steruj[u261]cy. Musz[u281] poszuka[u263] czego[u347], bo by[u322]oby go w stanie aktywowa[u263].</Entry>
+    <Entry Name="Quest_act1main3_Name">
+    </Entry>
+    <Entry Name="Quest_act1main3_Text">W ko[u324]cu mym oczom ukaza[u322]o si[u281] [u347]wiate[u322]ko cichej nadzieji. Ten korytarz wygl[u261]da sprawia równie antypatyczne wra[u380]enie -  jak pozosta[u322]o[u347][u263] z komnat. No có[u380], imo wydaje si[u281] to jedyn[u261] drog[u261] - tak wi[u281]c nie pozostaje mi nic innego jak si[u281] tam uda[u263].</Entry>
+    <Entry Name="Note_act1main4_Name">Uszkodzony mechanizm.</Entry>
+    <Entry Name="Note_act1main4_Text">Przy jednym z prze[u322][u261]czników znajduj[u261]cych sie w g[u322]ównym holu zauwa[u380]y[u322][u281]m defekt. Najwyra[u378]niej in[u380]ynierowie którzy wznosili te kazmaty nie byli misrzami fachu. Koniec ko[u324]ców, zmuszony jestem poszuka[u263] innego sposobu na wydostanie si[u281] st[u261]d.</Entry>
+    <Entry Name="Diary_act1main5_Name1">Eksperymenty Issac'a 1/3  </Entry>
+    <Entry Name="Diary_act1main5_Text1">(24 kwietnia 1878r.)[br]Drogi Albercie, Niestety - nasza kolejna próba rematerializacji tkanek zwierz[u281]cych zosta[u322]a zako[u324]czona niepowodzeniem.  Skoro nie mo[u380]na uzyska[u263] Twojego DNA, zmuszony jestem zastosowa[u263] si[u281] do planu B. Zapewne interesuje Ci[u281] co si[u281] za tym kryje, nie? Ah, spokojnie -  o nic si[u281] nie martw.  O wszytkim dowiesz si[u281] ju[u380] niebawem. Tymczasem moi s[u322]udzy odprowadz[u261] Ci[u281] z powrotem do izolatki.[br]</Entry>
+    <Entry Name="Note_act1main6_Name">Opuszczona komórka</Entry>
+    <Entry Name="Note_act1main6_Text">Przodz[u261]c ten koszmar trafi[u322]em jak mniemam na jak[u261][u347] opustosza[u322][u261] komórk[u281]. S[u261]dz[u261]c po zamieszczonych zapisakach na pulpicie, kto[u347] ca[u322]kiem niedawno by[u322] tu przede mn[u261]. O, zaraz - co ja tu widz[u281]. Hm, ten stary m[u322]otek - niew[u261]tpliwie mo[u380]e si[u281] okaza[u263] przydatny. Mam dziwne wra[u380]enie, jakby przesuwa[u322] si[u281] pode  mn[u261] p[u322]yty skalne. Powinienem jak najszybciej st[u261]d ucieka[u263].</Entry>
+    <Entry Name="Note_tasjen_note_test_Name">W poszukiwaniu Rotterdama (30 pazdziernika 1878r.) </Entry>
+    <Entry Name="Note_tasjen_note_test_Text">Przemierzaj[u261]c przes[u261]czone st[u281]chlizn[u261] kana[u322]y s[u261]dzi[u322]em, [u380]e znajd[u281] co[u347] co doprowadzi mnie do posiad[u322]o[u347]ci Rotterdama. [br][br]Zamiast tego trafi[u322]em do jakiej[u347] dalszej cz[u281][u347]ci odp[u322]ywu kana[u322]owego. [br][br]Zaraz... te [u347]ciany przede mn[u261] wydaj[u261] si[u281] by[u263] g[u322]uche. [br]Mo[u380]e to jest w[u322]a[u347]nie to co stoi mi na drodze.</Entry>
+    <Entry Name="Note_tasjen_note_test_2_Name">W pulapce (1 listopada 1878r.)</Entry>
+    <Entry Name="Note_tasjen_note_test_2_Text">Moja ciekawo[u347][u263] bywa zwodna. I tym razem nie by[u322]o wyj[u261]tku.  [br][br]Od kilku godzin stoj[u281] w jakiej[u347] skrytce wype[u322]nionej po kolana wody  szukaj[u261]c bezradnie wyj[u347]cia. Wydaje si[u281] by[u263] to jaka[u347] skrytka na dokumenty. Chyba powinienem przejrze[u263] dok[u322]adnie le[u380][u261]ce tutaj zwoje.[br][br] </Entry>
+    <Entry Name="Note_tasjen_note_test_3_Name">Kieszonkowa zguba (2 listopada 1878r.)</Entry>
+    <Entry Name="Note_tasjen_note_test_3_Text">Te drzwi prowadzace na gór[u281] wygladaja na zamkni[u281]te od zewn[u261]trz. Najwyra[u378]niej w[u322]a[u347]ciciel tej posiad[u322]o[u347]ci nie zbyt  by[u322] lubie[u263] w swoim gabinecie nieproszonych go[u347]ci.[br][br] Jego przebieg[u322]o[u347][u263] mnie coraz bardziej zaskakuje. Musz[u281] w ko[u324]cu zacz[u261][u263] my[u347]le[u263] logicznie. To jedyny 'klucz' do sukcesu.[br][br]Nie wydaje si[u281] by[u263] tutaj zbyt wiele kryjówek t[u281] "male[u324]stwo".</Entry>
+    <Entry Name="Quest_act3_q1_Name">Podisiad[u322]o[u347][u263] Rotterdama[br]</Entry>
+    <Entry Name="Quest_act3_q1_Text">Musz[u281] znale[u378][u263] przej[u347]cie do posiad[u322]o[u347]ci Rotterdama. Te kana[u322]y wedlug moich analiz odprowadzaj[u261] cz[u281][u347][u263] [u347]cieków z jego domu. [br][br]Musz[u281] by[u263] wyczulony na nawet najdrobniejsze szczegó[u322]y.</Entry>
+    <Entry Name="Quest_act3_q2_Name">Znajd[u378] biuro Rotterdama</Entry>
+    <Entry Name="Quest_act3_q2_Text">Rotterdam wiekszosc swojego czasu poswiecal na swoich pracach naukowych. Stad tez byc moze jego biuro moze okazac sie miejscem, gdzie uzyskam wiecej informacji na temat projektu X78, w wyniku ktorego jestem tutaj jako... lagodnie mowiac 'ludzki defekt'.</Entry>
+    <Entry Name="Note_act1down_1_Name">Tytul wpisu</Entry>
+    <Entry Name="Note_act1down_1_Text">Wpisz cos... testujemy wszystkie polskie znaki : Uwaga ! :D  </Entry>
+    <Entry Name="Diary_act3kitchen_Name1">Zapiski rze[u378]nika (30 sierpnia 1878r.)</Entry>
+    <Entry Name="Diary_act3kitchen_Text1">Kolejny dzie[u324] w tym powalonym miejscu. Codziennie musz[u281] czu[u263] ple[u347][u324] tych "wy[u380]szych" ludzi. Patrz[u261] si[u281] krzywo jak na kogo[u347] gorszego! Ci[u261]gle im co[u347] nie pasuje, to zupa za s[u322]ona, to talerze brudne. D[u322]u[u380]ej tak nie mog[u281].[br][br]Ostatnio nie mog[u281] skupi[u263] si[u281] na pracy. Te bachory wci[u261][u380] mnie denerwuj[u261]! Biegaj[u261] jak op[u281]tane po kuchni a ja nie mog[u281] nic zrobi[u263] bo to przecie[u380] go[u347]cie  ja[u347]nie pana! Gdyby pocz[u281]stowa[u263] ich czym[u347] co by przegoni[u322]o t[u261] kast[u281] najlepiej czym[u347] co jest im bliskie. By[u263] mo[u380]e wymy[u347]l[u281] sposób na te gównarzeri[u281]  jaki[u347] pies albo pozamyka[u263] je w jakiej[u347] skrzyni i mie[u263] spokój! Tak to jest my[u347]l! [br][br]Tylko sk[u261]d wzi[u261][u263] tak[u261] wielk[u261] skrzyni[u281]? Mo[u380]e przystawki ze szczurów co[u347] wnios[u261] do g[u322]owy lorda by podarowa[u263] mi kufer do ch[u322]odni.[br]</Entry>
+    <Entry Name="Diary_01act1main_Name1">Eksperyment Issac'a 1/3</Entry>
+    <Entry Name="Diary_01act1main_Text1">Dzie[u324] 69 [br][br]Pomimo wielu wysi[u322]ków uda[u322]o mi si[u281] w ko[u324]cu stworzy[u263] to nad czym pracowa[u322]em wiele dni.[br]Projekt Advena ujrza[u322] [u347]wiat[u322]o dzienne. Nigdy dot[u261]d nie czu[u322]em si[u281] tak usatysfakcjnowany z mojego dzie[u322]a. Kasta stra[u380]ników mo[u380]e w ko[u324]cu uchroni[u263] mnie od [u347]wiata zewn[u281]trznego.[br]... [br][br]Dzie[u324] 54 [br][br]Przygotowania zosta[u322]y dopi[u281]te na ostatni guzik. Ka[u380]dy w moich wi[u281][u378]niów zosta[u322] naznaczony i odpowiednio przygotowany do ceremonii. Ci[u261]gle chodzi mi po g[u322]owie jedno pytanie - jakie b[u281]dzie to wi[u261]za[u263] za sob[u261] skutki?[br][br]</Entry>
+    <Entry Name="Diary_02act1main_Name1">Eksperyment Issac'a 2/3</Entry>
+    <Entry Name="Diary_02act1main_Text1">Dzie[u324] 31[br][br]Nie min[u281][u322]o zbyt wiele czasu od znalezienia ksi[u281]gi Animus Advena nim przekona[u322]em si[u281], [u380]e jest ona kluczem do dost[u261]pienia pierwiastku idea[u322]u cz[u322]owieka. Jestem realist[u261], doskonale wiem, [u380]e sukces eksperymentu wisi na w[u322]osku. Musia[u322]em wi[u281]c zapomnie[u263] o moralno[u347]ci. [br][br]...[br][br][br]Dzie[u324] 28[br][br]Znaleziona ksi[u281]ga nie daje mi spokoju. Nie mog[u281] przez ni[u261] racjonalnie my[u347]le[u263]. Wci[u261][u380] zastanawiam si[u281] czy to wszystko jest prawd[u261]. </Entry>
+    <Entry Name="Diary_03act1main_Name1">Eksperyment Issac'a 3/3</Entry>
+    <Entry Name="Diary_03act1main_Text1">Dzie[u324] 9[br][br]Ostatnio nie mam czasu na nic inne poza  prac[u261] nad moim nowym projektem, zwi[u261]zanym z manipulacj[u261] dusz. Sta[u322]o si[u281] to mo[u380]liwe, dzi[u281]ki moim pracownikom, którzy  jaki[u347] czas temu powiadomili mnie o dziwnym znalezisku. Okaza[u322]o si[u281] to pradawn[u261] ksi[u281]g[u261] Animus Advena, w której zawarte by[u322]y okultystyczno medyczne tre[u347]ci.[br][br]...[br][br]Dzie[u324] 1 [br][br]Przy tworzeniu sieci melioracyjnej na terenie mojej posiad[u322]o[u347]ci,  pracownicy natkn[u281]li si[u281] na g[u322]uch[u261] komnat[u281], w której znajdowa[u322]y si[u281] tajemnicze manuskrypty. Postanowi[u322]em przyjrze[u263] si[u281] bli[u380]ej temu miejscu.</Entry>
+    <Entry Name="Note_04act1main_Note_Name">Ksi[u281]ga istot</Entry>
+    <Entry Name="Note_04act1main_Note_Text">Postanowi[u322]em sporz[u261]dzi[u263] krótkie streszczenie tre[u347]ci zawartej w ksi[u281]dze Animusa. [br][br]Dusza - ka[u380]da dusza potrzebuje domu, miejsca w którym przebywa. W ksi[u281]dze okre[u347]lono ni[u261] pojemnik. Je[u347]li pojemnik (cia[u322]o) obumiera - dusza opuszcza dom (cia[u322]o), Dusza skazana jest na astraln[u261] w[u281]drówk[u281].[br][br]Pojemnik - cia[u322]o, fizyczna cz[u281][u347][u263] duszy, który w po[u322][u261]czeniu z ni[u261] staje si[u281] jedno[u347]ci[u261]. Mo[u380]liwy jest powrót duszy, gdy cia[u322]o b[u281]dzie sprawne.[br][br]Czy mo[u380]liwe jest wi[u281]c przechowanie wielu dusz w jednym, zdrowym ciele?[br][br]Spis pojemników i sposób ich stworzenia[br][br]Przywo[u322]aniec -&gt; najprostrza istota do stworzenia. Nie wymaga bezpo[u347]rednio [u380]ywej tkanki. Wymaga prostego szkieletu, kilka kropel krwi oraz zwi[u261]zku syntetyzuj[u261]cego trofea.[br][br]Zszywaniec -&gt; zaawansowana istota, wymagaj[u261]ca conajmniej kilku cia[u322] i odpowiedniego ich zszycia, daj[u261]c tym samym du[u380][u261] wytrzyma[u322]o[u347][u263] i si[u322][u281].[br][br]Stra[u380]nik -&gt; wyj[u261]tkowo szybka i silna istota, wymagaj[u261]ca ryt[u322]au na [u380]ywym ciele.[br][br]Akolita -&gt; istota doskona[u322]a, posiadaj[u261]ca nadludzki intelekt i si[u322][u281]. Niestety nie wspomniano nigdzie o tym, w jaki sposób j[u261] stworzy[u263].</Entry>
+    <Entry Name="Note_05act1main_Note_Name">Ostatnie s[u322]owa Derecka</Entry>
+    <Entry Name="Note_05act1main_Note_Text">Nie wierz[u281] w to, co ostatnio widzia[u322][u281]m. Mój brat Issac to kompletny szaleniec. Bez najmniejszych skrupu[u322]ów brutalnie morduje swoich ludzi, wierz[u261]c w to, co naczyta[u322] si[u281] w jakiej[u347] [u347]miesznych bajkach. Musz[u281] uniemo[u380]liwi[u263] mu ten dalszy proceder. Spróbuj[u281] jako[u347] zabezpieczy[u263] klucz wodoci[u261]gów którymi przyprowadza[u322] kolejne ofiary. Mo[u380]e cho[u263] to zminimalizuje ci[u261]gle rosn[u261]c[u261] ilo[u347][u263] ofiar.</Entry>
+    <Entry Name="Diary_02act3library_Name1">Wspomnienia Issac'a 1/4</Entry>
+    <Entry Name="Diary_02act3library_Text1">30 pa[u378]dziernika 1878[br][br]Ostatnie moje miesi[u261]ce wyj[u261]tkowo zwi[u261]zane s[u261] z tym miejscem, bowiem jedynie tutaj mog[u281] zale[u378][u263] chwil[u281] natchnienia na analiz[u281] tekstów zawartych w znalezionym Animus Advena. Dziki tej ksi[u281]dze uda[u322]o mi si[u281] opanowa[u263] metod[u281] na pobudzanie uk[u322]adu nerwowego istot, w taki sposób aby by[u322] nadreaktywne na bod[u378]ce z zewn[u261]trz. [br][br]Aby jednak pozostawi[u263] tajmnic[u281] tej ksi[u281]gi wy[u322][u261]cznie dla siebie zostawiam j[u261] ukryt[u261] gdzie [u380]adne oko cz[u322]owieka nie dotar[u322]o.  Mam nadziej[u281], [u380]e to miejsce nigdy nie zotanie znalezione, a ju[u380] na pewno nie kiedy b[u281]dzie le[u380]a[u322] tam mój skarb.[br][br]</Entry>
+    <Entry Name="Note_01act3library_Note_Name">P[u322]yta winylowa</Entry>
+    <Entry Name="Note_01act3library_Note_Text">Pomy[u347]la[u322]em, [u380]e dobrym rozwi[u261]zaniem jest pozostawienie tej p[u322]yty po[u347]ród tych ksi[u261]g. Dzi[u281]ki temu nie nara[u380][u281] j[u261] na przypadkowe zniszczenie z r[u261]k otaczaj[u261]geo mnie pospólstwa.</Entry>
+    <Entry Name="Note_01act1down_Note_Name">Lampa Alepha</Entry>
+    <Entry Name="Note_01act1down_Note_Text">Po ci[u281][u380]kim dniu wreszcie czas na odpoczynek. Ka[u380]dy z nas stara si[u281] sp[u281]dzi[u263] ten czas jak najlepiej. Cz[u281][u347][u263] z nas gra w karty, usi[u322]uj[u261]c co[u347] uciu[u322]a[u263] na jutro - pozostali za[u347]  - udaj[u261] si[u281] na spoczynek, aby móc zregenerowa[u263] si[u322]y na kolejny dzie[u324]. Po pracy miejsce to jest tak mroczne, [u380]e nigdy nie opuszczam swojego pokoju bez mojej starej lampy oliwnej, która pomimo swoich lat potrafi roz[u347]wietli[u263] te cholern[u261] komnat[u281]. </Entry>
+    <Entry Name="Note_01act1up_Note_Name">Zakrwawiony list</Entry>
+    <Entry Name="Note_01act1up_Note_Text">Nie pami[u281]tam jak si[u281] nazywam... Nie wiem, co tu robi[u281]... Moje cia[u322]o ju[u380] dawno odmówi[u322]o mi pos[u322]usze[u324]stwa. Jestem jedynie mrocznym cieniem cz[u322]owieka, który bez wi[u281]kszego sensu wegetuje na tym n[u281]dznym [u347]wiecie. Potworny ból przeszywa moje ko[u347]ci, tak [u380]e nie jestem w stanie d[u322]u[u380]ej tego wytrzyma[u263]. Uda[u322]o mi si[u281] utrzyma[u263] przy sobie jedynie ig[u322][u281], która sam nie wiem jakim cudem znalaz[u322]a si[u281] w moim bucie. Czas z tym sko[u324]czy[u263]. Czas sko[u324]czy[u263] z tym [u347]wiatem, Nie znios[u281] ju[u380] d[u322]u[u380]ej tych tortur.</Entry>
+    <Entry Name="Diary_01act3main_Name1">Ostatnie skrzypce 1/3</Entry>
+    <Entry Name="Diary_01act3main_Text1">Wspaniale dzi[u347] si[u281] czu[u322]em mog[u261]c gra[u263] dla tak wielu ludzi w domu Issac'a. By[u322] to dla mnie zaszczyt, [u380]e wybra[u322] mnie spo[u347]ród tej zgrai[br]"grajków" która nie ma poj[u281]cia o muzyce. Wybór nie móg[u322] by[u263] inni, przecie[u380] tyle czasu po[u347]wi[u281]ci[u322]em na to by ukoi[u263] dusz[u281] moim miodem[br]wyp[u322]ywaj[u261]cym z pianina. Oklaski ludzi by[u322]y niczym woda na pustyni. Ju[u380] dawno zapomnia[u322]em tego smaku.[br]</Entry>
+    <Entry Name="Diary_02act3main_Name1">Ostatnie skrzypce 2/3</Entry>
+    <Entry Name="Diary_02act3main_Text1">Czekaj[u261] mnie kolejne kompozycje do zagrania. Jednak wiem, [u380]e musz[u281] si[u281] bardziej postara[u263] bo z tego co zauwa[u380]y[u322]em Pan nie jest ostatnio[br]zadowolony z jego pracowników. Co[u347] jakby w nim si[u281] zmieni[u322]o... Odczu[u322]em z jego struny ch[u322]ód mro[u380][u261]cy moje usta gdy do mnie przemawia[u322]...[br]nie mog[u322]em nic odpowiedzie[u263] w obronie.[br]</Entry>
+    <Entry Name="Diary_03act3main_Name1">Ostatnie skrzypce 3/3</Entry>
+    <Entry Name="Diary_03act3main_Text1">To by[u322] chyba ostatni gig w moim [u380]yciu. Pianino na którym gra[u322]em zosta[u322]o przeniesione do graciarni a w jego miejsce postawiono gramofon.[br]Có[u380] za sztuczne podej[u347]cie do s[u322]uchania muzyki. Modl[u281] si[u281] bym nie zosta[u322] potraktowany jak moje narz[u281]dzie... nie lubi[u281] cel i ciemno[u347]ci.</Entry>
+    <Entry Name="Quest_act4resident1_Name">Kieszonkowa zguba</Entry>
+    <Entry Name="Quest_act4resident1_Text">Te drzwi prowadzace na dó[u322] wygladaja na zamkni[u281]te od zewn[u261]trz. Jak wida[u263] Issac potrafi[u322] skutecznie uniemo[u380]liwi[u263] dost[u281]p do ka[u380]dego miejsca na jego posiad[u322]o[u347]ci.[br][br]Jednak, skoro zamek zamkni[u281]ty jest od zewn[u261]trz to klucz jest gdzie[u347] tutaj. Powinienem dok[u322]adniej si[u281] rozejrze[u263]. Mo[u380]e trafi[u281] na jakie[u347] wskazówki.</Entry>
+  </CATEGORY>
+  <CATEGORY Name="Act3">
+    <Entry Name="Dotnij_okno">Ta szyba wygl[u261]da jakby mia[u322]a zaraz p[u281]kn[u261][u263]</Entry>
+    <Entry Name="Dotnij_kamien">Ta [u347]ciana wygl[u261]da na g[u322]uch[u261]</Entry>
+    <Entry Name="Dotnij_czaszka">Ludzka czaszka</Entry>
+    <Entry Name="Dotnij_fonograf">Fonograf</Entry>
+    <Entry Name="Uderzenie_kamieniem">Stara k[u322]ódka</Entry>
+    <Entry Name="Text_Death_Fall">Padles - powstan :D</Entry>
+    <Entry Name="song1_t">Akord C-2</Entry>
+    <Entry Name="song2_t">Akord C-1</Entry>
+    <Entry Name="song3_t">Akord C0</Entry>
+    <Entry Name="song4_t">Akord C1</Entry>
+    <Entry Name="song5_t">Akord C2</Entry>
+  </CATEGORY>
+  <CATEGORY Name="Act1">
+    <Entry Name="Przelacznik_Info">Wygl[u261]da mi to na jaki[u347] mechanizm prze[u322][u261]czaj[u261]cy.</Entry>
+    <Entry Name="Error_Przelacznik">Mechanizm ten wygl[u261]da na popsuty</Entry>
+  </CATEGORY>
+  <CATEGORY Name="Levels">
+    <Entry Name="act1main">Kazamaty Isaac'a</Entry>
+    <Entry Name="act1up">Karcer</Entry>
+    <Entry Name="act1down">Alkierz</Entry>
+    <Entry Name="act1toact2">Wodoci[u261]gi</Entry>
+    <Entry Name="act2main">Kana[u322]y</Entry>
+    <Entry Name="act3main">Posiad[u322]o[u347][u263] Issac'a</Entry>
+    <Entry Name="act3kitchen">Jadalnia</Entry>
+    <Entry Name="act3libray">Biblioteka</Entry>
+    <Entry Name="act3cellar">Piwnica</Entry>
+    <Entry Name="act4resident">Rezydencja</Entry>
+    <Entry Name="act2sterownia">Rozlewnia</Entry>
+    <Entry Name="act4main">Loch</Entry>
+    <Entry Name="act5ending">Kot[u322]ownia</Entry>
+    <Entry Name="act6main">Dziedziniec</Entry>
+  </CATEGORY>
+  <CATEGORY Name="Skrytki">
+    <Entry Name="Odkryto">Znalaz[u322]e[u347] ukryte miejsce.</Entry>
+    <Entry Name="Hint_Skrytki">W ukrytych miejscach mo[u380]esz znale[u378][u263] wiele cennych przedmiotów, które pozwol[u261] Ci przetrwa[u263].</Entry>
+  </CATEGORY>
+  <CATEGORY Name="EASTER_EGG">
+    <Entry Name="Zaopatrzenie">Zaopatrzenie</Entry>
+    <Entry Name="Runda_I">Runda I</Entry>
+    <Entry Name="Runda_II">Runda II</Entry>
+    <Entry Name="Runda_III">Runda III</Entry>
+    <Entry Name="Runda_IV">Runda IV</Entry>
+    <Entry Name="Runda_V">Runda V</Entry>
+    <Entry Name="Runda_VI">Runda VI</Entry>
+    <Entry Name="Runda_VII">Runda VII</Entry>
+    <Entry Name="Runda_VIII">Runda VIII</Entry>
+    <Entry Name="Runda_IX">Runda IX</Entry>
+    <Entry Name="Runda_X">Runda X</Entry>
+    <Entry Name="Runda_XI">Runda XI</Entry>
+    <Entry Name="Runda_XII">Runda XII</Entry>
+  </CATEGORY>
+  <CATEGORY Name="Wiezien_Quests">
+    <Entry Name="DIA_1_Q1">Nie wygl[u261]dasz mi na kogo[u347] kto ch[u281]tnie by mnie wypatroszy.[br]</Entry>
+    <Entry Name="DIA_2_Q1">a wi[u281]c mówisz, [u380]e uda[u322]o Ci si[u281] pozbiera[u263] w[u322]asne my[u347]li?[br]</Entry>
+    <Entry Name="DIA_3_Q1">Nie wiem czy mog[u281] Ciebie prosi[u263] o przys[u322]ug[u281] ale je[u347]li by[u347] natkn[u261][u322] si[u281] na jaki[u347] posi[u322]ek by[u322]bym wdzi[u281]czny gdyby[u347] mi go dostarczy[u322].[br]</Entry>
+    <Entry Name="DIA_4_Q1">Przetrwa[u322]em d[u322]ugo wi[u281]c chyba jeszcze dam rad[u281] lecz nie chc[u281] zawracac Ci g[u322]owy.[br]</Entry>
+    <Entry Name="DIA_5_Q1">Jestem Twoim d[u322]u[u380]nikiem, prosz[u281], oto kamie[u324] który znalaz[u322]em gdy mnie tutaj wrzucono, mam nadziej[u281], [u380]e si[u281] przyda</Entry>
+  </CATEGORY>
+</LANGUAGE>

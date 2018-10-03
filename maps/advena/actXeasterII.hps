@@ -1,0 +1,271 @@
+//mansion_1
+//SetMessage("Skrytki","Odkryto", 3); 
+void OnStart() {
+	AddEntityCollideCallback("Player","ScriptArea_1","ScriptArea_1",false,0);
+	SetEntityPlayerInteractCallback("kup_mikstury", "kup_mikstury",false);
+}
+void OnLeave() {
+
+}
+void napis_kupowanie(string &in asEntity, int alState) {
+SetMessage("EASTER_EGG","Zaopatrzenie",1);
+}
+void kup_mikstury(string &in asEntity) {
+	GiveItemFromFile("potion_healh_1","potion_health.ent");
+	GiveItemFromFile("potion_sanity_1","potion_sanity.ent");
+	 PlayGuiSound("ui_use_health",1);
+}
+void OnEnter() {
+SetMoveObjectState("wooden_slide_door_auto_close_1", -1);
+}
+void ScriptArea_1(string &in asParent, string &in asChild, int alState) {
+if(alState == 1) {
+SetEntityActive("servant_grunt_1",true);
+SetEntityActive("enemy_suitor_4",true);
+SetEntityActive("enemy_suitor_1",true);
+SetMoveObjectState("wooden_slide_door_auto_close_1", 1);
+PlayMusic("Easter_Egg_II", true, 0.7f, 2.0f, 10, true);
+SetEntityActive("block_box_3",true);
+AddTimer("Przerwa",15,"Przerwa");
+SetMoveObjectState("wooden_slide_door_auto_close_1", 1);
+}
+if(alState == -1) {
+SetEntityActive("block_box_3",false);
+StopMusic(2,1.0f);
+}
+}
+void Przerwa(string &in asTimer) {
+for(int y=1;y<=12;y++) { RemoveTimer("Runda"+y); } 
+for(int z=13;z<=16;z++) { SetEntityActive("servant_grunt_"+z,false); }
+
+if(GetLocalVarInt("runda") == 0) {
+SetMessage("EASTER_EGG","Runda_I",3);
+AddTimer("Runda1",15,"Runda_1");
+}
+if(GetLocalVarInt("runda") == 1) {
+SetMessage("EASTER_EGG","Runda_II",3);
+AddTimer("Runda2",15,"Runda_2");
+}
+if(GetLocalVarInt("runda") == 2) {
+SetMessage("EASTER_EGG","Runda_III",3);
+AddTimer("Runda3",15,"Runda_3");
+}
+if(GetLocalVarInt("runda") == 3) {
+SetMessage("EASTER_EGG","Runda_IV",3);
+AddTimer("Runda4",15,"Runda_4");
+}
+if(GetLocalVarInt("runda") == 4) {
+SetMessage("EASTER_EGG","Runda_V",3);
+AddTimer("Runda5",0.1,"Runda_5");
+}
+if(GetLocalVarInt("runda") == 5) {
+SetMessage("EASTER_EGG","Runda_VI",3);
+AddTimer("Runda6",15,"Runda_6");
+}
+if(GetLocalVarInt("runda") == 6) {
+SetMessage("EASTER_EGG","Runda_VII",3);
+AddTimer("Runda8",15,"Runda_7");
+}
+if(GetLocalVarInt("runda") == 7) {
+SetMessage("EASTER_EGG","Runda_VIII",3);
+AddTimer("Runda8",15,"Runda_8");
+}
+if(GetLocalVarInt("runda") == 8) {
+SetMessage("EASTER_EGG","Runda_IX",3);
+AddTimer("Runda9",15,"Runda_9");
+}
+if(GetLocalVarInt("runda") == 9) {
+SetMessage("EASTER_EGG","Runda_X",3);
+AddTimer("Runda10",15,"Runda_10");
+}
+if(GetLocalVarInt("runda") == 10) {
+SetMessage("EASTER_EGG","Runda_XI",3);
+AddTimer("Runda11",15,"Runda_11");
+}
+if(GetLocalVarInt("runda") == 11) {
+SetMessage("EASTER_EGG","Runda_XII",3);
+AddTimer("Runda12",15,"Runda_12");
+}
+if(GetLocalVarInt("runda") == 12) {
+AddTimer("Runda13",15,"Runda_13");
+}
+}
+void Runda_1(string &in asTimer) {
+//RemoveTimer("Przerwa");
+//SetMoveObjectState("wooden_slide_door_auto_close_1", 1);
+SetEntityActive("servant_grunt_13",true);
+ShowEnemyPlayerPosition("servant_grunt_13");
+AddTimer("Przerwa",30,"Przerwa");
+AddLocalVarInt("runda",1);
+AddTimer("zamknij_drzwi",5,"zamknij");
+AddEnemyPatrolNode("servant_grunt_13", "PathNodeArea_111", 0, "");
+AddEnemyPatrolNode("servant_grunt_13", "PathNodeArea_88", 0, "");
+ RemoveTimer(asTimer);
+}
+void zamknij(string &in asTimer) {
+//SetMoveObjectState("wooden_slide_door_auto_close_1", -1);
+}
+void Runda_2(string &in asTimer) {
+//RemoveTimer("Przerwa");
+SetEntityActive("servant_grunt_13",true);
+SetEntityActive("servant_grunt_14",true);
+//SetMoveObjectState("wooden_slide_door_auto_close_1", 1);
+ShowEnemyPlayerPosition("servant_grunt_14");
+ShowEnemyPlayerPosition("servant_grunt_13");
+AddLocalVarInt("runda",1);
+AddTimer("Przerwa",30,"Przerwa");
+AddTimer("zamknij_drzwi",5,"zamknij");
+ RemoveTimer(asTimer);
+}
+void Runda_3(string &in asTimer) {
+//RemoveTimer("Przerwa");
+SetEntityActive("servant_grunt_13",true);
+SetEntityActive("servant_grunt_14",true);
+AddLocalVarInt("runda",1);
+SetEntityActive("servant_grunt_15",true);
+//SetMoveObjectState("wooden_slide_door_auto_close_1", 1);
+ShowEnemyPlayerPosition("servant_grunt_14");
+ShowEnemyPlayerPosition("servant_grunt_15");
+ShowEnemyPlayerPosition("servant_grunt_13");
+AddTimer("Przerwa",30,"Przerwa");
+AddTimer("zamknij_drzwi",5,"zamknij");
+ RemoveTimer(asTimer);
+}
+void Runda_4(string &in asTimer) {
+//RemoveTimer("Przerwa");
+SetEntityActive("servant_grunt_13",true);
+SetEntityActive("servant_grunt_14",true);
+SetEntityActive("servant_grunt_15",true);
+AddLocalVarInt("runda",1);
+SetEntityActive("servant_grunt_16",true);
+//SetMoveObjectState("wooden_slide_door_auto_close_1", 1);
+ShowEnemyPlayerPosition("servant_grunt_14");
+ShowEnemyPlayerPosition("servant_grunt_13");
+ShowEnemyPlayerPosition("servant_grunt_15");
+ShowEnemyPlayerPosition("servant_grunt_16");
+AddTimer("Przerwa",30,"Przerwa");
+AddTimer("zamknij_drzwi",5,"zamknij");
+ RemoveTimer(asTimer);
+}
+void Runda_5(string &in asTimer) {
+//RemoveTimer("Przerwa");
+SetEntityActive("enemy_suitor_5",true);
+ 
+AddLocalVarInt("runda",1);
+//SetMoveObjectState("wooden_slide_door_auto_close_1", 1);
+ShowEnemyPlayerPosition("enemy_suitor_5");
+ 
+AddTimer("Przerwa",30,"Przerwa");
+AddTimer("zamknij_drzwi",5,"zamknij");
+ RemoveTimer(asTimer);
+}
+void Runda_6(string &in asTimer) {
+//RemoveTimer("Przerwa");
+SetEntityActive("enemy_suitor_5",true);
+SetEntityActive("enemy_suitor_3",true);
+ 
+AddLocalVarInt("runda",1);
+SetEntityActive("servant_grunt_16",true);
+//SetMoveObjectState("wooden_slide_door_auto_close_1", 1);
+ShowEnemyPlayerPosition("enemy_suitor_5");
+ShowEnemyPlayerPosition("enemy_suitor_3");
+ 
+AddTimer("Przerwa",30,"Przerwa");
+AddTimer("zamknij_drzwi",5,"zamknij");
+
+ RemoveTimer(asTimer);
+}
+void Runda_7(string &in asTimer) {
+//RemoveTimer("Przerwa");
+ 
+SetEntityActive("enemy_suitor_3",true);
+SetEntityActive("enemy_suitor_6",true);
+AddLocalVarInt("runda",1);
+SetEntityActive("enemy_suitor_5",true);
+//SetMoveObjectState("wooden_slide_door_auto_close_1", 1);
+ShowEnemyPlayerPosition("enemy_suitor_5");
+ShowEnemyPlayerPosition("enemy_suitor_6");
+ 
+ShowEnemyPlayerPosition("enemy_suitor_3");
+AddTimer("Przerwa",30,"Przerwa");
+AddTimer("zamknij_drzwi",5,"zamknij");
+ RemoveTimer(asTimer);
+}
+void Runda_8(string &in asTimer) {
+SetEntityActive("enemy_suitor_2",true);
+SetEntityActive("enemy_suitor_3",true);
+SetEntityActive("enemy_suitor_6",true);
+AddLocalVarInt("runda",1);
+SetEntityActive("enemy_suitor_5",true);
+//SetMoveObjectState("wooden_slide_door_auto_close_1", 1);
+ShowEnemyPlayerPosition("enemy_suitor_5");
+ShowEnemyPlayerPosition("enemy_suitor_6");
+ShowEnemyPlayerPosition("enemy_suitor_2");
+ShowEnemyPlayerPosition("enemy_suitor_3");
+AddTimer("Przerwa",30,"Przerwa");
+AddTimer("zamknij_drzwi",5,"zamknij");
+ RemoveTimer(asTimer);
+}
+void Runda_9(string &in asTimer) {
+//RemoveTimer("Przerwa");
+SetEntityActive("servant_brute_4",true);
+AddLocalVarInt("runda",1);
+//SetMoveObjectState("wooden_slide_door_auto_close_1", 1);
+ShowEnemyPlayerPosition("servant_brute_4");
+AddTimer("Przerwa",30,"Przerwa");
+AddTimer("zamknij_drzwi",5,"zamknij");
+
+ RemoveTimer(asTimer);
+}
+void Runda_10(string &in asTimer) {
+//RemoveTimer("Przerwa");
+SetEntityActive("servant_brute_5",true);
+SetEntityActive("servant_brute_4",true);
+AddLocalVarInt("runda",1);
+//SetMoveObjectState("wooden_slide_door_auto_close_1", 1);
+ShowEnemyPlayerPosition("servant_brute_5");
+ShowEnemyPlayerPosition("servant_brute_4");
+AddTimer("Przerwa",30,"Przerwa");
+AddTimer("zamknij_drzwi",5,"zamknij");
+ RemoveTimer(asTimer);
+}
+void Runda_11(string &in asTimer) {
+//RemoveTimer("Przerwa");
+SetEntityActive("servant_brute_5",true);
+SetEntityActive("servant_brute_4",true);
+SetEntityActive("servant_brute_6",true);
+AddLocalVarInt("runda",1);
+ 
+//SetMoveObjectState("wooden_slide_door_auto_close_1", 1);
+ShowEnemyPlayerPosition("servant_brute_5");
+ShowEnemyPlayerPosition("servant_brute_4");
+ShowEnemyPlayerPosition("servant_brute_6");
+AddTimer("Przerwa",30,"Przerwa");
+AddTimer("zamknij_drzwi",5,"zamknij");
+ RemoveTimer(asTimer);
+}
+void Runda_12(string &in asTimer) {
+//RemoveTimer("Przerwa");
+SetEntityActive("servant_brute_4",true);
+SetEntityActive("servant_brute_5",true);
+SetEntityActive("servant_brute_6",true);
+AddLocalVarInt("runda",1);
+SetEntityActive("servant_brute_7",true);
+//SetMoveObjectState("wooden_slide_door_auto_close_1", 1);
+ShowEnemyPlayerPosition("servant_brute_4");
+ShowEnemyPlayerPosition("servant_brute_5");
+ShowEnemyPlayerPosition("servant_brute_6");
+ShowEnemyPlayerPosition("servant_brute_7");
+AddTimer("Przerwa",30,"Przerwa");
+AddTimer("zamknij_drzwi",5,"zamknij");
+ RemoveTimer(asTimer);
+}
+void Runda_13(string &in asTimer) {
+//RemoveTimer("Przerwa");
+SetEntityActive("servant_brute_4",false);
+SetEntityActive("servant_brute_5",false);
+SetEntityActive("servant_brute_6",false);
+AddLocalVarInt("runda",1);
+SetEntityActive("servant_brute_7",false);
+ RemoveTimer(asTimer);
+}

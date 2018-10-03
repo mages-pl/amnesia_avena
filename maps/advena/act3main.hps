@@ -1,0 +1,199 @@
+void OnStart() {
+	//########################################################################
+	//## PIANO
+	//########################################################################
+		for(int tasjen=1;tasjen<=5;tasjen++) { SetEntityPlayerInteractCallback("song"+tasjen,"song"+tasjen,false);	}
+//for(int vb=1;vb<=5;vb++) { SetEntityPlayerLookAtCallback("show_song"+vb,"show_song"+vb,false,1);	}
+                AddEntityCollideCallback("Player","ScriptArea_10","ScriptArea_10",false,1);
+AddEntityCollideCallback("Player","ScriptArea_4","ScriptArea_4",true,1);
+AddEntityCollideCallback("Player","ScriptArea_8","ScriptArea_8",true,1);
+
+AddEntityCollideCallback("Player","strach4","strach4",true,1);
+
+AddEntityCollideCallback("Player","ScriptArea_6","ScriptArea_6",false,0);
+AddUseItemCallback("", "glass_container_oil_1", "ScriptArea_2", "Nasmaruj_pokretlo", true);
+AddUseItemCallback("", "record_phonograph", "phonograph_1", "odtworz_nagranie", true);
+}
+
+void strach4(string &in asParent, string &in asChild, int alState)  { 
+  
+    GiveSanityDamage(10,false);
+    
+ SetEntityActive("servant_grunt_1",true);
+ 
+ 
+AddEnemyPatrolNode("servant_grunt_1", "PathNodeArea_9", 0, "");
+AddEnemyPatrolNode("servant_grunt_1", "PathNodeArea_12", 0, "");
+AddEnemyPatrolNode("servant_grunt_1", "PathNodeArea_19", 0, "");
+AddEnemyPatrolNode("servant_grunt_1", "PathNodeArea_22", 0, "");
+ 
+
+}
+void OnEnter() {
+     AutoSave();
+	PlayMusic("amb_extra01.ogg",false, 0.85,1.0,1,false);
+	if(GetLocalVarInt("rozdzial3") == 0) {
+FadeOut(0);
+ SetMessage("Rozdzial", "3", 3.0f);
+ AddLocalVarInt("rozdzial3",1);
+ AddTimer("",5,"EndFade_Rozdzial");
+ }
+      AddTimer("",42,"NowyTrackAmb");  
+}
+
+void NowyTrackAmb(string &in asTimer) {
+    PlayMusic("ending_alexander.ogg",true, 0.5,0.7,1,true);
+}
+void show_song1(string &in asEntity, int alState) {
+    if(alState == 1) { 
+        SetMessage("Act3", "song1_t", 0);
+    }
+}
+
+void show_song2(string &in asEntity, int alState) {
+    if(alState == 1) { 
+        SetMessage("Act3", "song2_t", 0);
+    }
+}
+
+void show_song3(string &in asEntity, int alState) {
+    if(alState == 1) { 
+        SetMessage("Act3", "song3_t", 0);
+    }
+}
+
+void show_song4(string &in asEntity, int alState) {
+    if(alState == 1) { 
+        SetMessage("Act3", "song4_t", 0);
+    }
+}
+
+void show_song5(string &in asEntity, int alState) {
+    if(alState == 1) { 
+        SetMessage("Act3", "song5_t", 0);
+    }
+}
+void EndFade_Rozdzial(string &in asTimer) {
+FadeIn(0.5f);
+}
+void ScriptArea_4(string &in asParent, string &in asChild, int alState) {
+if(GetGlobalVarInt("OdkryteSkrytki") == 0) {
+GiveHint("Hint_Skrytki", "Skrytki", "Hint_Skrytki", 5);
+}
+AddGlobalVarInt("OdkryteSkrytki",1);
+PlayGuiSound("quest_completed",1);
+SetMessage("Skrytki","Odkryto", 3); 
+}
+void ScriptArea_8(string &in asParent, string &in asChild, int alState) {
+if(GetGlobalVarInt("OdkryteSkrytki") == 0) {
+GiveHint("Hint_Skrytki", "Skrytki", "Hint_Skrytki", 5);
+}
+AddGlobalVarInt("OdkryteSkrytki",1);
+PlayGuiSound("quest_completed",1);
+SetMessage("Skrytki","Odkryto", 3); 
+}
+void ScriptArea_10(string &in asParent, string &in asChild, int alState) {
+  ChangeMap("act3_cellarbase.map", "PlayerStartArea_1", "", "");
+}
+void ScriptArea_6(string &in asParent, string &in asChild, int alState) {
+if(alState == 1) {
+ AddTimer("",RandInt(0.5,2),"piano_play");
+ }
+ if(alState == -1) {
+ AddTimer("",RandInt(1,5),"piano_play");
+ }
+}
+void piano_play(string &in asTimer) {
+RemoveTimer("piano");
+PlaySoundAtEntity("piano", "general_piano0"+RandInt(1,3), "ScriptArea_6", 0, false);
+} 
+//######################################################
+//  PIANO
+//######################################################
+void song1(string &in asEntity) {
+ 	SetMessage("Act3", "song1_t", 0);
+	PlayGuiSound("C-2.ogg",1);
+	if(GetLocalVarInt("C") == 5) { // PUZZLE PIANO - OK 
+SetEntityActive("hatch_ceiling_1",false);
+SetEntityActive("hatch_ceiling_2",true);
+AddPlayerSanity(30);
+PlayMusic("10_puzzle02.ogg",false, 0.85,1.0,1,false);
+    AddPropImpulse("hatch_ceiling_2", 0, 45, 0, "World");
+	} else {
+		SetLocalVarInt("C",0);
+	}
+}
+void song2(string &in asEntity) {
+ 	SetMessage("Act3", "song2_t", 0);
+	PlayGuiSound("C-1.ogg",1);
+	if(GetLocalVarInt("C") == 0) {
+	SetLocalVarInt("C",1);
+	} else {
+		SetLocalVarInt("C",0);
+	}
+}
+void song3(string &in asEntity) {
+ 	SetMessage("Act3", "song3_t", 0);
+	PlayGuiSound("C0.ogg",1);
+	if(GetLocalVarInt("C") == 2) {
+	SetLocalVarInt("C",3);
+	} 	 else {
+	SetLocalVarInt("C",0);
+	}
+}
+void song4(string &in asEntity) {
+ 	SetMessage("Act3", "song4_t", 0);
+	PlayGuiSound("C1.ogg",1);
+	if(GetLocalVarInt("C") == 1) {
+	SetLocalVarInt("C",2);
+	} 
+		else if(GetLocalVarInt("C") == 4) {
+	SetLocalVarInt("C",5);
+	} 
+	else {
+	SetLocalVarInt("C",0);
+	}
+}
+void song5(string &in asEntity) {
+ 	SetMessage("Act3", "song5_t", 0);
+	PlayGuiSound("C2.ogg",1);
+	if(GetLocalVarInt("C") == 3) {
+	SetLocalVarInt("C",4);
+	}	else {
+	SetLocalVarInt("C",0);
+	}
+}
+// Szyfr melodyczny #############################################
+//  C-1,C1,C0,C2,C1,C-2
+void wlacz_fonograf(string &in asEntity, int alState) {
+if(alState == 1) {
+if(GetLocalVarInt("fonograf") == 1) {
+PlayGuiSound("PianoPlayWinyl.ogg",0.6);
+}
+}
+}
+void Nasmaruj_pokretlo(string &in asItem, string &in asEntity) {
+RemoveItem("glass_container_oil_1");
+SetEntityActive("phonograph_1",true);
+SetEntityActive("phonograph_2",false);
+AddPlayerSanity(5);
+}
+void przesun_obraz(string &in asEntity, int alState) {
+     if(alState == 1) {
+     AddTimer("",5,"przesuwanie_obrazu_po_czasie");
+     }
+ }
+  
+
+void przesuwanie_obrazu_po_czasie(string &in asTimer) {
+
+ SetMoveObjectState("painting_large03_1", -1.5f);
+
+}
+void OnLeave() {
+
+}
+void odtworz_nagranie(string &in asItem, string &in asEntity) {
+RemoveItem("record_phonograph");
+SetLocalVarInt("fonograf",1);
+}

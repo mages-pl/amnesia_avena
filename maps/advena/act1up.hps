@@ -1,0 +1,228 @@
+void OnStart() {
+//#### Zmienne
+SetLocalVarInt("intro_cell_sequence",0); // OK 
+ 
+//####### COLLIDE #############
+AddEntityCollideCallback("Player", "ScriptArea_6", "ScriptArea_6", false, 1);  // OK
+AddEntityCollideCallback("Player", "ScriptArea_7", "ScriptArea_7", false, 1);  // OK
+AddEntityCollideCallback("Player", "ScriptArea_13", "ScriptArea_13", true, 1); // OK
+//AddEntityCollideCallback("Player", "ScriptArea_3", "DezActive_Man", true, 1); // OK
+AddEntityCollideCallback("Player", "ScriptArea_1", "ScriptArea_1", true, 1); // OK
+AddEntityCollideCallback("Player", "ScriptArea_16", "ScriptArea_16", false, 0); // OK
+AddEntityCollideCallback("Player", "ScriptArea_18", "ScriptArea_18", true, 1); // OK
+AddEntityCollideCallback("Player", "ScriptArea_12", "ScriptArea_12", false, 0); // OK
+//#### USE ITEMS
+//AddUseItemCallback("", "crowbar_1", "prison_7", "UsedCrowbarOnDoor", true);
+//######## INTERACT ########### 
+//SetEntityPlayerInteractCallback("Dotyk_lomu","Dotyk_lomu",false);
+//AddTimer("",5,"Brute");	
+
+}
+ 
+//####### ZATRZA�NIJ DRZWI #####################
+void ScriptArea_1(string &in asParent, string &in asChild, int alState) {
+ SetSwingDoorLocked("prison_silent_6", true, true);
+ SetSwingDoorDisableAutoClose("prison_silent_6", true);
+ SetSwingDoorClosed("prison_silent_6", true, true);
+   AddPropImpulse("prison_silent_6", 0, 0, -50, "World");
+ SetMoveObjectState("prison_silent_6", 1);
+ PlaySoundAtEntity("","general_wind_whirl_rand.snt", "prison_silent_6", 0, false);
+ AddTimer("",0.7,"particle_door");
+}
+void particle_door(string &in asTimer) {
+ CreateParticleSystemAtEntity("", "ps_dust_impact_vert.ps", "ScriptArea_22", false);
+}
+ 
+//##### PODNIE� IG�� ###############
+void dotyk1(string &in asEntity, string &in Type) {
+AddTimer("",0.5,"Teleport_Cell");
+}
+//######### INTRO SEQUENCE ###################
+void Teleport_Cell(string &in asTimer) {
+AddLocalVarInt("intro_cell_sequence",1);
+int szybkosc = 10;
+switch(GetLocalVarInt("intro_cell_sequence")) {
+case 1:
+
+PlayGuiSound("react_pant.snt",1);
+SetPlayerCrouchDisabled(true);
+ FadeRadialBlurTo(0.75f, 0.8f);
+szybkosc = 3;
+FadeOut(1); 
+break; // przej�cie ekranu do czerni mo�na doda� efekt os�abienia
+case 2:
+    SetEntityActive("enemy_suitor_1",true);
+ShowEnemyPlayerPosition("enemy_suitor_1"); 
+szybkosc = 1;
+ TeleportPlayer("PlayerStartArea_2");
+  SetSwingDoorLocked("prison_silent_6", false, false);
+  
+    SetMoveObjectState("childsnake_floor_water_blood_advena_1", 1.0f);
+    
+ SetSwingDoorDisableAutoClose("prison_silent_6", false);
+ SetSwingDoorClosed("prison_silent_6", false, false);
+ SetMoveObjectState("prison_silent_6", 1);
+break; 
+case 3:
+ FadeIn(1); // Wr�cenie do stanu normalno�ci + teleport do koszmarnej celi 
+szybkosc = 10;
+break; // panika, cela wype�nia si� krwi� + panika + os�abienie
+ case 4:
+ FadeOut(1);
+ szybkosc = 2;
+ break;
+case 5: 
+szybkosc = 2;
+TeleportPlayer("PlayerStartArea_3");
+ FadeRadialBlurTo(0.0f, 0.8f);
+  SetEntityActive("enemy_suitor_1",false);
+  break;
+case 6:
+szybkosc = 5;
+SetPlayerCrouchDisabled(false);
+FadeIn(1); //  teleport do celi pierwotnej
+break;
+}
+
+	if (GetLocalVarInt("intro_cell_sequence") <= 6){ AddTimer("", szybkosc, "Teleport_Cell"); }
+}
+//############# EFEKTY D�WI�KOWE ##############
+void ScriptArea_6(string &in asParent, string &in asChild, int alState) {
+	if(alState == 1) {
+ RemoveTimer("scare_sound_prison_n");
+	} if(alState == -1) {
+	AddTimer("scare_sound_prison_n",RandInt(1,40),"scare_sound_prison");
+	}
+}
+void scare_sound_prison(string &in asTimer) {
+    PlaySoundAtEntity("","scare_male_terrified.snt", "ScriptArea_19", 0, false);
+	RemoveTimer("scare_sound_prison_n");
+	  GiveSanityDamage(5,false);
+	AddTimer("scare_sound_prison_n",RandInt(1,40),"scare_sound_prison");
+	}
+void ScriptArea_13(string &in asParent, string &in asChild, int alState) {
+ PlaySoundAtEntity("","15_body_impact.ogg", "prison_silent_5", 0, false);
+ 
+  SetSwingDoorDisableAutoClose("prison_silent_5", true);
+  AddPropImpulse("prison_silent_5", 0, 0, 50, "World");
+GiveSanityDamage(10,false);
+}
+void ScriptArea_12(string &in asParent, string &in asChild, int alState) {
+if(alState == 1) {
+RemoveTimer("rand_prison_closed");
+}
+if(alState == -1) {
+AddTimer("rand_prison_closed",RandInt(1,60),"prisoner_closed_room");
+}
+}
+void prisoner_closed_room(string &in asTimer) {
+ PlaySoundAtEntity("","15_prisoner.snt", "ScriptArea_20", 0, false);
+ RemoveTimer("rand_prison_closed");
+ AddTimer("rand_prison_closed",RandInt(1,60),"prisoner_closed_room");
+}
+//############### ON ENTER #############3
+void OnEnter() {
+PlayMusic("23_amb.ogg",true, 0.85,1.0,1,true);
+AutoSave();
+}
+//############ PODNIE� OLIWE ##############
+void oil_take_act1up(string &in asEntity, string &in type) {
+  	GiveSanityDamage(15, true);
+    CreateParticleSystemAtEntityExt( "", "ps_green_wind_breeze.ps", "ScriptArea_21", false, 0.7f, 0.8f, 0.8f, 0.7f, true, 0, 2, 100, 110);
+ 	PlaySoundAtEntity("","scare_whine_loop4.ogg", "ScriptArea_21", 0, false);	
+ 	AddTimer("",2,"StopLook_wind");
+}
+void StopLook_wind(string &in asTimer) {
+	PlayGuiSound("react_pant2.ogg",1);		
+}
+//void DezActive_Man(string &in asParent, string &in asChild, int alState) {
+//	SetEntityActive("deformed_man_1", false);
+//	CreateParticleSystemAtEntity("", "ps_ghost_release", "deformed_man_1", false);	
+//	PlaySoundAtEntity("","15_man02_whimp.snt", "deformed_man_1", 0, false);	
+//	CreateParticleSystemAtEntity("", "ps_cave_monster_scream", "deformed_man_3", false);
+//	AddTimer("",2,"Next_Man");
+//	}
+//void Next_Man(string &in asTimer) {
+//SetEntityActive("deformed_man_2", true);
+//PlaySoundAtEntity("","15_man01_whimp.snt", "deformed_man_3", 0, false);	
+//CreateParticleSystemAtEntity("", "ps_ghost_release", "deformed_man_3", false);
+//CreateParticleSystemAtEntity("", "ps_cave_monster_scream", "deformed_man_3", false);
+//}
+ 
+void OnLeave() {
+StopMusic(1,1.0f);
+}
+
+void ScriptArea_16(string &in asParent, string &in asChild, int alState) {
+if(GetLocalVarInt("wiezien_q1_q") == 0) {
+if(alState == 1) {
+AddEffectVoice("15_help", "", "Dialogue", "DIA_1_Q1",true, "ScriptArea_16", 0.0f, 10.0f);
+AddEffectVoice("CH02L21_Agrippa_Strained_01", "", "Dialogue", "DIA_2_Q1",true, "ScriptArea_16", 0.0f, 10.0f);
+AddEffectVoice("CH02L21_Agrippa_Strained_02", "", "Dialogue", "DIA_3_Q1",true, "ScriptArea_16", 0.0f, 10.0f);
+
+AddTimer("wiezien_q",10,"wiezien_q_t");
+//SetEffectVoiceOverCallback("koniec_gadania_q1");
+}
+if(alState == -1) {
+RemoveTimer("wiezien_q");
+RemoveTimer("next_dialoge");
+AddEffectVoice("CH02L21_Agrippa_Strained_04", "", "Dialogue", "DIA_4_Q1",true, "ScriptArea_16", 0.0f, 10.0f);
+}
+}
+}
+void wiezien_q_t(string &in asTimer) {
+AddTimer("quest_1_w",1,"quest_1_w_timer");
+}
+void quest_1_w_timer(string &in asTimer) {
+AddQuest("wiezien_q_1", "wiezien_q_1");
+AddLocalVarInt("wiezien_q1_q",1);
+AddEntityCollideCallback("chlebek_*", "ScriptArea_15", "wiezien_najedzony", true, 1);
+
+//zmienić instancje w mapie
+}
+void wiezien_najedzony(string &in asParent, string &in asChild, int alState) {
+ FadeOut(3);
+ AddEffectVoice("CH02L21_Agrippa_Strained_03", "", "Dialogue", "DIA_5_Q1",true, "ScriptArea_16", 0.0f, 10.0f);
+ 
+ AddTimer("",6,"end_fade_wiezien_q1");
+}
+void end_fade_wiezien_q1(string &in asTimer) {
+FadeIn(3);
+CompleteQuest("wiezien_q_1", "wiezien_q_1");
+StopMusic(2,1.0f);
+ AddTimer("",1,"play_music_wiezien_q1"); // 
+}
+void play_music_wiezien_q1(string &in asTimer) {
+SetEntityActive("orbpiece_obsidian_1",true);
+ AddPropImpulse("orbpiece_obsidian_1", 0, 0, 1, "World");
+AddPlayerSanity(35);
+  PlayMusic("12_puzzle_cavein.ogg", false, 0.7, 0.1, 10, false);
+  SetEntityActive("chlebek1",false);
+  AddTimer("",30,"play_ambient_music"); // 30
+  AddGlobalVarInt("wiezien_chleb_result",1);
+}
+void play_ambient_music(string &in asTimer) {
+StopMusic(2,1.0f);
+PlayMusic("23_amb.ogg",true, 0.85,1.0,1,true);
+}
+
+void ScriptArea_18(string &in asParent, string &in asChild, int alState) {
+AddTimer("robaki",1,"pokaz_robaki");
+}
+void pokaz_robaki(string &in asTimer) {
+for(int y=1;y<=9;y++) {
+SetPropActiveAndFade("cockroach_"+y,true,0.5f);
+}
+StopMusic(2,1.0f);
+ PlayMusic("01_event_critters.ogg", false, 0.7, 0.1, 10, false);
+GiveSanityDamage(10,false);
+AddTimer("",10,"end_critters");
+}  
+void end_critters(string &in asTimer) {
+StopMusic(2,1.0f);
+PlayMusic("23_amb.ogg",true, 0.85,1.0,1,true);
+}
+void ScriptArea_7(string &in asParent, string &in asChild, int alState) {
+PlaySoundAtEntity("","insanity_babe_cry.snt", "ScriptArea_10", 0, false);
+}
+
